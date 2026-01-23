@@ -16,7 +16,7 @@
 
 ## Скриншоты  
 
-![MainMenu](Screenshots/mainMenu.png)
+![MainMenu](https://drive.google.com/file/d/1V9b5eTOMhdlp7abM59IeC49fiHL9srfh/view?usp=sharing)
 
 ![PanelLevel](Screenshots/levelPanel.png)
 
@@ -37,7 +37,7 @@
 ### Ключевые системы
 
 1. **Управление игроком**:
-   - Обработка ввода через `Input.GetButtonDown("Jump")`.
+   - Обработка ввода 
    - Физика: `Rigidbody2D` .
 2. **Анимации**:
     - Игрока;
