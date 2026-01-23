@@ -16,10 +16,10 @@
 
 ## Скриншоты  
 
-Главное меню (Screenshots/mainMenu.png)
-Панель уровней(Screenshots/levelPanel.png)
-Начало каждого уровня(Screenshots/startLevel.png)
-Геймплай (Screenshots/gameplay.png)
+![Главное меню](Screenshots/mainMenu.png)
+![Панель уровней](Screenshots/levelPanel.png)
+![Начало каждого уровня](Screenshots/startLevel.png)
+![Геймплай](Screenshots/gameplay.png)
 
 ## Особенности
 - 6 уникальных уровней с возрастающей сложностью;
