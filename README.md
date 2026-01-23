@@ -16,9 +16,12 @@
 
 ## Скриншоты  
 
-!(Screenshots/mainMenu.png)
+![MainMenu](Screenshots/mainMenu.png)
+
 ![PanelLevel](Screenshots/levelPanel.png)
+
 ![StartLevel](Screenshots/startLevel.png)
+
 ![Gameplay](Screenshots/gameplay.png)
 
 ## Особенности
