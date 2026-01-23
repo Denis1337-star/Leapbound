@@ -16,7 +16,7 @@
 
 ## Скриншоты  
 
-![MainMenu](https://drive.google.com/file/d/1V9b5eTOMhdlp7abM59IeC49fiHL9srfh/view?usp=sharing)
+![MainMenu](Screenshots/mainMenu.png)
 
 ![PanelLevel](Screenshots/levelPanel.png)
 
