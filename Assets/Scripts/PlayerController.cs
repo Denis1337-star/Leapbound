@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float walkSpeed = 3f;                //Скорость ходьбы
     public float runSpeed = 6f;                 //Скорость бега(при зажатом shift)
-    public float jumpForce = 7f;                //Сила прыжка по Y
+    public float jumpForce = 7f;                //Сила прыжка по Yggg
     public float crawlSpeedMultiplier = 0.5f;   //Множитель скорости при приседании(скорость/2)
 
     [Header("Ground Check")]

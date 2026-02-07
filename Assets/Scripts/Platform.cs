@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-
+   
     public Transform pointA;  //точки откуда куда двигается
     public Transform pointB;
     public float speed = 2f;  //скорость движения

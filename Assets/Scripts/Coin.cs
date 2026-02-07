@@ -11,7 +11,7 @@ public class Coin : MonoBehaviour
         if (other.CompareTag("Player")) //Если косается с игроком 
         {
             PlayerScore.AddPoints(value); //увеличивает общий счет
-            Destroy(gameObject);  //удаляется 
+            Destroy(gameObject);  //удаляется   нере
         }
     }
 }

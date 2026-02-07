@@ -8,7 +8,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Sources")]
     public AudioSource musicSource; // доступ MusicSource
-    public AudioSource sfxSource;   //  SFXSource
+    public AudioSource sfxSource;   //  SFXSource авпап
 
     [Header("Music Clips")]
     public AudioClip defaultMusic;  //фон музыки 
