@@ -5,17 +5,10 @@ using UnityEngine.UI;
 
 public class ScoreDisplay : MonoBehaviour
 {
-    public Text scoreText;  //текс счета
-    private void Start() 
-    { 
-        UpdateText();
-    }
+    public Text scoreText;
+
     private void Update()
-    { 
-        UpdateText();
-    }
-    private void UpdateText()
     {
-        scoreText.text = $"Score: {PlayerScore.CurrentScore}";  //берет счет и выводит
+        scoreText.text = $"Score: {PlayerScore.Score}";
     }
 }

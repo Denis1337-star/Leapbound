@@ -2,20 +2,16 @@ using UnityEngine;
 
 public class HeallthPickup : MonoBehaviour
 {
-    public int healAmount = 100;   //сколько хилит 
+    public int healAmount = 100;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.CompareTag("Player"))
-        {
-            var health = col.GetComponent<PlayerHealthUI>();
+        if (!col.CompareTag("Player")) return;
 
-            if (health != null)
-            {
-                health.Heal(healAmount); // Вылечить
-            }
+        var health = col.GetComponent<PlayerHealth>();
+        if (health != null)
+            health.Heal(healAmount);
 
-            Destroy(gameObject); // Удалить объект хилки
-        }
+        Destroy(gameObject);
     }
 }

@@ -5,17 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class FinishZone : MonoBehaviour
 {
-    public string nextSceneName;  //название следующей сцены
-    public int nextLevelIndex = 2; // указываем индекс следующего уровня
-
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;  //если косается с игроком продолжаем\нет ничего не делает
+        if (!other.CompareTag("Player")) return;
 
-        PlayerScore.Win();  //вызывает панель 
-        LevelResultManager.SaveResult(SceneManager.GetActiveScene().name, nextLevelIndex); //Сохраняет данные(активная сцена и ее индекс)
+        PlayerScore.Win();
 
-        var pm = FindAnyObjectByType<PauseMenu>();  //ищет любой обьект с компонентом pauseMenu
-        if (pm) pm.TogglePause();  //если обьект найден то вызывает панель 
+        int stars = CalculateStars(PlayerScore.Score);
+
+        Scene scene = SceneManager.GetActiveScene();
+        // сохраняем результат (ЛУЧШИЙ)
+        LevelResultManager.SaveLevelResult(
+            scene.name,        // имя сцены
+            scene.buildIndex,  // индекс уровня
+            stars
+        );
+
+        FindAnyObjectByType<PauseMenu>()?.TogglePause();
+    }
+    private int CalculateStars(int score)
+    {
+        if (score >= 100)
+            return 3;
+
+        if (score >= 50)
+            return 2;
+
+        return 1; // дошёл до финиша
     }
 }

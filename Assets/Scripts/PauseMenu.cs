@@ -53,8 +53,8 @@ public class PauseMenu : MonoBehaviour
             musicSlider.value = SettingsManager.Instance.GetMusicValue();
             sfxSlider.value = SettingsManager.Instance.GetSFXValue();
 
-            musicSlider.onValueChanged.AddListener(v => SettingsManager.Instance.SetMusicValue(v));
-            sfxSlider.onValueChanged.AddListener(v => SettingsManager.Instance.SetSFXValue(v));
+            musicSlider.onValueChanged.AddListener(SettingsManager.Instance.SetMusicValue);
+            sfxSlider.onValueChanged.AddListener(SettingsManager.Instance.SetSFXValue);
         }
 
         Time.timeScale = 1f; // в начале игра не на паузе
@@ -72,24 +72,24 @@ public class PauseMenu : MonoBehaviour
     private void UpdateUI()
     {
         // ќбновление текста очков
-        scoreText.text = $"Score: {PlayerScore.CurrentScore}";
+        scoreText.text = $"Score: {PlayerScore.Score}";
 
-        statusText.text = PlayerScore.IsGameOver
-            ? (PlayerScore.IsWin ? "You Win!" : "You Lose!")
-            : "Paused";
-
-        if (PlayerScore.IsWin)
-        { 
-            LevelResultManager.SaveResult(SceneManager.GetActiveScene().name,  //сохран€ет результат
-                                          SceneManager.GetActiveScene().buildIndex + 1);
-            ShowStars(LevelResultManager.starsEarned);  //показывает звезды
-
-            if (nextLevelButton != null)
-                nextLevelButton.gameObject.SetActive(true);  //активирует кнопку некс лвл
+        if (PlayerScore.IsGameOver)
+        {
+            statusText.text = PlayerScore.IsWin ? "YOU WIN!" : "YOU LOSE!";
         }
         else
         {
-            HideAllStars(); //откл звезды
+            statusText.text = "PAUSED";
+        }
+
+        if (PlayerScore.IsWin)
+        {
+            int stars = CalculateStars(PlayerScore.Score);
+            ShowStars(stars);
+
+            if (nextLevelButton)
+                nextLevelButton.gameObject.SetActive(true);
         }
     }
 
@@ -143,27 +143,25 @@ public class PauseMenu : MonoBehaviour
             settingsPanel.SetActive(false);
     }
 
-    public void GuidePanel()
-    {
-        Time.timeScale = 1f;
-    }
-
     public void LoadNextLevel()
     {
         Time.timeScale = 1f;
         PlayerScore.Reset();
 
-        //задает хар дл€ некс уровн€
-        int currentIndex = SceneManager.GetActiveScene().buildIndex; 
-        int nextIndex = currentIndex + 1;
-
-
-        //если нету след уровн€ уходит в главное меню
+        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextIndex < SceneManager.sceneCountInBuildSettings)
             SceneManager.LoadScene(nextIndex);
         else
-            SceneManager.LoadScene("MainMenu");
+            SceneManager.LoadScene("MainMenu"); ;
     }
+    private int CalculateStars(int score)
+    {
+        if (score >= 100)
+            return 3;
 
+        if (score >= 50)
+            return 2;
 
+        return 1;
+    }
 }

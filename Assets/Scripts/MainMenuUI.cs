@@ -23,7 +23,7 @@ public class MainMenuUI : MonoBehaviour
     private void Start()
     {
         playButton.onClick.AddListener(PlayLastLevel);  //накидывает методы на кнопки
-        settingsButton.onClick.AddListener(OpenSettings);
+        settingsButton.onClick.AddListener(() => settingsPanel.SetActive(true));
 
         UpdateLevelButtons();  //инициализирует UI
     }
@@ -37,35 +37,31 @@ public class MainMenuUI : MonoBehaviour
 
             int count = LevelResultManager.GetStarsForLevel(lvl.levelName);  //получает количество звезд заработаных за лвл
             for (int i = 0; i < lvl.stars.Length; i++)  //проходит по массиву 
+            {
                 lvl.stars[i].enabled = i < count;  //включает столько звезд сколько надо
+            }
 
             lvl.button.onClick.RemoveAllListeners();  //защита от дублирования 
             if (unlocked)  //если открыт лвл 
-                lvl.button.onClick.AddListener(() => LoadLevel(lvl.levelName));  //добавляет метод на запуск нужного уровня 
+            {
+                string sceneName = lvl.levelName;
+
+                //добавляет метод на запуск нужного уровня 
+                lvl.button.onClick.AddListener(() => SceneManager.LoadScene(lvl.levelName));  
+            }
         }
     }
 
     private void PlayLastLevel()
     {
-        int lastUnlocked = LevelResultManager.GetLastUnlockedLevel();  //получает индекс последнего разблокировано уровня
-        foreach (var lvl in levelButtons)  //проходит по массиву в поиске
+        int index = LevelResultManager.GetLastUnlockedLevel();
+        foreach (var lvl in levelButtons)
         {
-            if (lvl.levelIndex == lastUnlocked)  //если лвл открыт 
+            if (lvl.levelIndex == index)
             {
-                LoadLevel(lvl.levelName);  //загружает сцену с этим именем
+                SceneManager.LoadScene(lvl.levelName);
                 return;
             }
         }
-     
-    }
-
-    private void LoadLevel(string name)
-    {
-        SceneManager.LoadScene(name);  //запускает сцену по имени 
-    }
-
-    private void OpenSettings()
-    {
-        settingsPanel.SetActive(true);  //открывает панель с настройками
     }
 }

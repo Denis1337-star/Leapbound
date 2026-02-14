@@ -24,23 +24,22 @@ public class BulletPlaint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        // Попадание в игрока
-        if (col.CompareTag("Player"))
+        var damagble = col.GetComponent<IDamageble>();
+        if (damagble != null)
         {
-            
-            var health = col.GetComponent<PlayerHealthUI>(); //Пытается получить у обьекта компонент
-            if (health != null)
-                health.TakeDamage(damage); //если найден наносит урон
+            //Рассчитываем направление удара
+            Vector2 hitDir = (col.transform.position - transform.position).normalized;
 
-            Destroy(gameObject); //исчезает
-            
+            //наносим урон цели
+            damagble.TakeDamage(damage,hitDir);
+
+            Destroy(gameObject);
+            return;
         }
-
         // Попадание в землю
         if (col.CompareTag("Ground"))
         {
             Destroy(gameObject);
         }
     }
-
 }

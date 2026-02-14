@@ -8,7 +8,6 @@ public class Platform : MonoBehaviour
     public float speed = 2f;  //скорость движения
 
     private Vector3 target;  //текущая цель движения(А или В)
-
     private Vector3 lastPos;  //предыдущая позиция для расчета скорости
     public Vector2 PlatformVelocity { get; private set; }  //текущая скорость (единица/сек)  можно читать/нельзя изменять извне
 
@@ -39,6 +38,5 @@ public class Platform : MonoBehaviour
         PlatformVelocity = (transform.position - lastPos) / Time.fixedDeltaTime;  //назначает вектор перемещения 
         lastPos = transform.position;  //обновляет текущую позицию 
     }
-
 }
 
