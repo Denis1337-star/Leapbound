@@ -1,63 +1,61 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
     [Header("UI Panels")]
-    public GameObject pausePanel;  //основная панель
-    public GameObject settingsPanel;  //настроект fdfd
+    [SerializeField] private GameObject _pausePanel;  
+    [SerializeField] private GameObject _settingsPanel;  
     
     [Header("Pause Menu Buttons")]
-    public Button pauseButton;  //пауза\продолжение
-    public Button restartButton;  //перезапск
-    public Button mainMenuButton;  //выход в главное меню
-    public Button settingsButton;  //настройки
-    public Button nextLevelButton;  //след уровень
+    [SerializeField] private Button _pauseButton;  
+    [SerializeField] private Button _restartButton;  
+    [SerializeField] private Button _mainMenuButton;  
+    [SerializeField] private Button _settingsButton;  
+    [SerializeField] private Button _nextLevelButton;  
 
     [Header("UI Text")]
-    public Text scoreText;  //счет
-    public Text statusText; //вийграл или нет
+    [SerializeField] private Text _scoreText;  
+    [SerializeField] private Text _statusText; 
 
     [Header("Stars Display")]
-    public Transform starParent;  //родитель для звезд
-    private Image[] stars;  //массив звезд
+    [SerializeField] private Transform _starParent;  
+    [SerializeField] private Image[] _stars;  
 
     [Header("Settings Sliders")]
-    public Slider musicSlider;  //слайдеры для настройки громкости
-    public Slider sfxSlider;
+    [SerializeField] private Slider _musicSlider;  
+    [SerializeField] private Slider _sfxSlider;
 
-    private bool isPaused = false;  //флаг по паузе
+    private bool _isPaused = false;  
 
     private void Start()
     {
-        // Настройка звёзд
-        stars = starParent.GetComponentsInChildren<Image>(true);  //получает все звезды
-        HideAllStars();  //скрывает звезды
+        // РќР°СЃС‚СЂРѕР№РєР° Р·РІС‘Р·Рґ
+        _stars = _starParent.GetComponentsInChildren<Image>(true);  //РїРѕР»СѓС‡Р°РµС‚ РІСЃРµ Р·РІРµР·РґС‹
+        HideAllStars();  //СЃРєСЂС‹РІР°РµС‚ Р·РІРµР·РґС‹
 
-        // Скрыть панели в начале
-        pausePanel.SetActive(false);  
-        if (nextLevelButton != null) nextLevelButton.gameObject.SetActive(false);
+        // РЎРєСЂС‹С‚СЊ РїР°РЅРµР»Рё РІ РЅР°С‡Р°Р»Рµ
+        _pausePanel.SetActive(false);  
+        if (_nextLevelButton != null) _nextLevelButton.gameObject.SetActive(false);
 
-        // Подписка кнопок
-        pauseButton.onClick.AddListener(TogglePause);
-        restartButton.onClick.AddListener(RestartLevel);
-        mainMenuButton.onClick.AddListener(GoToMainMenu);
-        settingsButton.onClick.AddListener(OpenSettingsPanel);
+        // РџРѕРґРїРёСЃРєР° РєРЅРѕРїРѕРє
+        _pauseButton.onClick.AddListener(TogglePause);
+        _restartButton.onClick.AddListener(RestartLevel);
+        _mainMenuButton.onClick.AddListener(GoToMainMenu);
+        _settingsButton.onClick.AddListener(OpenSettingsPanel);
 
-        // Настройка слайдеров
+        // РќР°СЃС‚СЂРѕР№РєР° СЃР»Р°Р№РґРµСЂРѕРІ
         if (SettingsManager.Instance != null)
         {
-            musicSlider.value = SettingsManager.Instance.GetMusicValue();
-            sfxSlider.value = SettingsManager.Instance.GetSFXValue();
+            _musicSlider.value = SettingsManager.Instance.GetMusicValue();
+            _sfxSlider.value = SettingsManager.Instance.GetSFXValue();
 
-            musicSlider.onValueChanged.AddListener(SettingsManager.Instance.SetMusicValue);
-            sfxSlider.onValueChanged.AddListener(SettingsManager.Instance.SetSFXValue);
+            _musicSlider.onValueChanged.AddListener(SettingsManager.Instance.SetMusicValue);
+            _sfxSlider.onValueChanged.AddListener(SettingsManager.Instance.SetSFXValue);
         }
 
-        Time.timeScale = 1f; // в начале игра не на паузе
+        Time.timeScale = 1f; // РІ РЅР°С‡Р°Р»Рµ РёРіСЂР° РЅРµ РЅР° РїР°СѓР·Рµ
     }
 
     private void Update()
@@ -65,22 +63,22 @@ public class PauseMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             TogglePause();
 
-        if (pausePanel.activeSelf)
+        if (_pausePanel.activeSelf)
             UpdateUI();
     }
 
     private void UpdateUI()
     {
-        // Обновление текста очков
-        scoreText.text = $"Score: {PlayerScore.Score}";
+        // РћР±РЅРѕРІР»РµРЅРёРµ С‚РµРєСЃС‚Р° РѕС‡РєРѕРІ
+        _scoreText.text = $"Score: {PlayerScore.Score}";
 
         if (PlayerScore.IsGameOver)
         {
-            statusText.text = PlayerScore.IsWin ? "YOU WIN!" : "YOU LOSE!";
+            _statusText.text = PlayerScore.IsWin ? "YOU WIN!" : "YOU LOSE!";
         }
         else
         {
-            statusText.text = "PAUSED";
+            _statusText.text = "PAUSED";
         }
 
         if (PlayerScore.IsWin)
@@ -88,36 +86,36 @@ public class PauseMenu : MonoBehaviour
             int stars = CalculateStars(PlayerScore.Score);
             ShowStars(stars);
 
-            if (nextLevelButton)
-                nextLevelButton.gameObject.SetActive(true);
+            if (_nextLevelButton)
+                _nextLevelButton.gameObject.SetActive(true);
         }
     }
 
     private void ShowStars(int count)
     { 
-        //включает звезды 
-        for (int i = 0; i < stars.Length; i++)
-            stars[i].enabled = i < count;
+        //РІРєР»СЋС‡Р°РµС‚ Р·РІРµР·РґС‹ 
+        for (int i = 0; i < _stars.Length; i++)
+            _stars[i].enabled = i < count;
     }
 
     private void HideAllStars()
     {  
-        //проходит по массиву и откл звезды
-        foreach (var star in stars)
+        //РїСЂРѕС…РѕРґРёС‚ РїРѕ РјР°СЃСЃРёРІСѓ Рё РѕС‚РєР» Р·РІРµР·РґС‹
+        foreach (var star in _stars)
             star.enabled = false;
     }
 
     public void TogglePause()
     {
-        //режим паузы 
-        isPaused = !isPaused;
-        pausePanel.SetActive(isPaused);
-        Time.timeScale = isPaused ? 0f : 1f;
+        //СЂРµР¶РёРј РїР°СѓР·С‹ 
+        _isPaused = !_isPaused;
+        _pausePanel.SetActive(_isPaused);
+        Time.timeScale = _isPaused ? 0f : 1f;
     }
 
     public void RestartLevel()
     {
-        //перезапуск уровня
+        //РїРµСЂРµР·Р°РїСѓСЃРє СѓСЂРѕРІРЅСЏ
         Time.timeScale = 1f;
         PlayerScore.Reset();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -125,7 +123,7 @@ public class PauseMenu : MonoBehaviour
 
     public void GoToMainMenu()
     { 
-        //в главное меню
+        //РІ РіР»Р°РІРЅРѕРµ РјРµРЅСЋ
         Time.timeScale = 1f;
         PlayerScore.Reset();
         SceneManager.LoadScene("MainMenu");
@@ -133,14 +131,14 @@ public class PauseMenu : MonoBehaviour
 
     public void OpenSettingsPanel()
     {
-        if (settingsPanel != null)
-            settingsPanel.SetActive(true);
+        if (_settingsPanel != null)
+            _settingsPanel.SetActive(true);
     }
 
     public void CloseSettingsPanel()
     {
-        if (settingsPanel != null)
-            settingsPanel.SetActive(false);
+        if (_settingsPanel != null)
+            _settingsPanel.SetActive(false);
     }
 
     public void LoadNextLevel()

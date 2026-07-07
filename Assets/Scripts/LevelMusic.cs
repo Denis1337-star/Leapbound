@@ -1,14 +1,14 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class LevelMusic : MonoBehaviour
 {
-    public AudioClip levelMusic;  //ссылка на фоновую музыку
+    [SerializeField] private AudioClip _levelMusic;  //СЃСЃС‹Р»РєР° РЅР° С„РѕРЅРѕРІСѓСЋ РјСѓР·С‹РєСѓ
 
     private void Start()
     {
-        if (levelMusic != null && AudioManager.Instance != null)  //если клип есть и микшер тоже
+        if (_levelMusic != null && AudioManager.Instance != null)  //РµСЃР»Рё РєР»РёРї РµСЃС‚СЊ Рё РјРёРєС€РµСЂ С‚РѕР¶Рµ
         {
-            AudioManager.Instance.PlayMusic(levelMusic, true);  //отправляет в микшер(где регулирует звук)
+            AudioManager.Instance.PlayMusic(_levelMusic, true);  //РѕС‚РїСЂР°РІР»СЏРµС‚ РІ РјРёРєС€РµСЂ(РіРґРµ СЂРµРіСѓР»РёСЂСѓРµС‚ Р·РІСѓРє)
         }
     }
 }

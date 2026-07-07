@@ -1,10 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    private bool isGameOver;
     private void Awake()
     {
         if (Instance != null)
@@ -15,14 +14,6 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    }
-
-    public void GameOver()
-    {
-        if (isGameOver)
-            return;
-
-        isGameOver = true;
     }
 
     public void RestartLevel()

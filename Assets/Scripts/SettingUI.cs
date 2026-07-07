@@ -1,21 +1,21 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingUI : MonoBehaviour
 {
-    public Slider musicSlider;  //ñëàéäåð ïî íàñòðîéêó ãðîìêîñòè 
-    public Slider sfxSlider;
+    [SerializeField] private Slider _musicSlider;  
+    [SerializeField] private Slider _sfxSlider;
 
     private void Start()
     {
-        if (SettingsManager.Instance == null) return;  //ïðîâåðêà íà ìåíåäæåð íàñòðîåêò
+        if (SettingsManager.Instance == null) return;  //Ð¿Ñ€Ð¾Ð²ÐµÑ€ÐºÐ° Ð½Ð° Ð¼ÐµÐ½ÐµÐ´Ð¶ÐµÑ€ Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐºÑ‚
 
-        // Óñòàíîâèòü òåêóùèå çíà÷åíèÿ
-        musicSlider.value = SettingsManager.Instance.GetMusicValue();  //çàãðóæàåò ïîëîæåíèå ïîëçóíêîâ 
-        sfxSlider.value = SettingsManager.Instance.GetSFXValue();
+        // Ð£ÑÑ‚Ð°Ð½Ð¾Ð²Ð¸Ñ‚ÑŒ Ñ‚ÐµÐºÑƒÑ‰Ð¸Ðµ Ð·Ð½Ð°Ñ‡ÐµÐ½Ð¸Ñ
+        _musicSlider.value = SettingsManager.Instance.GetMusicValue();  //Ð·Ð°Ð³Ñ€ÑƒÐ¶Ð°ÐµÑ‚ Ð¿Ð¾Ð»Ð¾Ð¶ÐµÐ½Ð¸Ðµ Ð¿Ð¾Ð»Ð·ÑƒÐ½ÐºÐ¾Ð² 
+        _sfxSlider.value = SettingsManager.Instance.GetSFXValue();
 
-        // Ïîäïèñêà íà èçìåíåíèÿ
-        musicSlider.onValueChanged.AddListener(v => SettingsManager.Instance.SetMusicValue(v));  //ïðè ïåðåìåùíåè ïîëçóíêà ìåíÿåò ãðîìêîñòü
-        sfxSlider.onValueChanged.AddListener(v => SettingsManager.Instance.SetSFXValue(v));
+        // ÐŸÐ¾Ð´Ð¿Ð¸ÑÐºÐ° Ð½Ð° Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ñ
+        _musicSlider.onValueChanged.AddListener(v => SettingsManager.Instance.SetMusicValue(v));  //Ð¿Ñ€Ð¸ Ð¿ÐµÑ€ÐµÐ¼ÐµÑ‰Ð½ÐµÐ¸ Ð¿Ð¾Ð»Ð·ÑƒÐ½ÐºÐ° Ð¼ÐµÐ½ÑÐµÑ‚ Ð³Ñ€Ð¾Ð¼ÐºÐ¾ÑÑ‚ÑŒ
+        _sfxSlider.onValueChanged.AddListener(v => SettingsManager.Instance.SetSFXValue(v));
     }
 }

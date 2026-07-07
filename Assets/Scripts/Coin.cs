@@ -1,16 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    public int value = 10; // очки за монету
+    [SerializeField] private int _value = 10; // РѕС‡РєРё Р·Р° РјРѕРЅРµС‚Сѓ
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
 
-        PlayerScore.Add(value);  // увеличиваем очки
-        Destroy(gameObject);     // удаляем монету
+        PlayerScore.Add(_value);  // СѓРІРµР»РёС‡РёРІР°РµРј РѕС‡РєРё
+        Destroy(gameObject);     // СѓРґР°Р»СЏРµРј РјРѕРЅРµС‚Сѓ
     }
 }

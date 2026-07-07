@@ -1,17 +1,13 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyAudio : MonoBehaviour
 {
-    public AudioClip hurtClip;
-    public AudioClip deathClip;
+    [SerializeField] private AudioClip hurtClip;
+    [SerializeField] private AudioClip deathClip;
 
     private AudioSource source;
     private EnemyBase enemy;
 
-    private void Start()
-    {
-        
-    }
     private void Awake()
     {
         source = GetComponent<AudioSource>();

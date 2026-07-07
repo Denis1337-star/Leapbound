@@ -1,35 +1,34 @@
-using UnityEditorInternal;
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class PlayerJump : MonoBehaviour
 {
-    public float jumpForce = 7f; //Сила прыжка
+    [SerializeField] private float _jumpForce = 7f; //РЎРёР»Р° РїСЂС‹Р¶РєР°
 
     [Header("Ground Check")]
-    public Transform groundCheck; //Точка из которой производится проверка
-    public float groundRadius = 0.2f; //Радус для проверки пересечения с землей
-    public LayerMask groundLayer;  //Слой который считается землей
+    [SerializeField] private Transform _groundCheck; //РўРѕС‡РєР° РёР· РєРѕС‚РѕСЂРѕР№ РїСЂРѕРёР·РІРѕРґРёС‚СЃСЏ РїСЂРѕРІРµСЂРєР°
+    [SerializeField] private float _groundRadius = 0.2f; //Р Р°РґСѓСЃ РґР»СЏ РїСЂРѕРІРµСЂРєРё РїРµСЂРµСЃРµС‡РµРЅРёСЏ СЃ Р·РµРјР»РµР№
+    [SerializeField] private LayerMask _groundLayer;  //РЎР»РѕР№ РєРѕС‚РѕСЂС‹Р№ СЃС‡РёС‚Р°РµС‚СЃСЏ Р·РµРјР»РµР№
 
-    private Rigidbody2D rb;
-    private PlayerInput input;
+    private Rigidbody2D _rb;
+    private PlayerInput _input;
 
-    private bool isGrounded; //Флаг находится ли игрок на земле
+    private bool _isGrounded; //Р¤Р»Р°Рі РЅР°С…РѕРґРёС‚СЃСЏ Р»Рё РёРіСЂРѕРє РЅР° Р·РµРјР»Рµ
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        input = GetComponent<PlayerInput>();
+        _rb = GetComponent<Rigidbody2D>();
+        _input = GetComponent<PlayerInput>();
     }
     private void Update()
     {
-        //Проверяет, касается ли игрок земли
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius,groundLayer);
+        //РџСЂРѕРІРµСЂСЏРµС‚, РєР°СЃР°РµС‚СЃСЏ Р»Рё РёРіСЂРѕРє Р·РµРјР»Рё
+        _isGrounded = Physics2D.OverlapCircle(_groundCheck.position, _groundRadius,_groundLayer);
 
-        if (input.JumpPressed && isGrounded)  //Условия для прыжка
+        if (_input.JumpPressed && _isGrounded)  //РЈСЃР»РѕРІРёСЏ РґР»СЏ РїСЂС‹Р¶РєР°
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); //Даем скорость
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpForce); //Р”Р°РµРј СЃРєРѕСЂРѕСЃС‚СЊ
             
-            input.ConsumeJump(); //Сбрасываем флаг прыжка
+            _input.ConsumeJump(); //РЎР±СЂР°СЃС‹РІР°РµРј С„Р»Р°Рі РїСЂС‹Р¶РєР°
         }
     }
 }

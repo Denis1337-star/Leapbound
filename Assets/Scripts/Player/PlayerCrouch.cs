@@ -1,59 +1,59 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 [RequireComponent (typeof(CapsuleCollider2D))]
 public class PlayerCrouch : MonoBehaviour
-{  //Для управления приседанием игрока
+{  //Р”Р»СЏ СѓРїСЂР°РІР»РµРЅРёСЏ РїСЂРёСЃРµРґР°РЅРёРµРј РёРіСЂРѕРєР°
 
     [Header("Celing Check")]
-    public Transform ceilingCheck;  //Точка из которой производится проверка на припятствие
-    public float ceilingRadius = 0.2f;  //Радиус круга для проверки пересечения 
-    public LayerMask groundLayer;  //Слой который считается землей
+    [SerializeField] private Transform _ceilingCheck;  //РўРѕС‡РєР° РёР· РєРѕС‚РѕСЂРѕР№ РїСЂРѕРёР·РІРѕРґРёС‚СЃСЏ РїСЂРѕРІРµСЂРєР° РЅР° РїСЂРёРїСЏС‚СЃС‚РІРёРµ
+    [SerializeField] private float _ceilingRadius = 0.2f;  //Р Р°РґРёСѓСЃ РєСЂСѓРіР° РґР»СЏ РїСЂРѕРІРµСЂРєРё РїРµСЂРµСЃРµС‡РµРЅРёСЏ 
+    [SerializeField] private LayerMask _groundLayer;  //РЎР»РѕР№ РєРѕС‚РѕСЂС‹Р№ СЃС‡РёС‚Р°РµС‚СЃСЏ Р·РµРјР»РµР№
 
     [Header("Collider")]
-    public float hightMultiplier = 0.7f; //Множитель высоты колайдера при приседании
+    [SerializeField] private float _hightMultiplier = 0.7f; //РњРЅРѕР¶РёС‚РµР»СЊ РІС‹СЃРѕС‚С‹ РєРѕР»Р°Р№РґРµСЂР° РїСЂРё РїСЂРёСЃРµРґР°РЅРёРё
 
-    private CapsuleCollider2D col;
-    private Vector2 originalSize;  //Исходны размер коллайдера
-    private Vector2 originalOffset;  //Исходное смещение коллайдера
-    public bool IsCrouching { get; private set; } //Флаг в приседе или нет
-    private PlayerInput input;
+    private CapsuleCollider2D _collider;
+    private Vector2 _originalSize;  //РСЃС…РѕРґРЅС‹ СЂР°Р·РјРµСЂ РєРѕР»Р»Р°Р№РґРµСЂР°
+    private Vector2 _originalOffset;  //РСЃС…РѕРґРЅРѕРµ СЃРјРµС‰РµРЅРёРµ РєРѕР»Р»Р°Р№РґРµСЂР°
+    public bool IsCrouching { get; private set; } //Р¤Р»Р°Рі РІ РїСЂРёСЃРµРґРµ РёР»Рё РЅРµС‚
+    private PlayerInput _input;
     private void Awake()
     {
-        col = GetComponent<CapsuleCollider2D>();
-        input = GetComponent<PlayerInput>();
+        _collider = GetComponent<CapsuleCollider2D>();
+        _input = GetComponent<PlayerInput>();
 
-        //сохраняем исходные данные 
-        originalSize = col.size;
-        originalOffset = col.offset;
+        //СЃРѕС…СЂР°РЅСЏРµРј РёСЃС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ 
+        _originalSize = _collider.size;
+        _originalOffset = _collider.offset;
     }
     private void Update()
     {
-        //Проверка есть ли припятствие над головой
-        bool ceilingBlocked = Physics2D.OverlapCircle(ceilingCheck.position, ceilingRadius,groundLayer);
+        //РџСЂРѕРІРµСЂРєР° РµСЃС‚СЊ Р»Рё РїСЂРёРїСЏС‚СЃС‚РІРёРµ РЅР°Рґ РіРѕР»РѕРІРѕР№
+        bool ceilingBlocked = Physics2D.OverlapCircle(_ceilingCheck.position, _ceilingRadius,_groundLayer);
 
-        //Условия при котором игрок приседает
-        IsCrouching = input.CrouchHeld || ceilingBlocked;
+        //РЈСЃР»РѕРІРёСЏ РїСЂРё РєРѕС‚РѕСЂРѕРј РёРіСЂРѕРє РїСЂРёСЃРµРґР°РµС‚
+        IsCrouching = _input.CrouchHeld || ceilingBlocked;
 
-        //Обновляет параметры коллайдера от  текущего состояния 
+        //РћР±РЅРѕРІР»СЏРµС‚ РїР°СЂР°РјРµС‚СЂС‹ РєРѕР»Р»Р°Р№РґРµСЂР° РѕС‚  С‚РµРєСѓС‰РµРіРѕ СЃРѕСЃС‚РѕСЏРЅРёСЏ 
         UpdateCollider();
     }
 
-    //Изменяет размеры\смещение коллайдера
+    //РР·РјРµРЅСЏРµС‚ СЂР°Р·РјРµСЂС‹\СЃРјРµС‰РµРЅРёРµ РєРѕР»Р»Р°Р№РґРµСЂР°
     private void UpdateCollider()
     {
         if (IsCrouching)
         {
-            //Приседаем уменьшая высоту 
-            col.size = new Vector2(originalSize.x, originalSize.y * hightMultiplier);
+            //РџСЂРёСЃРµРґР°РµРј СѓРјРµРЅСЊС€Р°СЏ РІС‹СЃРѕС‚Сѓ 
+            _collider.size = new Vector2(_originalSize.x, _originalSize.y * _hightMultiplier);
 
-            //Изменение смещения 
-            col.offset = new Vector2(originalOffset.x, originalOffset.y - (originalSize.y - col.size.y) / 2f);
+            //РР·РјРµРЅРµРЅРёРµ СЃРјРµС‰РµРЅРёСЏ 
+            _collider.offset = new Vector2(_originalOffset.x, _originalOffset.y - (_originalSize.y - _collider.size.y) / 2f);
         }
         else
         {
-            //встает (востановление исходных данных
-            col.size = originalSize;
-            col.offset = originalOffset;
+            //РІСЃС‚Р°РµС‚ (РІРѕСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РёСЃС…РѕРґРЅС‹С… РґР°РЅРЅС‹С…
+            _collider.size = _originalSize;
+            _collider.offset = _originalOffset;
         }
         
     }

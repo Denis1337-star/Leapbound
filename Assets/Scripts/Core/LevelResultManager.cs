@@ -1,42 +1,36 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
+ï»¿using UnityEngine;
 public class LevelResultManager : MonoBehaviour
 {
-    public static LevelResultManager Instance { get; private set; }
-
     private const string LAST_LEVEL_KEY = "LastUnlockedLevel";
     private const string STARS_KEY = "Stars_";
 
-    //ÑÎÕĞÀÍÅÍÈÅ ĞÅÇÓËÜÒÀÒÀ 
+    //Ğ¡ĞĞ¥Ğ ĞĞĞ•ĞĞ˜Ğ• Ğ Ğ•Ğ—Ğ£Ğ›Ğ¬Ğ¢ĞĞ¢Ğ 
     public static void SaveLevelResult(string levelName, int levelIndex, int stars)
     {
         string key = STARS_KEY + levelName;
 
         int oldStars = PlayerPrefs.GetInt(key, 0);
 
-        // ñîõğàíÿåì ÒÎËÜÊÎ ëó÷øèé ğåçóëüòàò
+        // ÑĞ¾Ñ…Ñ€Ğ°Ğ½ÑĞµĞ¼ Ğ¢ĞĞ›Ğ¬ĞšĞ Ğ»ÑƒÑ‡ÑˆĞ¸Ğ¹ Ñ€ĞµĞ·ÑƒĞ»ÑŒÑ‚Ğ°Ñ‚
         if (stars > oldStars)
             PlayerPrefs.SetInt(key, stars);
 
         int lastUnlocked = PlayerPrefs.GetInt(LAST_LEVEL_KEY, 1);
 
-        // îòêğûâàåì ñëåäóşùèé óğîâåíü
+        // Ğ¾Ñ‚ĞºÑ€Ñ‹Ğ²Ğ°ĞµĞ¼ ÑĞ»ĞµĞ´ÑƒÑÑ‰Ğ¸Ğ¹ ÑƒÑ€Ğ¾Ğ²ĞµĞ½ÑŒ
         if (levelIndex + 1 > lastUnlocked)
             PlayerPrefs.SetInt(LAST_LEVEL_KEY, levelIndex + 1);
 
         PlayerPrefs.Save();
     }
 
-    // ÇÂÅÇÄÛ
+    // Ğ—Ğ’Ğ•Ğ—Ğ”Ğ«
     public static int GetStarsForLevel(string levelName)
     {
         return PlayerPrefs.GetInt(STARS_KEY + levelName, 0);
     }
 
-    //ÄÎÑÒÓÏ Ê ÓĞÎÂÍŞ
+    //Ğ”ĞĞ¡Ğ¢Ğ£ĞŸ Ğš Ğ£Ğ ĞĞ’ĞĞ®
     public static bool IsLevelUnlocked(int levelIndex)
     {
         int lastUnlocked = PlayerPrefs.GetInt(LAST_LEVEL_KEY, 1);
@@ -48,7 +42,7 @@ public class LevelResultManager : MonoBehaviour
         return PlayerPrefs.GetInt(LAST_LEVEL_KEY, 1);
     }
 
-    // (îïöèîíàëüíî)
+    // (Ğ¾Ğ¿Ñ†Ğ¸Ğ¾Ğ½Ğ°Ğ»ÑŒĞ½Ğ¾)
     public static void ResetProgress()
     {
         PlayerPrefs.DeleteAll();

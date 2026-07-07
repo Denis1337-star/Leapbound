@@ -1,42 +1,39 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using System;
-using Unity.VisualScripting;
 
-public class PlayerHealth : MonoBehaviour, IDamageble
+public class PlayerHealth : MonoBehaviour, IDamageable
 {
     public int maxHealth = 100;
     //public float invincibleTime = 1f;
-    public int CurrentHP { get; private set; } //Текущее количество здоровья
-    public bool IsInvincible { get; private set; } //Флаг неуязвимости
+    public int CurrentHP { get; private set; } //РўРµРєСѓС‰РµРµ РєРѕР»РёС‡РµСЃС‚РІРѕ Р·РґРѕСЂРѕРІСЊСЏ
+    public bool IsInvincible { get; private set; } //Р¤Р»Р°Рі РЅРµСѓСЏР·РІРёРјРѕСЃС‚Рё
 
-    //Событие об изменение здоровья   Передает текущее хп и maxHP
+    //РЎРѕР±С‹С‚РёРµ РѕР± РёР·РјРµРЅРµРЅРёРµ Р·РґРѕСЂРѕРІСЊСЏ   РџРµСЂРµРґР°РµС‚ С‚РµРєСѓС‰РµРµ С…Рї Рё maxHP
     public event Action<int, int> OnHealthChange;
-    public event Action<Vector2> OnDamaged;  //событие получение урона
-    public event Action OnDeath;      //Событие о смерти игрока
+    public event Action<Vector2> OnDamaged;  //СЃРѕР±С‹С‚РёРµ РїРѕР»СѓС‡РµРЅРёРµ СѓСЂРѕРЅР°
+    public event Action OnDeath;      //РЎРѕР±С‹С‚РёРµ Рѕ СЃРјРµСЂС‚Рё РёРіСЂРѕРєР°
+
+    private bool _isDead;
     private void Awake()
     {
-        CurrentHP = maxHealth; //Устанавливет начальное здоровье 
-        OnHealthChange?.Invoke(CurrentHP, maxHealth);  //Сигнал что здоровье изменилось
+        CurrentHP = maxHealth; //РЈСЃС‚Р°РЅР°РІР»РёРІРµС‚ РЅР°С‡Р°Р»СЊРЅРѕРµ Р·РґРѕСЂРѕРІСЊРµ 
+        OnHealthChange?.Invoke(CurrentHP, maxHealth);  //РЎРёРіРЅР°Р» С‡С‚Рѕ Р·РґРѕСЂРѕРІСЊРµ РёР·РјРµРЅРёР»РѕСЃСЊ
     }
 
-    //Для получения урона
+    //Р”Р»СЏ РїРѕР»СѓС‡РµРЅРёСЏ СѓСЂРѕРЅР°
     public void TakeDamage(int amount, Vector2 hitDirection)
     {
-        if (IsInvincible || CurrentHP <= 0)  //если неуязвим или мертв = выход
-        {
-            return;
-        }
-
-        //Уменьшаем текущее хп на величину урона
+        if (IsInvincible || CurrentHP <= 0) return; 
+   
+        //РЈРјРµРЅСЊС€Р°РµРј С‚РµРєСѓС‰РµРµ С…Рї РЅР° РІРµР»РёС‡РёРЅСѓ СѓСЂРѕРЅР°
         CurrentHP -= amount;
 
-        //Ограничиваем значения текущего хп от 0 до maxHP
+        //РћРіСЂР°РЅРёС‡РёРІР°РµРј Р·РЅР°С‡РµРЅРёСЏ С‚РµРєСѓС‰РµРіРѕ С…Рї РѕС‚ 0 РґРѕ maxHP
         CurrentHP = Mathf.Clamp(CurrentHP, 0, maxHealth);
 
-        OnHealthChange?.Invoke(CurrentHP, maxHealth);   //Сигнал об изменение хп
-        OnDamaged?.Invoke(hitDirection);  //Сигнал об получение урона (передает направление от куда)
+        OnHealthChange?.Invoke(CurrentHP, maxHealth);   //РЎРёРіРЅР°Р» РѕР± РёР·РјРµРЅРµРЅРёРµ С…Рї
+        OnDamaged?.Invoke(hitDirection);  //РЎРёРіРЅР°Р» РѕР± РїРѕР»СѓС‡РµРЅРёРµ СѓСЂРѕРЅР° (РїРµСЂРµРґР°РµС‚ РЅР°РїСЂР°РІР»РµРЅРёРµ РѕС‚ РєСѓРґР°)
 
-        //Проверка здоровья и сигнал смерти
         if (CurrentHP <= 0)
         {
             Die();
@@ -45,8 +42,8 @@ public class PlayerHealth : MonoBehaviour, IDamageble
 
     public void Heal(int amount)
     {
-        CurrentHP = Mathf.Min(CurrentHP + amount, maxHealth);  //увеличиваем ХП но не больше MAX
-        OnHealthChange?.Invoke(CurrentHP, maxHealth);  //сигнал
+        CurrentHP = Mathf.Min(CurrentHP + amount, maxHealth);  //СѓРІРµР»РёС‡РёРІР°РµРј РҐРџ РЅРѕ РЅРµ Р±РѕР»СЊС€Рµ MAX
+        OnHealthChange?.Invoke(CurrentHP, maxHealth);  //СЃРёРіРЅР°Р»
     }
 
     public void Kill()
@@ -58,8 +55,9 @@ public class PlayerHealth : MonoBehaviour, IDamageble
 
     public void Die()
     {
-        OnDeath?.Invoke();  //всем системам сигнал
-        GetComponent<PlayerDeathEffect>().Play();  //запускаем эффект смерти
+        if(CurrentHP <= 0 && _isDead) return;
+        _isDead = true;
+        OnDeath?.Invoke();  //РІСЃРµРј СЃРёСЃС‚РµРјР°Рј СЃРёРіРЅР°Р»
     }
     public void SetInvincible(bool value)
     {

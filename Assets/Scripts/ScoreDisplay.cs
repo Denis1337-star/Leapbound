@@ -1,14 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreDisplay : MonoBehaviour
 {
-    public Text scoreText;
+    [SerializeField] private Text _scoreText;
 
-    private void Update()
+    private void Awake()
     {
-        scoreText.text = $"Score: {PlayerScore.Score}";
+        UpdateText(0);
+    }
+    private void OnEnable()
+    {
+        PlayerScore.OnScoreChanged += UpdateText;
+    }
+    private void OnDisable()
+    {
+        PlayerScore.OnScoreChanged -= UpdateText;
+    }
+    private void UpdateText(int score)
+    {
+        _scoreText.text = $"Score: {PlayerScore.Score}";
     }
 }

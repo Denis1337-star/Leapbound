@@ -1,27 +1,22 @@
-using System.Collections;
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.UI;
- 
-//Для отображения Интерфейса здоровья
+
+//Р”Р»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РРЅС‚РµСЂС„РµР№СЃР° Р·РґРѕСЂРѕРІСЊСЏ
 public class PlayerHealthUI : MonoBehaviour
 {
-    public Text hpText;  //Текст отображение хп
-    private PlayerHealth health;
-    private void Awake()
-    {
-        health = FindAnyObjectByType<PlayerHealth>();
-    }
+    [SerializeField] private Text _hpText;
+    [SerializeField] private PlayerHealth _playerHealth;
 
     private void OnEnable()
     {
-        health.OnHealthChange += UpdateText;
+        _playerHealth.OnHealthChange += UpdateText;
     }
     private void OnDisable()
     {
-        health.OnHealthChange -= UpdateText;
+        _playerHealth.OnHealthChange -= UpdateText;
     }
     private void UpdateText(int current, int max)
     {
-        hpText.text = $"HP:{current}/{max}";
+        _hpText.text = $"HP:{current}/{max}";
     }
 }

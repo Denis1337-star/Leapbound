@@ -1,68 +1,68 @@
-using System.Collections;
+п»їusing System.Collections;
 using UnityEngine;
 
 
-//Визуальны эффект получения урона игроком
+//Р’РёР·СѓР°Р»СЊРЅС‹ СЌС„С„РµРєС‚ РїРѕР»СѓС‡РµРЅРёСЏ СѓСЂРѕРЅР° РёРіСЂРѕРєРѕРј
 [RequireComponent (typeof(PlayerHealth))]
 public class PlayerDamageFeedback : MonoBehaviour
 {
-    public float knockbackForce = 6f; //Сила отбрасывания
-    public float invincibleTime = 1f; //Время после урона в неузявимости
-    public Color damageColor = Color.red;  //Цвет спрайта при получение урона
-    public Color normalColor = Color.white;  //Исходный цвет
+    [SerializeField] private float _knockbackForce = 6f; //РЎРёР»Р° РѕС‚Р±СЂР°СЃС‹РІР°РЅРёСЏ
+    [SerializeField] private float _invincibleTime = 1f; //Р’СЂРµРјСЏ РїРѕСЃР»Рµ СѓСЂРѕРЅР° РІ РЅРµСѓР·СЏРІРёРјРѕСЃС‚Рё
+    [SerializeField] private Color _damageColor = Color.red;  //Р¦РІРµС‚ СЃРїСЂР°Р№С‚Р° РїСЂРё РїРѕР»СѓС‡РµРЅРёРµ СѓСЂРѕРЅР°
+    [SerializeField] private Color _normalColor = Color.white;  //РСЃС…РѕРґРЅС‹Р№ С†РІРµС‚
 
-    private Rigidbody2D rb;
-    private SpriteRenderer sprite;
-    private PlayerHealth health;
-    private PlayerAudio audioSource;
+    private Rigidbody2D _rb;
+    private SpriteRenderer _sprite;
+    private PlayerHealth _health;
+    private PlayerAudio _audioSource;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        sprite = GetComponent<SpriteRenderer>();
-        health = GetComponent<PlayerHealth>();
-        audioSource = GetComponent<PlayerAudio>();
+        _rb = GetComponent<Rigidbody2D>();
+        _sprite = GetComponent<SpriteRenderer>();
+        _health = GetComponent<PlayerHealth>();
+        _audioSource = GetComponent<PlayerAudio>();
     }
 
-    //При активации обьекта
+    //РџСЂРё Р°РєС‚РёРІР°С†РёРё РѕР±СЊРµРєС‚Р°
     private void OnEnable()
     {
-        //При срабатывании OnDamaged 
-        health.OnDamaged += StartDamageEffect;
+        //РџСЂРё СЃСЂР°Р±Р°С‚С‹РІР°РЅРёРё OnDamaged 
+        _health.OnDamaged += StartDamageEffect;
     }
     private void OnDisable()
     {
-       health.OnDamaged -= StartDamageEffect;
+       _health.OnDamaged -= StartDamageEffect;
     }
     private void StartDamageEffect(Vector2 hitDir)
     {
-        StopAllCoroutines(); //чтобы избежать наложение эффекта
+        StopAllCoroutines(); //С‡С‚РѕР±С‹ РёР·Р±РµР¶Р°С‚СЊ РЅР°Р»РѕР¶РµРЅРёРµ СЌС„С„РµРєС‚Р°
         StartCoroutine(DamageEffect(hitDir));
         
     }
     private IEnumerator DamageEffect(Vector2 hitDir)
     {
 
-        audioSource?.PlayHurt(); //Звук урона
-        health.SetInvincible(true); //Неязвим на время
+        _audioSource?.PlayHurt(); //Р—РІСѓРє СѓСЂРѕРЅР°
+        _health.SetInvincible(true); //РќРµСЏР·РІРёРј РЅР° РІСЂРµРјСЏ
 
-        //Обнуляем текущию скоростьи применяем силу отбрасывания
-        rb.linearVelocity = Vector2.zero;
-        rb.AddForce(hitDir.normalized * knockbackForce,ForceMode2D.Impulse);
+        //РћР±РЅСѓР»СЏРµРј С‚РµРєСѓС‰РёСЋ СЃРєРѕСЂРѕСЃС‚СЊРё РїСЂРёРјРµРЅСЏРµРј СЃРёР»Сѓ РѕС‚Р±СЂР°СЃС‹РІР°РЅРёСЏ
+        _rb.linearVelocity = Vector2.zero;
+        _rb.AddForce(hitDir.normalized * _knockbackForce,ForceMode2D.Impulse);
 
-        sprite.color = damageColor;  //меняем цвет
+        _sprite.color = _damageColor;  //РјРµРЅСЏРµРј С†РІРµС‚
 
-        //эффект мигания
-        float timer = invincibleTime;
+        //СЌС„С„РµРєС‚ РјРёРіР°РЅРёСЏ
+        float timer = _invincibleTime;
         while (timer > 0)
         {
-            sprite.enabled = false;
-            yield return new WaitForSeconds(0.08f); //такое время скрыт спрайт
-            sprite.enabled = true;
-            yield return new WaitForSeconds(0.08f); //такое время виден спрайт
-            timer -= 0.16f; //Уменьшаем таймиер
+            _sprite.enabled = false;
+            yield return new WaitForSeconds(0.08f); //С‚Р°РєРѕРµ РІСЂРµРјСЏ СЃРєСЂС‹С‚ СЃРїСЂР°Р№С‚
+            _sprite.enabled = true;
+            yield return new WaitForSeconds(0.08f); //С‚Р°РєРѕРµ РІСЂРµРјСЏ РІРёРґРµРЅ СЃРїСЂР°Р№С‚
+            timer -= 0.16f; //РЈРјРµРЅСЊС€Р°РµРј С‚Р°Р№РјРёРµСЂ
         }
-        //возрощаем исходные данные
-        sprite.color = normalColor;
-        health.SetInvincible(false);
+        //РІРѕР·СЂРѕС‰Р°РµРј РёСЃС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ
+        _sprite.color = _normalColor;
+        _health.SetInvincible(false);
     }    
 }

@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 1444710563746896697}
   - component: {fileID: 324424805615957231}
   - component: {fileID: 4524184563120480144}
-  - component: {fileID: 6282387756833580903}
   - component: {fileID: 2352494002612472560}
   - component: {fileID: 6301698722849249129}
   m_Layer: 0
@@ -218,9 +217,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2638c0bacde4512469e697f07a0724bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  walkSpeed: 6
-  runSpeed: 9
-  crawlSpeedMultiplier: 0.5
+  _walkSpeed: 5
+  _runSpeed: 10
+  _crawlSpeedMultiplier: 0.5
 --- !u!114 &4823775674306673267
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -233,10 +232,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f18299abe77ca3e4286414a15328ba70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJump
-  jumpForce: 15
-  groundCheck: {fileID: 4626094894885521589}
-  groundRadius: 0.2
-  groundLayer:
+  _jumpForce: 15
+  _groundCheck: {fileID: 4626094894885521589}
+  _groundRadius: 0.2
+  _groundLayer:
     serializedVersion: 2
     m_Bits: 8
 --- !u!114 &6508992687455231303
@@ -251,12 +250,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b241747fa2e3664784b588d2eed266f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCrouch
-  ceilingCheck: {fileID: 3405612351790542046}
-  ceilingRadius: 0.2
-  groundLayer:
+  _ceilingCheck: {fileID: 3405612351790542046}
+  _ceilingRadius: 0.2
+  _groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  hightMultiplier: 0.7
+  _hightMultiplier: 0.7
 --- !u!114 &4371138879937587682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,10 +281,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5ee0674742b3d14c828e8e0c33e07d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDamageFeedback
-  knockbackForce: 6
-  invincibleTime: 1
-  damageColor: {r: 1, g: 0, b: 0, a: 1}
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  _knockbackForce: 6
+  _invincibleTime: 1
+  _damageColor: {r: 1, g: 0, b: 0, a: 1}
+  _normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &324424805615957231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,24 +309,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e861d034fc2c71e478011eeb93c71278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkStep: {fileID: 8300000, guid: 56684981319f43148878a1d8b54c8104, type: 3}
-  runStep: {fileID: 8300000, guid: 56684981319f43148878a1d8b54c8104, type: 3}
-  jumpClip: {fileID: 8300000, guid: 114815f30efd8b54eb460f2d178c0957, type: 3}
-  hurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
-  deathClip: {fileID: 8300000, guid: 349add1a39df26647aeb4433952199d8, type: 3}
---- !u!114 &6282387756833580903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9544a089237d73d40a1f0af4581961f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpText: {fileID: 0}
+  _walkStep: {fileID: 8300000, guid: 56684981319f43148878a1d8b54c8104, type: 3}
+  _runStep: {fileID: 8300000, guid: 56684981319f43148878a1d8b54c8104, type: 3}
+  _jumpClip: {fileID: 8300000, guid: 114815f30efd8b54eb460f2d178c0957, type: 3}
+  _hurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
+  _deathClip: {fileID: 8300000, guid: 349add1a39df26647aeb4433952199d8, type: 3}
 --- !u!114 &2352494002612472560
 MonoBehaviour:
   m_ObjectHideFlags: 0

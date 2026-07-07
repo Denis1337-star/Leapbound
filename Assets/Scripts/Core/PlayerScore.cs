@@ -1,18 +1,18 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 
-public class PlayerScore : MonoBehaviour
+public static class PlayerScore
 {
     public static int Score { get; private set; }
 
     public static bool IsGameOver { get; private set; }
     public static bool IsWin { get; private set; }
 
+    public static event Action<int> OnScoreChanged;
+
     public static void Add(int amount)
     {
         Score += amount;
+        OnScoreChanged?.Invoke(Score);
     }
 
     public static void Reset()

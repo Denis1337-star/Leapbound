@@ -1054,7 +1054,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &51110796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1354,7 +1354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &80597035
 GameObject:
   m_ObjectHideFlags: 0
@@ -5043,7 +5043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &539168478
 GameObject:
   m_ObjectHideFlags: 0
@@ -6294,7 +6294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &689161146
 GameObject:
   m_ObjectHideFlags: 0
@@ -7396,7 +7396,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &791179293
 GameObject:
   m_ObjectHideFlags: 0
@@ -7771,7 +7771,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &816429138
 GameObject:
   m_ObjectHideFlags: 0
@@ -9530,8 +9530,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ca6ad2c77ff1d42a6297563ac5638a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicSlider: {fileID: 855066529}
-  sfxSlider: {fileID: 2139878736}
+  _musicSlider: {fileID: 0}
+  _sfxSlider: {fileID: 0}
 --- !u!1 &1001767776
 GameObject:
   m_ObjectHideFlags: 0
@@ -10331,7 +10331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &1100013051
 GameObject:
   m_ObjectHideFlags: 0
@@ -11751,7 +11751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &1216631564
 GameObject:
   m_ObjectHideFlags: 0
@@ -12130,7 +12130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &1226722099
 GameObject:
   m_ObjectHideFlags: 0
@@ -12796,7 +12796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &1302027511
 GameObject:
   m_ObjectHideFlags: 0
@@ -13348,7 +13348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &1430599894
 GameObject:
   m_ObjectHideFlags: 0
@@ -14184,6 +14184,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 1
+  m_UseReflectionProbes: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -14223,52 +14224,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f6f869e68d55d54f8d589f8a7749d1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelButtons:
-  - levelName: Level_1
+  _levelButtons:
+  - levelName: level_1
     levelIndex: 1
     button: {fileID: 46310800}
     stars:
     - {fileID: 1950381015}
     - {fileID: 80597038}
     - {fileID: 1216631565}
-  - levelName: Level_2
+  - levelName: level_2
     levelIndex: 2
     button: {fileID: 814227130}
     stars:
     - {fileID: 345347729}
     - {fileID: 42244331}
     - {fileID: 758365122}
-  - levelName: Level_3
+  - levelName: level_3
     levelIndex: 3
     button: {fileID: 59959518}
     stars:
     - {fileID: 1655285283}
     - {fileID: 2020269220}
     - {fileID: 1523029935}
-  - levelName: Level_4
+  - levelName: level_4
     levelIndex: 4
     button: {fileID: 1224338226}
     stars:
     - {fileID: 452402954}
     - {fileID: 44175821}
     - {fileID: 952492657}
-  - levelName: Level_5
+  - levelName: level_5
     levelIndex: 5
     button: {fileID: 668752608}
     stars:
     - {fileID: 307560727}
     - {fileID: 382810866}
     - {fileID: 1167898216}
-  - levelName: Level_6
+  - levelName: level_6
     levelIndex: 6
     button: {fileID: 1342743402}
     stars:
     - {fileID: 747627073}
     - {fileID: 1026889363}
     - {fileID: 503664307}
-  playButton: {fileID: 1077205382}
-  settingsButton: {fileID: 529182341}
-  settingsPanel: {fileID: 987784973}
+  _playButton: {fileID: 1077205382}
+  _settingsButton: {fileID: 529182341}
+  _settingsPanel: {fileID: 987784973}
 --- !u!1 &1513016586
 GameObject:
   m_ObjectHideFlags: 0
@@ -14787,7 +14788,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1542015041
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14917,7 +14918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &1546399439
 GameObject:
   m_ObjectHideFlags: 0
@@ -18451,7 +18452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a1b2bf136203444f8306bc34494f1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clip: {fileID: 8300000, guid: 83b791cc971dfbf4ba29fe1b902b5c3a, type: 3}
+  _clip: {fileID: 0}
 --- !u!1 &2036105289
 GameObject:
   m_ObjectHideFlags: 0

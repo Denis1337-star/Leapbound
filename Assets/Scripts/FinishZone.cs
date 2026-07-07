@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class FinishZone : MonoBehaviour
 {
+    [SerializeField] private PauseMenu _pauseMenu;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
@@ -14,14 +13,14 @@ public class FinishZone : MonoBehaviour
         int stars = CalculateStars(PlayerScore.Score);
 
         Scene scene = SceneManager.GetActiveScene();
-        // сохраняем результат (ЛУЧШИЙ)
+        // СЃРѕС…СЂР°РЅСЏРµРј СЂРµР·СѓР»СЊС‚Р°С‚ (Р›РЈР§РЁРР™)
         LevelResultManager.SaveLevelResult(
-            scene.name,        // имя сцены
-            scene.buildIndex,  // индекс уровня
+            scene.name,        // РёРјСЏ СЃС†РµРЅС‹
+            scene.buildIndex,  // РёРЅРґРµРєСЃ СѓСЂРѕРІРЅСЏ
             stars
         );
 
-        FindAnyObjectByType<PauseMenu>()?.TogglePause();
+        _pauseMenu.TogglePause();
     }
     private int CalculateStars(int score)
     {
@@ -31,6 +30,6 @@ public class FinishZone : MonoBehaviour
         if (score >= 50)
             return 2;
 
-        return 1; // дошёл до финиша
+        return 1; // РґРѕС€С‘Р» РґРѕ С„РёРЅРёС€Р°
     }
 }

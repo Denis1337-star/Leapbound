@@ -1,14 +1,12 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Audio;
+п»їusing UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance {  get; private set; }
 
     [Header("Sources")]
-    [SerializeField] private AudioSource musicSource; // доступ MusicSource  Фоновая
-    [SerializeField] private AudioSource sfxSource;   //  SFXSource   Звуковые эффекты
+    [SerializeField] private AudioSource musicSource; // РґРѕСЃС‚СѓРї MusicSource  Р¤РѕРЅРѕРІР°СЏ
+    [SerializeField] private AudioSource sfxSource;   //  SFXSource   Р—РІСѓРєРѕРІС‹Рµ СЌС„С„РµРєС‚С‹
 
     private void Awake()
     {
@@ -18,38 +16,39 @@ public class AudioManager : MonoBehaviour
             return;
         }
 
-        Instance = this;  //Назначает текущий обьект как единственный 
+        Instance = this;  //РќР°Р·РЅР°С‡Р°РµС‚ С‚РµРєСѓС‰РёР№ РѕР±СЊРµРєС‚ РєР°Рє РµРґРёРЅСЃС‚РІРµРЅРЅС‹Р№ 
 
-        DontDestroyOnLoad(gameObject); //Сохраняет обьект между сценами
+        DontDestroyOnLoad(gameObject); //РЎРѕС…СЂР°РЅСЏРµС‚ РѕР±СЊРµРєС‚ РјРµР¶РґСѓ СЃС†РµРЅР°РјРё
     }
 
-    // Music  фоновой
+ 
+    // Music  С„РѕРЅРѕРІРѕР№
     public void PlayMusic(AudioClip clip, bool loop = true)
     {
-        if (!clip) return;  //если нету клипа = выход
+        if (!clip) return;  //РµСЃР»Рё РЅРµС‚Сѓ РєР»РёРїР° = РІС‹С…РѕРґ
 
-        musicSource.clip = clip;  //Назначаем аудио источнику
-        musicSource.loop = loop;  //зацикливаем
-        musicSource.Play();      //вкл аудио
+        musicSource.clip = clip;  //РќР°Р·РЅР°С‡Р°РµРј Р°СѓРґРёРѕ РёСЃС‚РѕС‡РЅРёРєСѓ
+        musicSource.loop = loop;  //Р·Р°С†РёРєР»РёРІР°РµРј
+        musicSource.Play();      //РІРєР» Р°СѓРґРёРѕ
     }
 
     // SFX
     public void PlaySFX(AudioClip clip) 
     {
-        if (!clip) return;  // Проверка на null
+        if (!clip) return;  // РџСЂРѕРІРµСЂРєР° РЅР° null
 
-        sfxSource.PlayOneShot(clip);  // Воспроизводит клип без остановки текущего звука
+        sfxSource.PlayOneShot(clip);  // Р’РѕСЃРїСЂРѕРёР·РІРѕРґРёС‚ РєР»РёРї Р±РµР· РѕСЃС‚Р°РЅРѕРІРєРё С‚РµРєСѓС‰РµРіРѕ Р·РІСѓРєР°
     }
 
-    // Метод для регулировки громкости музыки
+    // РњРµС‚РѕРґ РґР»СЏ СЂРµРіСѓР»РёСЂРѕРІРєРё РіСЂРѕРјРєРѕСЃС‚Рё РјСѓР·С‹РєРё
     public void SetMusicVolume(float value)
     {
-        musicSource.volume = value;  // value: 0.0 (тихо) — 1.0 (громко)
+        musicSource.volume = value;  // value: 0.0 (С‚РёС…Рѕ) вЂ” 1.0 (РіСЂРѕРјРєРѕ)
     }
 
-    // Метод для регулировки громкости звуковых эффектов
+    // РњРµС‚РѕРґ РґР»СЏ СЂРµРіСѓР»РёСЂРѕРІРєРё РіСЂРѕРјРєРѕСЃС‚Рё Р·РІСѓРєРѕРІС‹С… СЌС„С„РµРєС‚РѕРІ
     public void SetSFXVolume(float value)
     {
-        sfxSource.volume = value;   // value: 0.0 (тихо) — 1.0 (громко)
+        sfxSource.volume = value;   // value: 0.0 (С‚РёС…Рѕ) вЂ” 1.0 (РіСЂРѕРјРєРѕ)
     }
 }

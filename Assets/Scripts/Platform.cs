@@ -1,42 +1,42 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-   
-    public Transform pointA;  //точки откуда куда двигается
-    public Transform pointB;
-    public float speed = 2f;  //скорость движения
 
-    private Vector3 target;  //текущая цель движения(А или В)
-    private Vector3 lastPos;  //предыдущая позиция для расчета скорости
-    public Vector2 PlatformVelocity { get; private set; }  //текущая скорость (единица/сек)  можно читать/нельзя изменять извне
+    [SerializeField] private Transform _pointA;  //С‚РѕС‡РєРё РѕС‚РєСѓРґР° РєСѓРґР° РґРІРёРіР°РµС‚СЃСЏ
+    [SerializeField] private Transform _pointB;
+    [SerializeField] private float _speed = 2f;  //СЃРєРѕСЂРѕСЃС‚СЊ РґРІРёР¶РµРЅРёСЏ
+
+    private Vector3 _target;  //С‚РµРєСѓС‰Р°СЏ С†РµР»СЊ РґРІРёР¶РµРЅРёСЏ(Рђ РёР»Рё Р’)
+    private Vector3 _lastPos;  //РїСЂРµРґС‹РґСѓС‰Р°СЏ РїРѕР·РёС†РёСЏ РґР»СЏ СЂР°СЃС‡РµС‚Р° СЃРєРѕСЂРѕСЃС‚Рё
+    public Vector2 PlatformVelocity { get; private set; }  //С‚РµРєСѓС‰Р°СЏ СЃРєРѕСЂРѕСЃС‚СЊ (РµРґРёРЅРёС†Р°/СЃРµРє)  РјРѕР¶РЅРѕ С‡РёС‚Р°С‚СЊ/РЅРµР»СЊР·СЏ РёР·РјРµРЅСЏС‚СЊ РёР·РІРЅРµ
 
     private void Start()
     {
-        target = pointB.position; //начинает двигаться к В
-        lastPos = transform.position; //для вычисления скорости
+        _target = _pointB.position; //РЅР°С‡РёРЅР°РµС‚ РґРІРёРіР°С‚СЊСЃСЏ Рє Р’
+        _lastPos = transform.position; //РґР»СЏ РІС‹С‡РёСЃР»РµРЅРёСЏ СЃРєРѕСЂРѕСЃС‚Рё
     }
 
     private void FixedUpdate()
     {
-        // движение платформы
+        // РґРІРёР¶РµРЅРёРµ РїР»Р°С‚С„РѕСЂРјС‹
         transform.position = Vector3.MoveTowards(
-            transform.position,             //текущая позиция
-            target,                         //куда двигается
-            speed * Time.fixedDeltaTime    //расстояние за шаг(кадр)
+            transform.position,             //С‚РµРєСѓС‰Р°СЏ РїРѕР·РёС†РёСЏ
+            _target,                         //РєСѓРґР° РґРІРёРіР°РµС‚СЃСЏ
+            _speed * Time.fixedDeltaTime    //СЂР°СЃСЃС‚РѕСЏРЅРёРµ Р·Р° С€Р°Рі(РєР°РґСЂ)
         );
 
-        // меняем цель
-        if (Vector3.Distance(transform.position, target) < 0.05f)   //если близко к точке
+        // РјРµРЅСЏРµРј С†РµР»СЊ
+        if (Vector3.Distance(transform.position, _target) < 0.05f)   //РµСЃР»Рё Р±Р»РёР·РєРѕ Рє С‚РѕС‡РєРµ
         {
-            // проверяем, куда пришли
-            bool nearA = Vector3.Distance(target, pointA.position) < 0.1f; //true если близок к А
-            target = nearA ? pointB.position : pointA.position;  //меняет от bool направление
+            // РїСЂРѕРІРµСЂСЏРµРј, РєСѓРґР° РїСЂРёС€Р»Рё
+            bool nearA = Vector3.Distance(_target, _pointA.position) < 0.1f; //true РµСЃР»Рё Р±Р»РёР·РѕРє Рє Рђ
+            _target = nearA ? _pointB.position : _pointA.position;  //РјРµРЅСЏРµС‚ РѕС‚ bool РЅР°РїСЂР°РІР»РµРЅРёРµ
         }
 
-        // вычисление скорости
-        PlatformVelocity = (transform.position - lastPos) / Time.fixedDeltaTime;  //назначает вектор перемещения 
-        lastPos = transform.position;  //обновляет текущую позицию 
+        // РІС‹С‡РёСЃР»РµРЅРёРµ СЃРєРѕСЂРѕСЃС‚Рё
+        PlatformVelocity = (transform.position - _lastPos) / Time.fixedDeltaTime;  //РЅР°Р·РЅР°С‡Р°РµС‚ РІРµРєС‚РѕСЂ РїРµСЂРµРјРµС‰РµРЅРёСЏ 
+        _lastPos = transform.position;  //РѕР±РЅРѕРІР»СЏРµС‚ С‚РµРєСѓС‰СѓСЋ РїРѕР·РёС†РёСЋ 
     }
 }
 

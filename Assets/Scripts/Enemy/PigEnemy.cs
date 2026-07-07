@@ -3,21 +3,21 @@
 public class PigEnemy : EnemyBase
 {
     [Header("Patrol")]
-    public Transform pointA;
-    public Transform pointB;
-    public float speed = 2f;
-    public int damage = 50;
+    [SerializeField] private Transform _pointA;
+    [SerializeField] private Transform _pointB;
+    [SerializeField] private float _speed = 2f;
+    [SerializeField] private int _damage = 50;
 
-    private Vector3 target;
-    private SpriteRenderer sprite;
-    private Collider2D col;
+    private Vector3 _target;
+    private SpriteRenderer _sprite;
+    private Collider2D _collider;
 
     protected override void Awake()
     {
         base.Awake();
-        sprite = GetComponent<SpriteRenderer>();
-        col = GetComponent<Collider2D>();
-        target = pointB.position;
+        _sprite = GetComponent<SpriteRenderer>();
+        _collider = GetComponent<Collider2D>();
+        _target = _pointB.position;
     }
 
     private void Update()
@@ -28,12 +28,12 @@ public class PigEnemy : EnemyBase
     private void Patrol()
     {
         transform.position = Vector3.MoveTowards(transform.position,
-            target,speed * Time.deltaTime);
+            _target,_speed * Time.deltaTime);
 
-        if (Vector3.Distance(transform.position, target) < 0.05f)
+        if (Vector3.Distance(transform.position, _target) < 0.05f)
         {
-            target = target == pointA.position ? pointB.position : pointA.position;
-            sprite.flipX = !sprite.flipX;
+            _target = _target == _pointA.position ? _pointB.position : _pointA.position;
+            _sprite.flipX = !_sprite.flipX;
         }
     }
 
@@ -44,7 +44,7 @@ public class PigEnemy : EnemyBase
 
         // проверяем, где контакт
         float playerBottom = collision.collider.bounds.min.y;
-        float enemyTop = col.bounds.max.y;
+        float enemyTop = _collider.bounds.max.y;
 
         Rigidbody2D playerRb = collision.collider.GetComponent<Rigidbody2D>();
         PlayerHealth playerHealth = collision.collider.GetComponent<PlayerHealth>();
@@ -60,7 +60,7 @@ public class PigEnemy : EnemyBase
         {
             // Игрок сталкивается сбоку или снизу -получает урон
             if (playerHealth != null)
-                playerHealth.TakeDamage(damage, Vector2.zero);
+                playerHealth.TakeDamage(_damage, Vector2.zero);
         }
     }
 }

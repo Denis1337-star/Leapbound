@@ -1,44 +1,44 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 
-//Отвечает за перемещениее игрока
+//РћС‚РІРµС‡Р°РµС‚ Р·Р° РїРµСЂРµРјРµС‰РµРЅРёРµРµ РёРіСЂРѕРєР°
 [RequireComponent (typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
-    public float walkSpeed = 3f;  //Базовая скорость ходьбы
-    public float runSpeed = 6f;   //Скорость бега
-    public float crawlSpeedMultiplier = 0.5f; //Множитель скорости при приседание
+    [SerializeField] private float _walkSpeed = 3f;  //Р‘Р°Р·РѕРІР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ С…РѕРґСЊР±С‹
+    [SerializeField] private float _runSpeed = 6f;   //РЎРєРѕСЂРѕСЃС‚СЊ Р±РµРіР°
+    [SerializeField] private float _crawlSpeedMultiplier = 0.5f; //РњРЅРѕР¶РёС‚РµР»СЊ СЃРєРѕСЂРѕСЃС‚Рё РїСЂРё РїСЂРёСЃРµРґР°РЅРёРµ
 
-    private Rigidbody2D rb;
-    private PlayerInput input;  //для получения данных ввода
-    private PlayerCrouch crouch;
-    private PlayerPlatformHandler platformHandler;
+    private Rigidbody2D _rb;
+    private PlayerInput _input;  //РґР»СЏ РїРѕР»СѓС‡РµРЅРёСЏ РґР°РЅРЅС‹С… РІРІРѕРґР°
+    private PlayerCrouch _crouch;
+    private PlayerPlatformHandler _platformHandler;
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
-        input = GetComponent<PlayerInput>();
-        crouch = GetComponent<PlayerCrouch>();
-        platformHandler = GetComponent<PlayerPlatformHandler>();
+        _rb = GetComponent<Rigidbody2D>();
+        _input = GetComponent<PlayerInput>();
+        _crouch = GetComponent<PlayerCrouch>();
+        _platformHandler = GetComponent<PlayerPlatformHandler>();
     }
     private void FixedUpdate()
     {
-        //Определяет текущую скорость:если зажата кнопка бега - runSpeed,иначе walkSpeed
-        float speed = input.RunHeld ? runSpeed : walkSpeed;
+        //РћРїСЂРµРґРµР»СЏРµС‚ С‚РµРєСѓС‰СѓСЋ СЃРєРѕСЂРѕСЃС‚СЊ:РµСЃР»Рё Р·Р°Р¶Р°С‚Р° РєРЅРѕРїРєР° Р±РµРіР° - runSpeed,РёРЅР°С‡Рµ walkSpeed
+        float speed = _input.RunHeld ? _runSpeed : _walkSpeed;
 
-        //Уменьшает скорость при приседании
-        if (crouch != null && crouch.IsCrouching)
+        //РЈРјРµРЅСЊС€Р°РµС‚ СЃРєРѕСЂРѕСЃС‚СЊ РїСЂРё РїСЂРёСЃРµРґР°РЅРёРё
+        if (_crouch != null && _crouch.IsCrouching)
         {
-            speed *= crawlSpeedMultiplier;
+            speed *= _crawlSpeedMultiplier;
         }
 
-        Vector2 velocity = rb.linearVelocity;
-        float platformX = platformHandler != null  //расчет платформы
-           ? platformHandler.PlatformVelocity.x : 0f;
-        velocity.x = input.Move * speed + platformX;   //текущая скорость игрока + платформа
+        Vector2 velocity = _rb.linearVelocity;
+        float platformX = _platformHandler != null  //СЂР°СЃС‡РµС‚ РїР»Р°С‚С„РѕСЂРјС‹
+           ? _platformHandler.PlatformVelocity.x : 0f;
+        velocity.x = _input.Move * speed + platformX;   //С‚РµРєСѓС‰Р°СЏ СЃРєРѕСЂРѕСЃС‚СЊ РёРіСЂРѕРєР° + РїР»Р°С‚С„РѕСЂРјР°
 
 
-        rb.linearVelocity = velocity;  //финальная 
+        _rb.linearVelocity = velocity;  //С„РёРЅР°Р»СЊРЅР°СЏ 
     }
 }

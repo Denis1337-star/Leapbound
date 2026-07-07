@@ -1,11 +1,11 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 
-public abstract class EnemyBase : MonoBehaviour,IDamageble
+public abstract class EnemyBase : MonoBehaviour, IDamageable
 {
     [Header("Health")]
-    public int maxHealth = 50;
+    [SerializeField] public int maxHealth = 50;
     public int CurrentHP { get; private set; }
 
     public event Action<Vector2> OnDamaged;
@@ -33,6 +33,5 @@ public abstract class EnemyBase : MonoBehaviour,IDamageble
     protected virtual void Die()
     {
         OnDeath?.Invoke();
-        Destroy(gameObject);
     }
 }

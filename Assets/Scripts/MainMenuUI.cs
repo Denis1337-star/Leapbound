@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -9,44 +7,44 @@ public class MainMenuUI : MonoBehaviour
     [System.Serializable]
     public class LevelButton
     {
-        public string levelName;  //имя сцены
-        public int levelIndex;  //порядковый номер уровня
-        public Button button;  //кнопка от уровня
-        public Image[] stars;  //массив для отображения звезд
+        public string levelName;  //РёРјСЏ СЃС†РµРЅС‹
+        public int levelIndex;  //РїРѕСЂСЏРґРєРѕРІС‹Р№ РЅРѕРјРµСЂ СѓСЂРѕРІРЅСЏ
+        public Button button;  //РєРЅРѕРїРєР° РѕС‚ СѓСЂРѕРІРЅСЏ
+        public Image[] stars;  //РјР°СЃСЃРёРІ РґР»СЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ Р·РІРµР·Рґ
     }
 
-    public LevelButton[] levelButtons;  //массив для кнопок уровня(для каждого задается из выше класса)
-    public Button playButton;  //кнопка играть
-    public Button settingsButton;  //открывет настройки
-    public GameObject settingsPanel;  //панель настроек
+    [SerializeField] private LevelButton[] _levelButtons;  //РјР°СЃСЃРёРІ РґР»СЏ РєРЅРѕРїРѕРє СѓСЂРѕРІРЅСЏ(РґР»СЏ РєР°Р¶РґРѕРіРѕ Р·Р°РґР°РµС‚СЃСЏ РёР· РІС‹С€Рµ РєР»Р°СЃСЃР°)
+    [SerializeField] private Button _playButton;  //РєРЅРѕРїРєР° РёРіСЂР°С‚СЊ
+    [SerializeField] private Button _settingsButton;  //РѕС‚РєСЂС‹РІРµС‚ РЅР°СЃС‚СЂРѕР№РєРё
+    [SerializeField] private GameObject _settingsPanel;  //РїР°РЅРµР»СЊ РЅР°СЃС‚СЂРѕРµРє
 
     private void Start()
     {
-        playButton.onClick.AddListener(PlayLastLevel);  //накидывает методы на кнопки
-        settingsButton.onClick.AddListener(() => settingsPanel.SetActive(true));
+        _playButton.onClick.AddListener(PlayLastLevel);  //РЅР°РєРёРґС‹РІР°РµС‚ РјРµС‚РѕРґС‹ РЅР° РєРЅРѕРїРєРё
+        _settingsButton.onClick.AddListener(() => _settingsPanel.SetActive(true));
 
-        UpdateLevelButtons();  //инициализирует UI
+        UpdateLevelButtons();  //РёРЅРёС†РёР°Р»РёР·РёСЂСѓРµС‚ UI
     }
 
     private void UpdateLevelButtons()
     {
-        foreach (var lvl in levelButtons)  //проходит по массиву(классу)
+        foreach (var lvl in _levelButtons)  //РїСЂРѕС…РѕРґРёС‚ РїРѕ РјР°СЃСЃРёРІСѓ(РєР»Р°СЃСЃСѓ)
         {
-            bool unlocked = LevelResultManager.IsLevelUnlocked(lvl.levelIndex); //true если уровень открыт 
-            lvl.button.interactable = unlocked;  //за актив кнопки отвечает
+            bool unlocked = LevelResultManager.IsLevelUnlocked(lvl.levelIndex); //true РµСЃР»Рё СѓСЂРѕРІРµРЅСЊ РѕС‚РєСЂС‹С‚ 
+            lvl.button.interactable = unlocked;  //Р·Р° Р°РєС‚РёРІ РєРЅРѕРїРєРё РѕС‚РІРµС‡Р°РµС‚
 
-            int count = LevelResultManager.GetStarsForLevel(lvl.levelName);  //получает количество звезд заработаных за лвл
-            for (int i = 0; i < lvl.stars.Length; i++)  //проходит по массиву 
+            int count = LevelResultManager.GetStarsForLevel(lvl.levelName);  //РїРѕР»СѓС‡Р°РµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ Р·РІРµР·Рґ Р·Р°СЂР°Р±РѕС‚Р°РЅС‹С… Р·Р° Р»РІР»
+            for (int i = 0; i < lvl.stars.Length; i++)  //РїСЂРѕС…РѕРґРёС‚ РїРѕ РјР°СЃСЃРёРІСѓ 
             {
-                lvl.stars[i].enabled = i < count;  //включает столько звезд сколько надо
+                lvl.stars[i].enabled = i < count;  //РІРєР»СЋС‡Р°РµС‚ СЃС‚РѕР»СЊРєРѕ Р·РІРµР·Рґ СЃРєРѕР»СЊРєРѕ РЅР°РґРѕ
             }
 
-            lvl.button.onClick.RemoveAllListeners();  //защита от дублирования 
-            if (unlocked)  //если открыт лвл 
+            lvl.button.onClick.RemoveAllListeners();  //Р·Р°С‰РёС‚Р° РѕС‚ РґСѓР±Р»РёСЂРѕРІР°РЅРёСЏ 
+            if (unlocked)  //РµСЃР»Рё РѕС‚РєСЂС‹С‚ Р»РІР» 
             {
                 string sceneName = lvl.levelName;
 
-                //добавляет метод на запуск нужного уровня 
+                //РґРѕР±Р°РІР»СЏРµС‚ РјРµС‚РѕРґ РЅР° Р·Р°РїСѓСЃРє РЅСѓР¶РЅРѕРіРѕ СѓСЂРѕРІРЅСЏ 
                 lvl.button.onClick.AddListener(() => SceneManager.LoadScene(lvl.levelName));  
             }
         }
@@ -55,7 +53,7 @@ public class MainMenuUI : MonoBehaviour
     private void PlayLastLevel()
     {
         int index = LevelResultManager.GetLastUnlockedLevel();
-        foreach (var lvl in levelButtons)
+        foreach (var lvl in _levelButtons)
         {
             if (lvl.levelIndex == index)
             {

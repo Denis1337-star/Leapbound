@@ -1,35 +1,35 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAudio : MonoBehaviour
 {
-    public AudioClip walkStep;
-    public AudioClip runStep;
-    public AudioClip jumpClip;
-    public AudioClip hurtClip;
-    public AudioClip deathClip;
+    [SerializeField] private AudioClip _walkStep;
+    [SerializeField] private AudioClip _runStep;
+    [SerializeField] private AudioClip _jumpClip;
+    [SerializeField] private AudioClip _hurtClip;
+    [SerializeField] private AudioClip _deathClip;
 
     public void PlayWalkStep()
     {
-        AudioManager.Instance?.PlaySFX(walkStep);
+        AudioManager.Instance?.PlaySFX(_walkStep);
     }
 
     public void PlayRunStep()
     {
-        AudioManager.Instance?.PlaySFX(runStep);
+        AudioManager.Instance?.PlaySFX(_runStep);
     }
 
     public void PlayJump()
     {
-        AudioManager.Instance?.PlaySFX(jumpClip);
+        AudioManager.Instance?.PlaySFX(_jumpClip);
     }
 
     public void PlayHurt()
     {
-        AudioManager.Instance?.PlaySFX(hurtClip);
+        AudioManager.Instance?.PlaySFX(_hurtClip);
     }
 
     public void PlayDeath()
     {
-        AudioManager.Instance?.PlaySFX(deathClip);
+        AudioManager.Instance?.PlaySFX(_deathClip);
     }
 }

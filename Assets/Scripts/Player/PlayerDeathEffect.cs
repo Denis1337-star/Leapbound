@@ -1,17 +1,15 @@
-using System.Collections;
+п»їusing System.Collections;
 using UnityEngine;
 
 public class PlayerDeathEffect : MonoBehaviour
 {
-    private SpriteRenderer sprite;
-    private Collider2D col;
-    private Rigidbody2D rb;
+    private SpriteRenderer _sprite;
+    private Rigidbody2D _rb;
 
     private void Awake()
     {
-        sprite = GetComponent<SpriteRenderer>();
-        col = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
+        _sprite = GetComponent<SpriteRenderer>();
+        _rb = GetComponent<Rigidbody2D>();
     }
     private void OnEnable()
     {
@@ -24,18 +22,16 @@ public class PlayerDeathEffect : MonoBehaviour
     }
     public void Play()
     {
-        rb.linearVelocity = Vector2.zero;  //останавливаем
+        _rb.linearVelocity = Vector2.zero;  //РѕСЃС‚Р°РЅР°РІР»РёРІР°РµРј
         StartCoroutine(DeathRoutine());
     }
 
     private IEnumerator DeathRoutine()
     {
-
-        // Конец игры
-        PlayerScore.Lose();                // помечаем проигрыш
-        sprite.color = Color.red;
+        PlayerScore.Lose();                // РїРѕРјРµС‡Р°РµРј РїСЂРѕРёРіСЂС‹С€
+        _sprite.color = Color.red;
         yield return new WaitForSeconds(1.2f);
 
-        GameManager.Instance?.RestartLevel();  // перезапуск сцены
+        GameManager.Instance?.RestartLevel();  // РїРµСЂРµР·Р°РїСѓСЃРє СЃС†РµРЅС‹
     }
 }

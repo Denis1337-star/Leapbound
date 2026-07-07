@@ -1,47 +1,46 @@
-using UnityEngine;
-using UnityEngine.Splines;
+п»їusing UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
 {
-    private Animator animator;
-    private Rigidbody2D rb;
-    private PlayerInput input;
-    private PlayerCrouch crouch;
-    private PlayerHealth health;
-    private SpriteRenderer sprite;
+    private Animator _animator;
+    private Rigidbody2D _rb;
+    private PlayerInput _input;
+    private PlayerCrouch _crouch;
+    private PlayerHealth _health;
+    private SpriteRenderer _sprite;
 
     private void Awake()
     {
-        animator = GetComponent<Animator>();
-        input = GetComponent<PlayerInput>();
-        rb = GetComponent<Rigidbody2D>();
-        health = GetComponent<PlayerHealth>();
-        crouch = GetComponent<PlayerCrouch>();
-        sprite = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
+        _input = GetComponent<PlayerInput>();
+       _rb = GetComponent<Rigidbody2D>();
+        _health = GetComponent<PlayerHealth>();
+        _crouch = GetComponent<PlayerCrouch>();
+        _sprite = GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
-        //Устанавливает парраметр speed в Animator модулем 
-        animator.SetFloat("Speed", Mathf.Abs(input.Move));
+        //РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ РїР°СЂСЂР°РјРµС‚СЂ speed РІ Animator РјРѕРґСѓР»РµРј 
+        _animator.SetFloat("Speed", Mathf.Abs(_input.Move));
 
-        //Устанавливает булевые парраметры 
-        animator.SetBool("IsRun",input.RunHeld);
-        animator.SetBool("IsCrouch", crouch != null && crouch.IsCrouching);
-        animator.SetBool("IsDead",health!= null && health.CurrentHP <= 0);
-        animator.SetBool("IsJump", input.JumpPressed);
+        //РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ Р±СѓР»РµРІС‹Рµ РїР°СЂСЂР°РјРµС‚СЂС‹ 
+        _animator.SetBool("IsRun",_input.RunHeld);
+       _animator.SetBool("IsCrouch", _crouch != null && _crouch.IsCrouching);
+        _animator.SetBool("IsDead",_health!= null && _health.CurrentHP <= 0);
+        _animator.SetBool("IsJump", _input.JumpPressed);
     }
 
 
     private void LateUpdate()
     {
-        //Флип спрайт
-        if (rb.linearVelocity.x > 0.1f)
+        //Р¤Р»РёРї СЃРїСЂР°Р№С‚
+        if (_rb.linearVelocity.x > 0.1f)
         {
-            sprite.flipX = true;
+            _sprite.flipX = true;
         }
-        else if (rb.linearVelocity.x < -0.1f)
+        else if (_rb.linearVelocity.x < -0.1f)
         {
-            sprite.flipX = false;
+            _sprite.flipX = false;
         }
     }
 }

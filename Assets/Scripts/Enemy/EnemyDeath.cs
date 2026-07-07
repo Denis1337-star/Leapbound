@@ -1,50 +1,55 @@
-using System.Collections;
+п»їusing System.Collections;
 using UnityEngine;
 
 
 public class EnemyDeath : MonoBehaviour
 {
-    public float fadeSpeed = 2f; //Скорость затухания
+    [SerializeField] private float fadeSpeed = 1f; //РЎРєРѕСЂРѕСЃС‚СЊ Р·Р°С‚СѓС…Р°РЅРёСЏ
 
-    private SpriteRenderer sprite;
-    private Collider2D col;
-    private Rigidbody2D rb;
-    private EnemyBase enemy;
+    private SpriteRenderer _sprite;
+    private Collider2D _collider;
+    private Rigidbody2D _rb;
+    private EnemyBase _enemyBase;
     private void Awake()
     {
-        sprite = GetComponent<SpriteRenderer>();
-        rb = GetComponent<Rigidbody2D>();
-        col = GetComponent<Collider2D>();
-        enemy = GetComponent<EnemyBase>();
+        _sprite = GetComponent<SpriteRenderer>();
+        _rb = GetComponent<Rigidbody2D>();
+        _collider = GetComponent<Collider2D>();
+        _enemyBase = GetComponent<EnemyBase>();
     }
-    private void Start()
-    {
-        
-    }
+
     private void OnEnable()
     {
-        enemy.OnDeath += Die;
+        _enemyBase.OnDeath += Die;
     }
 
     private void OnDisable()
     {
-        enemy.OnDeath -= Die;
+        _enemyBase.OnDeath -= Die;
     }
     private void Die()
     {
-        col.enabled = false; //чтобы больше не взаимодействовал с игроком
-        rb.linearVelocity = Vector2.zero; //Остснавливаем движение
+        _collider.enabled = false;
+        //РћСЃС‚Р°РЅР°РІР»РёРІРµС‚ AI РІСЂР°РіРѕРІ
+        MonoBehaviour[] behaviours = GetComponents<MonoBehaviour>();
+        foreach (MonoBehaviour behaviour in behaviours)
+        {
+            if(behaviour ==this)
+                continue;
 
-        StartCoroutine(FadeOut());  //Для визуала
+            behaviour.enabled = false;
+        }
+
+        StartCoroutine(FadeOut());  //Р”Р»СЏ РІРёР·СѓР°Р»Р°
     }
     private IEnumerator FadeOut()
     {
-        float alpha = 1f;  //исходные данные
+        float alpha = 1f;  //РёСЃС…РѕРґРЅС‹Рµ РґР°РЅРЅС‹Рµ
         while (alpha > 0)
         {
-            alpha -= Time.deltaTime * fadeSpeed; //уменьшаем прозрачность
+            alpha -= Time.deltaTime * fadeSpeed; //СѓРјРµРЅСЊС€Р°РµРј РїСЂРѕР·СЂР°С‡РЅРѕСЃС‚СЊ
 
-            sprite.color = new Color(1, 1, 1, alpha);
+            _sprite.color = new Color(1, 1, 1, alpha);
             yield return null;
         }
         Destroy(gameObject);

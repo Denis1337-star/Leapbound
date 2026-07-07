@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -20,6 +20,14 @@ public class SettingsManager : MonoBehaviour
 
         musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
         sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+    }
+    private void Start()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetMusicVolume(musicVolume);
+            AudioManager.Instance.SetSFXVolume(sfxVolume);
+        }
     }
 
     public float GetMusicValue() => musicVolume;

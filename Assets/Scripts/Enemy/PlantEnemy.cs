@@ -1,34 +1,34 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlantEnemy : EnemyBase
 {
     [Header("Shooting")]
-    public Transform firePoint;
-    public GameObject bulletPrefab;
-    public float fireInterval = 1.5f;
-    public Vector2 shootDirection = Vector2.left;
+    [SerializeField] private Transform _firePoint;
+    [SerializeField] private GameObject _bulletPrefab;
+    [SerializeField] private float _fireInterval = 1.5f;
+    [SerializeField] private Vector2 _shootDirection = Vector2.left;
 
-    private float timer;
+    private float _timer;
 
     private void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= fireInterval)
+        _timer += Time.deltaTime;
+        if (_timer >= _fireInterval)
         {
             Shoot();
-            timer = 0f;
+            _timer = 0f;
         }
     }
 
     private void Shoot()
     {
         GameObject bullet = Instantiate(
-            bulletPrefab,
-            firePoint.position,
+            _bulletPrefab,
+            _firePoint.position,
             Quaternion.identity
         );
 
-        bullet.GetComponent<BulletPlaint>()
-              .Setup(shootDirection);
+        bullet.GetComponent<PlantBullet>()
+              .Setup(_shootDirection);
     }
 }
