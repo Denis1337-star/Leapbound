@@ -13,16 +13,13 @@ GameObject:
   - component: {fileID: 5049919233515861788}
   - component: {fileID: 4707986558865738393}
   - component: {fileID: 3576545171035203869}
-  - component: {fileID: 5373355242053722262}
-  - component: {fileID: 3755781944358799768}
-  - component: {fileID: 4823775674306673267}
-  - component: {fileID: 6508992687455231303}
   - component: {fileID: 4371138879937587682}
   - component: {fileID: 1444710563746896697}
   - component: {fileID: 324424805615957231}
   - component: {fileID: 4524184563120480144}
   - component: {fileID: 2352494002612472560}
   - component: {fileID: 6301698722849249129}
+  - component: {fileID: 8678355723974585441}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -193,69 +190,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.048071384, y: -0.23751068}
   m_Size: {x: 1.0815783, y: 1.6461763}
   m_Direction: 0
---- !u!114 &5373355242053722262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e49f12aef76faa648a2a39288fbaedc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInput
---- !u!114 &3755781944358799768
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2638c0bacde4512469e697f07a0724bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  _walkSpeed: 5
-  _runSpeed: 10
-  _crawlSpeedMultiplier: 0.5
---- !u!114 &4823775674306673267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f18299abe77ca3e4286414a15328ba70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerJump
-  _jumpForce: 15
-  _groundCheck: {fileID: 4626094894885521589}
-  _groundRadius: 0.2
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
---- !u!114 &6508992687455231303
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b241747fa2e3664784b588d2eed266f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCrouch
-  _ceilingCheck: {fileID: 3405612351790542046}
-  _ceilingRadius: 0.2
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  _hightMultiplier: 0.7
 --- !u!114 &4371138879937587682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +272,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39d4af8754898c8429ad44bd48a31bdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerPlatformHandler
+--- !u!114 &8678355723974585441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487879235409658313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9aed0ed8b8249334492948db249be84c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMotor
+  _walkSpeed: 3
+  _runSpeed: 6
+  _crawlSpeedMultiplier: 0.5
+  _jumpForce: 7
+  _groundCheck: {fileID: 4626094894885521589}
+  _groundRadius: 0.2
+  _groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  _ceilingCheck: {fileID: 3405612351790542046}
+  _ceilingRadius: 0.2
+  _heightMultiplier: 0.7
 --- !u!1 &2524815155094048932
 GameObject:
   m_ObjectHideFlags: 0

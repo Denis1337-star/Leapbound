@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5266498211581707342}
   - component: {fileID: 5502286411287795606}
   - component: {fileID: 5677045281195420601}
-  - component: {fileID: 3913879244488924800}
   - component: {fileID: 8983770465477680857}
   - component: {fileID: 623038214662215228}
   - component: {fileID: 5323270887291671975}
@@ -193,103 +192,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.696852, y: 1.7796297}
   m_EdgeRadius: 0
---- !u!82 &3913879244488924800
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993252380459878518}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -3481352936333021671, guid: 43c1699c0fee8ea44b5cb41829e5f1c5, type: 2}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.8
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &8983770465477680857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -302,8 +204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebf941b0bf656f44ba5e5933c8af6df0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAudio
-  hurtClip: {fileID: 8300000, guid: b1735d1292ec4e04983427dce0f844ed, type: 3}
-  deathClip: {fileID: 8300000, guid: b1735d1292ec4e04983427dce0f844ed, type: 3}
+  _hurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
+  _deathClip: {fileID: 8300000, guid: b1735d1292ec4e04983427dce0f844ed, type: 3}
 --- !u!114 &623038214662215228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PigEnemy
   maxHealth: 50
-  pointA: {fileID: 0}
-  pointB: {fileID: 0}
-  speed: 2
-  damage: 50
+  _pointA: {fileID: 0}
+  _pointB: {fileID: 0}
+  _speed: 2
+  _damage: 50
