@@ -6,10 +6,12 @@ public sealed class SceneFlowService : ISceneFlowService
     private const string MainMenuSceneName = "MainMenu";
 
     private readonly IScoreService _scoreService;
+    private readonly IGameStateService _gameStateService;
 
-    public SceneFlowService(IScoreService scoreService)
+    public SceneFlowService(IScoreService scoreService, IGameStateService gameStateService)
     {
         _scoreService = scoreService;
+        _gameStateService = gameStateService;
     }
     public void RestartCurrentLevel()
     {
@@ -25,8 +27,8 @@ public sealed class SceneFlowService : ISceneFlowService
     {
         PrepareForSceneLoad();
 
-        int nextIndex = SceneManager.GetActiveScene().buildIndex+1;
-        if(nextIndex < SceneManager.sceneCountInBuildSettings) 
+        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextIndex < SceneManager.sceneCountInBuildSettings)
             SceneManager.LoadScene(nextIndex);
         else
             SceneManager.LoadScene(MainMenuSceneName);
@@ -44,5 +46,6 @@ public sealed class SceneFlowService : ISceneFlowService
     {
         Time.timeScale = 1.0f;
         _scoreService.Reset();
+        _gameStateService.Reset();
     }
 }

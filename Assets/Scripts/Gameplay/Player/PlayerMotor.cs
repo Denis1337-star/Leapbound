@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
+using Zenject;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(CapsuleCollider2D))]
 public class PlayerMotor : ValidatedMonoBehaviour
 {
-    public float Move { get; private set; }
-    public bool JumpPressed { get; private set; }
-    public bool RunHeld { get; private set; }
-    public bool CrouchHeld { get; private set; }
+    public float Move => _inputService.Move;
+    public bool RunHeld => _inputService.RunHeld;
+    public bool CrouchHeld => _inputService.CrouchHeld;
+    public bool JumpPressed => _inputService.JumpPressed;
     public bool IsCrouching { get; private set; }
     public bool IsGrounded { get; private set; }
 
@@ -24,21 +24,23 @@ public class PlayerMotor : ValidatedMonoBehaviour
     [Header("Ceiling Check")]
     [SerializeField] private Transform _ceilingCheck;
     [SerializeField] private float _ceilingRadius = 0.2f;
-
-    [Header("Collider")]
     [SerializeField] private float _heightMultiplier = 0.7f;
-
-    private Rigidbody2D _rb;
-    private CapsuleCollider2D _collider;
-    private PlayerPlatformHandler _platformHandler;
+    [SerializeField] private Rigidbody2D _rigidbody;
+    [SerializeField] private CapsuleCollider2D _collider;
+    [SerializeField] private PlayerPlatformHandler _platformHandler;
+    private IInputService _inputService;
     private Vector2 _originalSize;
     private Vector2 _originalOffset;
+
+    [Inject]
+    public void Construct(IInputService inputService)
+    {
+        _inputService = inputService;
+    }
     protected override void Awake()
     {
         base.Awake();
-        _rb = GetComponent<Rigidbody2D>();
-        _collider = GetComponent<CapsuleCollider2D>();
-        _platformHandler = GetComponent<PlayerPlatformHandler>();
+
         _originalSize = _collider.size;
         _originalOffset = _collider.offset;
     }
@@ -47,11 +49,13 @@ public class PlayerMotor : ValidatedMonoBehaviour
         bool valid = true;
         valid &= ValidationUtility.IsAssigned(this, _groundCheck, nameof(_groundCheck));
         valid &= ValidationUtility.IsAssigned(this, _ceilingCheck, nameof(_ceilingCheck));
+        valid &= ValidationUtility.IsAssigned(this, _rigidbody, nameof(_rigidbody));
+        valid &= ValidationUtility.IsAssigned(this, _collider, nameof(_collider));
+        valid &= ValidationUtility.IsAssigned(this, _platformHandler, nameof(_platformHandler));
         return valid;
     }
     private void Update()
     {
-        ReadInput();
         CheckGrounded();
         UpdateCrouch();
         HandleJump();
@@ -59,18 +63,6 @@ public class PlayerMotor : ValidatedMonoBehaviour
     private void FixedUpdate()
     {
         ApplyMovement();
-    }
-    private void ReadInput()
-    {
-        Move = Input.GetAxisRaw("Horizontal");
-        RunHeld = Input.GetKey(KeyCode.LeftShift);
-        CrouchHeld = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
-        if (Input.GetButtonDown("Jump"))
-            JumpPressed = true;
-    }
-    public void ConsumeJump()
-    {
-        JumpPressed = false;
     }
 
     private void CheckGrounded()
@@ -80,16 +72,18 @@ public class PlayerMotor : ValidatedMonoBehaviour
     }
     private void HandleJump()
     {
-        if (!JumpPressed || !IsGrounded)
+        if (!_inputService.JumpPressed || !IsGrounded)
             return;
-        _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, _jumpForce);
-        ConsumeJump();
+
+        _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, _jumpForce);
+        _inputService.ConsumeJump();
     }
     private void UpdateCrouch()
     {
         bool ceilingBlocked = Physics2D.OverlapCircle(
             _ceilingCheck.position, _ceilingRadius, _groundLayer);
-        IsCrouching = CrouchHeld || ceilingBlocked;
+
+        IsCrouching = _inputService.CrouchHeld || ceilingBlocked;
         UpdateCollider();
     }
     private void UpdateCollider()
@@ -98,8 +92,8 @@ public class PlayerMotor : ValidatedMonoBehaviour
         {
             _collider.size = new Vector2(
                 _originalSize.x, _originalSize.y * _heightMultiplier);
-            _collider.offset = new Vector2(
-                _originalOffset.x,
+
+            _collider.offset = new Vector2(_originalOffset.x,
                 _originalOffset.y - (_originalSize.y - _collider.size.y) / 2f);
         }
         else
@@ -110,14 +104,23 @@ public class PlayerMotor : ValidatedMonoBehaviour
     }
     private void ApplyMovement()
     {
-        float speed = RunHeld ? _runSpeed : _walkSpeed;
+        float speed;
+        if (_inputService.RunHeld)
+            speed = _runSpeed;
+        else
+            speed = _walkSpeed;
+
         if (IsCrouching)
             speed *= _crawlSpeedMultiplier;
-        float platformX = _platformHandler != null
-            ? _platformHandler.PlatformVelocity.x
-            : 0f;
-        Vector2 velocity = _rb.linearVelocity;
-        velocity.x = Move * speed + platformX;
-        _rb.linearVelocity = velocity;
+
+        float platformX;
+        if (_platformHandler != null)
+            platformX = _platformHandler.PlatformVelocity.x;
+        else
+            platformX = 0f;
+        
+        Vector2 velocity = _rigidbody.linearVelocity;
+        velocity.x = _inputService.Move * speed + platformX;
+        _rigidbody.linearVelocity = velocity;
     }
 }

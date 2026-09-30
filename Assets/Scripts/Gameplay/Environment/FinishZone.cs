@@ -2,22 +2,28 @@
 using UnityEngine.SceneManagement;
 using Zenject;
 
-public class FinishZone : MonoBehaviour
+public class FinishZone : ValidatedMonoBehaviour
 {
     [SerializeField] private PauseMenu _pauseMenu;
 
     private IScoreService _scoreService;
+    private IGameStateService _gameStateService;
 
     [Inject]
-    public void Construct(IScoreService scoreService)
+    public void Construct(IScoreService scoreService, IGameStateService gameStateService)
     {
         _scoreService = scoreService;
+        _gameStateService = gameStateService;
+    }
+    protected override bool ValidateInternal()
+    {
+        return ValidationUtility.IsAssigned(this, _pauseMenu, nameof(_pauseMenu));
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
 
-        _scoreService.Win();
+        _gameStateService.Win();
 
         int stars = LevelStarCalculator.Calculate(_scoreService.Score);
 
@@ -27,11 +33,6 @@ public class FinishZone : MonoBehaviour
             scene.buildIndex,  
             stars
         );
-
-        if (_pauseMenu == null)
-        {
-            Debug.LogError($"{name} PauseMenu miss", this); return;
-        }
 
         _pauseMenu.TogglePause();
     }

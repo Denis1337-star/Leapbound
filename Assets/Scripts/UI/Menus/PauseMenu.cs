@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
@@ -16,8 +17,8 @@ public class PauseMenu : ValidatedMonoBehaviour
     [SerializeField] private Button _nextLevelButton;
 
     [Header("UI Text")]
-    [SerializeField] private Text _scoreText;
-    [SerializeField] private Text _statusText;
+    [SerializeField] private TMP_Text _scoreText;
+    [SerializeField] private TMP_Text _statusText;
 
     [Header("Stars Display")]
     [SerializeField] private Transform _starParent;
@@ -27,12 +28,15 @@ public class PauseMenu : ValidatedMonoBehaviour
 
     private ISceneFlowService _sceneFlowService;
     private IScoreService _scoreService;
+    private IGameStateService _gameStateService;
 
     [Inject]
-    public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService)
+    public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService,
+        IGameStateService gameStateService)
     {
         _sceneFlowService = sceneFlowService;
         _scoreService = scoreService;
+        _gameStateService = gameStateService;
     }
     protected override void Awake()
     {
@@ -42,6 +46,16 @@ public class PauseMenu : ValidatedMonoBehaviour
         _restartButton.onClick.AddListener(RestartLevel);
         _mainMenuButton.onClick.AddListener(GoToMainMenu);
         _settingsButton.onClick.AddListener(OpenSettingsPanel);
+    }
+    private void OnEnable()
+    {
+        _gameStateService.OnStateChanged += HandleGameStateChanged;
+        _scoreService.OnScoreChanged += HandleScoreChanged;
+    }
+    private void OnDisable()
+    {
+        _gameStateService.OnStateChanged -= HandleGameStateChanged;
+        _scoreService.OnScoreChanged -= HandleScoreChanged;
     }
     protected override bool ValidateInternal()
     {
@@ -77,13 +91,13 @@ public class PauseMenu : ValidatedMonoBehaviour
     {
         _scoreText.text = $"Score: {_scoreService.Score}";
 
-        switch (_scoreService.State)
+        switch (_gameStateService.CurrentState)
         {
-            case GameState.Won:
-                _statusText.text = "Ты выйиграл";
+            case GameState.Win:
+                _statusText.text = "Ты победил";
                 break;
-            case GameState.Lost:
-                _statusText.text = "Ты пройиграл";
+            case GameState.Lose:
+                _statusText.text = "Ты проиграл";
                 break;
             case GameState.Paused:
                 _statusText.text = "Пауза";
@@ -91,16 +105,18 @@ public class PauseMenu : ValidatedMonoBehaviour
             default:
                 _statusText.text = "Пауза";
                 break;
-
-
         }
 
-        if (_scoreService.State == GameState.Won)
+        if (_gameStateService.CurrentState == GameState.Win)
         {
             int stars = LevelStarCalculator.Calculate(_scoreService.Score);
             ShowStars(stars);
-
             _nextLevelButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            HideAllStars();
+            _nextLevelButton.gameObject.SetActive(false);
         }
     }
 
@@ -118,12 +134,18 @@ public class PauseMenu : ValidatedMonoBehaviour
 
     public void TogglePause()
     {
-        if (_scoreService.State == GameState.Won)
+
+        if (_gameStateService.CurrentState == GameState.Win || _gameStateService.CurrentState == GameState.Lose)
         {
             UpdateUI();
             _isPaused = !_isPaused;
             _pausePanel.SetActive(_isPaused);
-            Time.timeScale = _isPaused ? 0f : 1f;
+
+            if (_isPaused)
+                Time.timeScale = 0f;
+            else
+                Time.timeScale = 1f;
+
             return;
         }
 
@@ -131,9 +153,7 @@ public class PauseMenu : ValidatedMonoBehaviour
         _isPaused = !_isPaused;
         _pausePanel.SetActive(_isPaused);
         Time.timeScale = _isPaused ? 0f : 1f;
-
-        if (_scoreService.State != GameState.Won && _scoreService.State != GameState.Lost)
-            _scoreService.SetPaused(_isPaused);
+        _gameStateService.SetPaused(_isPaused);
     }
 
     public void RestartLevel()
@@ -159,5 +179,19 @@ public class PauseMenu : ValidatedMonoBehaviour
     public void LoadNextLevel()
     {
         _sceneFlowService.LoadNextLevel();
+    }
+    private void HandleScoreChanged(int newScore)
+    {
+        _scoreText.text = $"Счёт: {newScore}";
+    }
+    private void HandleGameStateChanged(GameState newState)
+    {
+        if (newState == GameState.Win || newState == GameState.Lose)
+        {
+            UpdateUI();
+            _isPaused = true;
+            _pausePanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 }

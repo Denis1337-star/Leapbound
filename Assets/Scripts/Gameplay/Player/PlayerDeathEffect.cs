@@ -9,12 +9,14 @@ public class PlayerDeathEffect : MonoBehaviour
 
     private ISceneFlowService _sceneFlowService;
     private IScoreService _scoreService;
+    private IGameStateService _gameStateService;
 
     [Inject]
-    public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService)
+    public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService, IGameStateService gameStateService)
     {
         _sceneFlowService = sceneFlowService;
         _scoreService = scoreService;
+        _gameStateService = gameStateService;
     }
     private void Awake()
     {
@@ -38,7 +40,7 @@ public class PlayerDeathEffect : MonoBehaviour
 
     private IEnumerator DeathRoutine()
     {
-        _scoreService.Lose();                
+        _gameStateService.Lose();              
         _sprite.color = Color.red;
         yield return new WaitForSeconds(1.2f);
 

@@ -2,6 +2,6 @@
 {
     Playing,
     Paused,
-    Won,
-    Lost
+    Win,
+    Lose
 }

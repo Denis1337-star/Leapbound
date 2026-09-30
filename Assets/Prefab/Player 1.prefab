@@ -296,6 +296,9 @@ MonoBehaviour:
   _ceilingCheck: {fileID: 3405612351790542046}
   _ceilingRadius: 0.2
   _heightMultiplier: 0.7
+  _rigidbody: {fileID: 4707986558865738393}
+  _collider: {fileID: 3576545171035203869}
+  _platformHandler: {fileID: 6301698722849249129}
 --- !u!1 &2524815155094048932
 GameObject:
   m_ObjectHideFlags: 0

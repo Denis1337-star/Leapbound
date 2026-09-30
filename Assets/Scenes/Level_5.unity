@@ -1783,6 +1783,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: SFXSlider
       objectReference: {fileID: 0}
+    - target: {fileID: 2887007004873144971, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3693322000221854307, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -1807,6 +1811,10 @@ PrefabInstance:
     - target: {fileID: 4581474659406981310, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089028084557429652, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5564462452471824606, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_IsActive
@@ -2129,17 +2137,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &1071656948 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2270020372634004548, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
-  m_PrefabInstance: {fileID: 830721615}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1116811799
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13573,7 +13570,7 @@ PrefabInstance:
     - target: {fileID: 6282387756833580903, guid: 00718f93d3a484a41820bddb5b0de269, type: 3}
       propertyPath: hpText
       value: 
-      objectReference: {fileID: 1071656948}
+      objectReference: {fileID: 0}
     - target: {fileID: 7300511325364809130, guid: 00718f93d3a484a41820bddb5b0de269, type: 3}
       propertyPath: m_LocalPosition.x
       value: -9.882888

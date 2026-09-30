@@ -22,5 +22,13 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<IScoreService>()
             .To<ScoreService>()
             .AsSingle();
+
+        Container.Bind<IGameStateService>()
+          .To<GameStateService>()
+          .AsSingle();
+
+        Container.Bind<IInputService>()
+         .To<KeyboardInputService>()
+         .AsSingle();
     }
 }
