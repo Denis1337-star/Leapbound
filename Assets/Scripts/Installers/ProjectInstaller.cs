@@ -27,8 +27,7 @@ public class ProjectInstaller : MonoInstaller
           .To<GameStateService>()
           .AsSingle();
 
-        Container.Bind<IInputService>()
-         .To<KeyboardInputService>()
+        Container.BindInterfacesTo<KeyboardInputService>()
          .AsSingle();
     }
 }

@@ -63,10 +63,15 @@ crashlytics-build.properties
 !/[Aa]ssets/**/*.asset          # Но сохраняем ассеты, если они часть контента
 
 
-# Избегаем мета‑файлов для игнорируемых папок
-*.meta
-!/Assets/**/*.meta             # Сохраняем мета‑файлы только для Assets
-!/ProjectSettings/*.meta       # И для ProjectSettings
+
+# Игнорируем .meta только в игнорируемых папках
+/[Ll]ibrary/**/*.meta
+/[Tt]emp/**/*.meta
+/[Oo]bj/**/*.meta
+[Bb]uild/**/*.meta
+[Bb]uilds/**/*.meta
+/[Ll]ogs/**/*.meta
+/[Uu]serSettings/**/*.meta
 
 
 # Прочие бинарники и временные файлы
