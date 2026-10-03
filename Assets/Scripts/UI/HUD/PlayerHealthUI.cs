@@ -1,15 +1,20 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using TMPro;
+using UnityEngine;
 
-//Для отображения Интерфейса здоровья
-public class PlayerHealthUI : MonoBehaviour
+public class PlayerHealthUI : ValidatedMonoBehaviour
 {
-    [SerializeField] private Text _hpText;
+    [SerializeField] private TMP_Text _hpText;
     [SerializeField] private PlayerHealth _playerHealth;
 
+    protected override bool ValidateInternal()
+    {
+        bool valid = true;
+        valid &= ValidationUtility.IsAssigned(this, _hpText, nameof(_hpText));
+        valid &= ValidationUtility.IsAssigned(this, _playerHealth, nameof(_playerHealth));
+        return valid;
+    }
     private void Start()
     {
-        if (_playerHealth != null)
             UpdateText(_playerHealth.CurrentHP, _playerHealth.maxHealth);
     }
     private void OnEnable()

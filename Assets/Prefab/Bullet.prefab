@@ -170,5 +170,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletPlaint
   _speed: 8
-  _lifeTime: 5
+  _lifeTime: 2
   _damage: 50

@@ -17,7 +17,7 @@ public class Coin : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        _scoreService.Add(_value);  
-        Destroy(gameObject);     
+        _scoreService.Add(_value);
+        gameObject.SetActive(false);
     }
 }

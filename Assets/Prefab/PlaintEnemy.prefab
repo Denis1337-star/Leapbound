@@ -162,9 +162,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlantEnemy
   maxHealth: 50
   _firePoint: {fileID: 4991463169880435521}
-  _bulletPrefab: {fileID: 7196291195142204669, guid: 3c173bb323780374ebe6b7a04dc5d631, type: 3}
   _fireInterval: 1.5
   _shootDirection: {x: -1, y: 0}
+  _bulletPoolRoot: {fileID: 4991463169880435521}
+  _bulletPrefab: {fileID: 7734287715752573909, guid: 3c173bb323780374ebe6b7a04dc5d631, type: 3}
+  _poolSize: 5
 --- !u!114 &2370523352001548230
 MonoBehaviour:
   m_ObjectHideFlags: 0
