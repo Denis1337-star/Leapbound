@@ -2,7 +2,7 @@
 using System;
 
 
-public abstract class EnemyBase : ValidatedMonoBehaviour, IDamageable
+public abstract class EnemyBase : MonoBehaviour
 {
     [Header("Health")]
     [SerializeField] public int maxHealth = 50;
@@ -11,14 +11,9 @@ public abstract class EnemyBase : ValidatedMonoBehaviour, IDamageable
     public event Action<Vector2> OnDamaged;
     public event Action OnDeath;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         CurrentHP = maxHealth;
-    }
-    protected override bool ValidateInternal()
-    {
-        return true;
     }
 
     public virtual void TakeDamage(int amount, Vector2 hitDir)

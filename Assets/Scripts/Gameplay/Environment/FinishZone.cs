@@ -2,38 +2,27 @@
 using UnityEngine.SceneManagement;
 using Zenject;
 
-public class FinishZone : ValidatedMonoBehaviour
+public class FinishZone : MonoBehaviour
 {
-    [SerializeField] private PauseMenu _pauseMenu;
-
     private IScoreService _scoreService;
-    private IGameStateService _gameStateService;
+    private IGameStateService _gameState;
 
     [Inject]
-    public void Construct(IScoreService scoreService, IGameStateService gameStateService)
+    public void Construct(IScoreService scoreService, IGameStateService gameState)
     {
         _scoreService = scoreService;
-        _gameStateService = gameStateService;
+        _gameState = gameState;
     }
-    protected override bool ValidateInternal()
-    {
-        return ValidationUtility.IsAssigned(this, _pauseMenu, nameof(_pauseMenu));
-    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
 
-        _gameStateService.Win();
+        _gameState.Win();
 
         int stars = LevelStarCalculator.Calculate(_scoreService.Score);
 
         Scene scene = SceneManager.GetActiveScene();
-        LevelResultManager.SaveLevelResult(
-            scene.name,        
-            scene.buildIndex,  
-            stars
-        );
-
-        _pauseMenu.TogglePause();
+        LevelResultManager.SaveLevelResult(scene.name, scene.buildIndex, stars);
     }
 }

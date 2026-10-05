@@ -12,19 +12,11 @@ public class PigEnemy : EnemyBase
     private SpriteRenderer _sprite;
     private Collider2D _collider;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         _sprite = GetComponent<SpriteRenderer>();
         _collider = GetComponent<Collider2D>();
         _target = _pointB.position;
-    }
-    protected override bool ValidateInternal()
-    {
-        bool valid = true;
-        valid &= ValidationUtility.IsAssigned(this, _pointA, nameof(_pointA));
-        valid &= ValidationUtility.IsAssigned(this, _pointB, nameof(_pointB));
-        return valid;
     }
 
     private void Update()

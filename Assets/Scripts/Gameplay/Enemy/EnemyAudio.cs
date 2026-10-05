@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class EnemyAudio : ValidatedMonoBehaviour
+public class EnemyAudio : MonoBehaviour
 {
     [SerializeField] private AudioClip _hurtClip;
     [SerializeField] private AudioClip _deathClip;
@@ -14,19 +14,9 @@ public class EnemyAudio : ValidatedMonoBehaviour
     {
         _audioService = audioService;
     }
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         _enemy = GetComponent<EnemyBase>();
-    }
-    protected override bool ValidateInternal()
-    {
-        bool valid = true;
-        valid &= ValidationUtility.IsAssigned(this, _enemy,nameof(_enemy));
-        //valid &= ValidationUtility.IsAssigned(this, _hurtClip, nameof(_hurtClip));
-        //valid &= ValidationUtility.IsAssigned(this, _deathClip, nameof(_deathClip));
-        return valid;
     }
 
     private void OnEnable()

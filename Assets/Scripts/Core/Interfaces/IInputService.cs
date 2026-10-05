@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public interface IInputService 
@@ -7,4 +8,5 @@ public interface IInputService
     bool CrouchHeld { get; }
     bool JumpPressed { get; }
     void ConsumeJump();
+    event Action PausedRequested;
 }

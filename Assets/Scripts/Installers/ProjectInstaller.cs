@@ -19,14 +19,6 @@ public class ProjectInstaller : MonoInstaller
             .To<SceneFlowService>()
             .AsSingle();
 
-        Container.Bind<IScoreService>()
-            .To<ScoreService>()
-            .AsSingle();
-
-        Container.Bind<IGameStateService>()
-          .To<GameStateService>()
-          .AsSingle();
-
         Container.BindInterfacesTo<KeyboardInputService>()
          .AsSingle();
     }

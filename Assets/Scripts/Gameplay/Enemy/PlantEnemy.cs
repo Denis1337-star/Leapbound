@@ -13,18 +13,9 @@ public class PlantEnemy : EnemyBase
 
     private float _timer;
     private List<PlantBullet> _bulletPoolList;
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         InitializePool();
-    }
-    protected override bool ValidateInternal()
-    {
-        bool valid = true;
-        valid &= ValidationUtility.IsAssigned(this, _firePoint, nameof(_firePoint));
-        valid &= ValidationUtility.IsAssigned(this, _bulletPoolRoot, nameof(_bulletPoolRoot));
-        valid &= ValidationUtility.IsAssigned(this, _bulletPrefab, nameof(_bulletPrefab));
-        return valid;
     }
 
     private void Update()

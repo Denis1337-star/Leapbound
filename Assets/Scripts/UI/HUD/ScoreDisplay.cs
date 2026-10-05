@@ -1,10 +1,10 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using TMPro;
+using UnityEngine;
 using Zenject;
 
 public class ScoreDisplay : MonoBehaviour
 {
-    [SerializeField] private Text _scoreText;
+    [SerializeField] private TMP_Text _scoreText;
 
     private IScoreService _scoreService;
 
@@ -13,9 +13,11 @@ public class ScoreDisplay : MonoBehaviour
     {
         _scoreService = scoreService;
     }
+
     private void OnEnable()
     {
         _scoreService.OnScoreChanged += UpdateText;
+        UpdateText(_scoreService.Score);
     }
     private void OnDisable()
     {
@@ -23,6 +25,6 @@ public class ScoreDisplay : MonoBehaviour
     }
     private void UpdateText(int score)
     {
-        _scoreText.text = $"Score: {score}";
+        _scoreText.SetText("Счёт:{0}", score);
     }
 }

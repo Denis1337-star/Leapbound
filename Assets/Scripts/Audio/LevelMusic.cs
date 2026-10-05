@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class LevelMusic : ValidatedMonoBehaviour
+public class LevelMusic : MonoBehaviour
 {
     [SerializeField] private AudioClip _levelMusic;
 
@@ -11,13 +11,6 @@ public class LevelMusic : ValidatedMonoBehaviour
     public void Construct(IAudioService audioService)
     {
         _audioService = audioService;
-    }
-
-    protected override bool ValidateInternal()
-    {
-        bool valid = true;
-        valid &= ValidationUtility.IsAssigned(this, _levelMusic, nameof(_levelMusic));
-        return valid;
     }
 
     private void Start()

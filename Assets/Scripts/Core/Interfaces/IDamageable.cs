@@ -1,7 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public interface IDamageable
 {
-    //Число урона, вектор откуда пришел урон
-    void TakeDamage(int amout, Vector2 hitDirection);
+    int CurrentHP { get; }
+    int MaxHP { get; }
+    event Action OnDied;
+    event Action<int, int> OnHealthChanged;
+    void TakeDamage(int damageAmount, Vector2 hitPoint);
+    void Heal(int healAmount);
 }

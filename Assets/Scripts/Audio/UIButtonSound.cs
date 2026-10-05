@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class UIButtonSound : ValidatedMonoBehaviour
+public class UIButtonSound : MonoBehaviour
 {
     [SerializeField] private AudioClip _clip;
 
@@ -12,12 +12,7 @@ public class UIButtonSound : ValidatedMonoBehaviour
     {
         _audioService = audioService;
     }
-    protected override bool ValidateInternal()
-    {
-        bool valid = true;
-        valid &= ValidationUtility.IsAssigned(this, _clip, nameof(_clip));
-        return valid;
-    }
+
 
     public void Play()
     {

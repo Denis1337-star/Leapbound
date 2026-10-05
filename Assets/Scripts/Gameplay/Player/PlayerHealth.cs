@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-public class PlayerHealth : MonoBehaviour, IDamageable
+public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     //public float invincibleTime = 1f;

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class PlayerMotor : ValidatedMonoBehaviour
+public class PlayerMotor : MonoBehaviour
 {
     public float Move => _inputService.Move;
     public bool RunHeld => _inputService.RunHeld;
@@ -37,23 +37,12 @@ public class PlayerMotor : ValidatedMonoBehaviour
     {
         _inputService = inputService;
     }
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
-
         _originalSize = _collider.size;
         _originalOffset = _collider.offset;
     }
-    protected override bool ValidateInternal()
-    {
-        bool valid = true;
-        valid &= ValidationUtility.IsAssigned(this, _groundCheck, nameof(_groundCheck));
-        valid &= ValidationUtility.IsAssigned(this, _ceilingCheck, nameof(_ceilingCheck));
-        valid &= ValidationUtility.IsAssigned(this, _rigidbody, nameof(_rigidbody));
-        valid &= ValidationUtility.IsAssigned(this, _collider, nameof(_collider));
-        valid &= ValidationUtility.IsAssigned(this, _platformHandler, nameof(_platformHandler));
-        return valid;
-    }
+
     private void Update()
     {
         CheckGrounded();
