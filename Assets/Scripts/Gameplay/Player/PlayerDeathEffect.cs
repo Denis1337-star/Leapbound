@@ -4,25 +4,18 @@ using Zenject;
 
 public class PlayerDeathEffect : MonoBehaviour
 {
-    private SpriteRenderer _sprite;
-    private Rigidbody2D _rb;
-
+    private Player _player;
     private ISceneFlowService _sceneFlowService;
-    private IScoreService _scoreService;
     private IGameStateService _gameStateService;
 
     [Inject]
-    public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService, IGameStateService gameStateService)
+    public void Construct(Player player,ISceneFlowService sceneFlowService, IGameStateService gameStateService)
     {
+        _player = player;
         _sceneFlowService = sceneFlowService;
-        _scoreService = scoreService;
         _gameStateService = gameStateService;
     }
-    private void Awake()
-    {
-        _sprite = GetComponent<SpriteRenderer>();
-        _rb = GetComponent<Rigidbody2D>();
-    }
+   
     private void OnEnable()
     {
         GetComponent<PlayerHealth>().OnDeath += Play;
@@ -34,16 +27,15 @@ public class PlayerDeathEffect : MonoBehaviour
     }
     public void Play()
     {
-        _rb.linearVelocity = Vector2.zero;  
+        _player.Rigidbody.linearVelocity = Vector2.zero;  
         StartCoroutine(DeathRoutine());
     }
 
     private IEnumerator DeathRoutine()
     {
         _gameStateService.Lose();              
-        _sprite.color = Color.red;
-        yield return new WaitForSeconds(1.2f);
-
+        _player.SpriteRenderer.color = Color.red;
+        yield return new WaitForSecondsRealtime(1.2f);
         _sceneFlowService.RestartCurrentLevel();  
     }
 }

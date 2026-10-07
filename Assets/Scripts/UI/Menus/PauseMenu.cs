@@ -3,26 +3,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class PauseMenu :MonoBehaviour
+public class PauseMenu : MonoBehaviour
 {
-    [Header("UI Panels")]
     [SerializeField] private GameObject _pausePanel;
     [SerializeField] private GameObject _settingsPanel;
-
-    [Header("Pause Menu Buttons")]
     [SerializeField] private Button _pauseButton;
     [SerializeField] private Button _restartButton;
     [SerializeField] private Button _mainMenuButton;
     [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _nextLevelButton;
-    [SerializeField] private Button _closeSettingButtom;
-
-    [Header("UI Text")]
+    [SerializeField] private Button _closeSettingsButton;
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _statusText;
-
-    [Header("Stars Display")]
-    [SerializeField] private Transform _starParent;
     [SerializeField] private Image[] _stars;
 
     private ISceneFlowService _sceneFlowService;
@@ -67,27 +59,32 @@ public class PauseMenu :MonoBehaviour
         {
             case GameState.Win:
                 _statusText.SetText("ТЫ ПОБЕДИЛ");
-                int stars = LevelStarCalculator.Calculate(_scoreService.Score);
-                ShowStars(stars);
+                ShowStars(LevelStarCalculator.Calculate(_scoreService.Score));
                 SetNextButtonVisiale(true);
+                SetSettingPanelVisiable(false);
                 SetPausePanelVisible(true);
                 SetGameFrozen(true);
                 break;
 
             case GameState.Lose:
                 _statusText.SetText("ТЫ ПРОИГРАЛ");
-                ResetAllUI();
+                ShowStars(0);
+                SetNextButtonVisiale(false);
+                SetSettingPanelVisiable(false);
                 SetPausePanelVisible(true);
                 SetGameFrozen(true);
                 break;
 
             case GameState.Paused:
                 _statusText.SetText("ПАУЗА");
+                SetSettingPanelVisiable(false);
                 SetPausePanelVisible(true);
                 SetGameFrozen(true);
                 break;
+
             case GameState.Playing:
                 _statusText.SetText(string.Empty);
+                SetSettingPanelVisiable(false);
                 SetPausePanelVisible(false);
                 SetGameFrozen(false);
                 break;
@@ -98,15 +95,12 @@ public class PauseMenu :MonoBehaviour
     {
         GameState currentGameState = _gameStateService.CurrentState;
         if (currentGameState == GameState.Win || currentGameState == GameState.Lose)
-        {
-            SetPausePanelVisible(!_pausePanel.activeSelf);
             return;
-        }
 
         if (currentGameState == GameState.Playing)
-            _gameStateService.SetPaused(paused: true);
+            _gameStateService.SetPaused(true);
         else if (currentGameState == GameState.Paused)
-            _gameStateService.SetPaused(paused: true);
+            _gameStateService.SetPaused(true);
     }
     private void ResetAllUI()
     {
@@ -126,14 +120,9 @@ public class PauseMenu :MonoBehaviour
         for (int i = 0; i < _stars.Length; i++)
             _stars[i].enabled = i < count;
     }
-    private void SetPausePanelVisible(bool visiable)
-    {
-        _pausePanel.SetActive(visiable);
-        if (visiable)
-            SetPausePanelVisible(false);
-    }
-    private void SetSettingPanelVisiable(bool visiable) { _settingsPanel.SetActive(visiable); }
-    private void SetNextButtonVisiale(bool visiable) { _nextLevelButton.gameObject.SetActive(visiable); }
+    private void SetPausePanelVisible(bool visible) { _pausePanel.SetActive(visible); }
+    private void SetSettingPanelVisiable(bool visible) { _settingsPanel.SetActive(visible); }
+    private void SetNextButtonVisiale(bool visible) { _nextLevelButton.gameObject.SetActive(visible); }
     private void SetGameFrozen(bool frozen)
     {
         if (frozen)
@@ -145,12 +134,11 @@ public class PauseMenu :MonoBehaviour
     private void BindButtons()
     {
         _pauseButton.onClick.AddListener(TogglePause);
-
         _restartButton.onClick.AddListener(() => _sceneFlowService.RestartCurrentLevel());
         _mainMenuButton.onClick.AddListener(() => _sceneFlowService.LoadMainMenu());
         _nextLevelButton.onClick.AddListener(() => _sceneFlowService.LoadNextLevel());
         _settingsButton.onClick.AddListener(OpenSettingsPanel);
-        _closeSettingButtom.onClick.AddListener(CloseSettingsPanel);
+        _closeSettingsButton.onClick.AddListener(CloseSettingsPanel);
     }
     public void CloseSettingsPanel() { _settingsPanel.SetActive(false); }
     public void OpenSettingsPanel() { _settingsPanel.SetActive(true); }

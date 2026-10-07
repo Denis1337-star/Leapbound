@@ -5,15 +5,16 @@ using System;
 public abstract class EnemyBase : MonoBehaviour
 {
     [Header("Health")]
-    [SerializeField] public int maxHealth = 50;
+    [SerializeField] private int _maxHealth = 50;
     public int CurrentHP { get; private set; }
 
     public event Action<Vector2> OnDamaged;
     public event Action OnDeath;
+    public int MaxHealth => _maxHealth;
 
     private void Awake()
     {
-        CurrentHP = maxHealth;
+        CurrentHP = _maxHealth;
     }
 
     public virtual void TakeDamage(int amount, Vector2 hitDir)

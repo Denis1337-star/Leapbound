@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 2352494002612472560}
   - component: {fileID: 6301698722849249129}
   - component: {fileID: 8678355723974585441}
+  - component: {fileID: 2102812715221822836}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -187,8 +188,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 1}
-  m_Size: {x: 1.35, y: 2}
+  m_Offset: {x: 0, y: 0.7}
+  m_Size: {x: 1.35, y: 1}
   m_Direction: 0
 --- !u!114 &4371138879937587682
 MonoBehaviour:
@@ -202,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20a4008668daec249b380dad52226d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 100
+  _maxHealth: 100
 --- !u!114 &1444710563746896697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -288,17 +289,37 @@ MonoBehaviour:
   _runSpeed: 6
   _crawlSpeedMultiplier: 0.5
   _jumpForce: 7
-  _groundCheck: {fileID: 4626094894885521589}
-  _groundRadius: 0.5
+  _groundCheckAnchor: {fileID: 4626094894885521589}
+  _groundCheckRadius: 3
   _groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  _ceilingCheck: {fileID: 3405612351790542046}
-  _ceilingRadius: 0.2
-  _heightMultiplier: 0.7
-  _rigidbody: {fileID: 4707986558865738393}
-  _collider: {fileID: 3576545171035203869}
   _platformHandler: {fileID: 6301698722849249129}
+  _ceilingCheckAnchor: {fileID: 3405612351790542046}
+  _ceilingCheckRadius: 3
+--- !u!114 &2102812715221822836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487879235409658313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f49c0b9b94229364795bc6a8e95dcbfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player
+  _rigidbody: {fileID: 4707986558865738393}
+  _animator: {fileID: 5049919233515861788}
+  _spriteRenderer: {fileID: 5701701950901775379}
+  _bodyCollider: {fileID: 3576545171035203869}
+  _playerMotor: {fileID: 8678355723974585441}
+  _playerHealth: {fileID: 4371138879937587682}
+  _playerAnimation: {fileID: 324424805615957231}
+  _standardSize: {x: 1.35, y: 2}
+  _standardOffset: {x: 0, y: 1}
+  _crouchSize: {x: 1.35, y: 1}
+  _crouchOffset: {x: 0, y: 0.7}
 --- !u!1 &2524815155094048932
 GameObject:
   m_ObjectHideFlags: 0

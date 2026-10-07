@@ -48,7 +48,7 @@ public class PigEnemy : EnemyBase
 
         if (playerBottom > enemyTop - 0.05f)
         {
-            TakeDamage(maxHealth, Vector2.up);
+            TakeDamage(MaxHealth, Vector2.up);
         }
         else
         {

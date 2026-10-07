@@ -5,27 +5,19 @@ public sealed class SceneFlowService : ISceneFlowService
 {
     private const string MainMenuSceneName = "MainMenu";
 
-    private readonly IScoreService _scoreService;
-    private readonly IGameStateService _gameStateService;
-
-    public SceneFlowService(IScoreService scoreService, IGameStateService gameStateService)
-    {
-        _scoreService = scoreService;
-        _gameStateService = gameStateService;
-    }
     public void RestartCurrentLevel()
     {
-        PrepareForSceneLoad();
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void LoadMainMenu()
     {
-        PrepareForSceneLoad();
+        Time.timeScale = 1f;
         SceneManager.LoadScene(MainMenuSceneName);
     }
     public void LoadNextLevel()
     {
-        PrepareForSceneLoad();
+        Time.timeScale = 1f;
 
         int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextIndex < SceneManager.sceneCountInBuildSettings)
@@ -35,17 +27,11 @@ public sealed class SceneFlowService : ISceneFlowService
     }
     public void LoadLevelByBuildIndex(int buildIndex)
     {
-        PrepareForSceneLoad();
+        Time.timeScale = 1f;
         SceneManager.LoadScene(buildIndex);
     }
     public void QuitGame()
     {
         Application.Quit();
-    }
-    private void PrepareForSceneLoad()
-    {
-        Time.timeScale = 1.0f;
-        _scoreService.Reset();
-        _gameStateService.Reset();
     }
 }

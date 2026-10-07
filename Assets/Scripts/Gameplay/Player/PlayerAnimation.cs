@@ -18,11 +18,11 @@ public class PlayerAnimation : MonoBehaviour
     }
     private void Update()
     {
-        _animator.SetFloat("Speed", Mathf.Abs(_motor.Move));
-        _animator.SetBool("IsRun", _motor.RunHeld);
-        _animator.SetBool("IsCrouch", _motor.IsCrouching);
+        _animator.SetFloat("Speed", Mathf.Abs(_motor.HorizontalInput));
+        _animator.SetBool("IsRun", _motor.IsRunHeld);
+        _animator.SetBool("IsCrouch", _motor.IsCrouchingNow);
         _animator.SetBool("IsDead", _health != null && _health.CurrentHP <= 0);
-        _animator.SetBool("IsJump", _motor.JumpPressed);
+        _animator.SetBool("IsJump", _motor.IsJumpPressed);
     }
 
 

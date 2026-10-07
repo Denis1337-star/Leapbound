@@ -9,15 +9,15 @@ public class PlayerHealthUI : MonoBehaviour
 
     private void Start()
     {
-            UpdateText(_playerHealth.CurrentHP, _playerHealth.maxHealth);
+            UpdateText(_playerHealth.CurrentHP, _playerHealth.MaxHealth);
     }
     private void OnEnable()
     {
-        _playerHealth.OnHealthChange += UpdateText;
+        _playerHealth.OnHealthChanged += UpdateText;
     }
     private void OnDisable()
     {
-        _playerHealth.OnHealthChange -= UpdateText;
+        _playerHealth.OnHealthChanged -= UpdateText;
     }
     private void UpdateText(int current, int max)
     {

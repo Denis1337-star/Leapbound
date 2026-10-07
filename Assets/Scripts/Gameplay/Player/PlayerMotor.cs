@@ -3,113 +3,96 @@ using Zenject;
 
 public class PlayerMotor : MonoBehaviour
 {
-    public float Move => _inputService.Move;
-    public bool RunHeld => _inputService.RunHeld;
-    public bool CrouchHeld => _inputService.CrouchHeld;
-    public bool JumpPressed => _inputService.JumpPressed;
-    public bool IsCrouching { get; private set; }
+    public float HorizontalInput { get; private set; }
+    public bool IsRunHeld { get; private set; }
+    public bool IsCrouchHeld { get; private set; }
+    public bool IsJumpPressed { get; private set; }
     public bool IsGrounded { get; private set; }
+    public bool IsCrouchingNow { get; private set; }
+    public bool IsCeiling { get; private set; }
 
     [Header("Movement")]
-    [SerializeField] private float _walkSpeed = 3f;
-    [SerializeField] private float _runSpeed = 6f;
-    [SerializeField] private float _crawlSpeedMultiplier = 0.5f;
-    [SerializeField] private float _jumpForce = 7f;
+    [SerializeField] private float _walkSpeed;
+    [SerializeField] private float _runSpeed;
+    [SerializeField] private float _crawlSpeedMultiplier;
+    [SerializeField] private float _jumpForce;
 
     [Header("Ground Check")]
-    [SerializeField] private Transform _groundCheck;
-    [SerializeField] private float _groundRadius = 0.2f;
+    [SerializeField] private Transform _groundCheckAnchor;
+    [SerializeField] private float _groundCheckRadius ;
     [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] private PlayerPlatformHandler _platformHandler;
 
     [Header("Ceiling Check")]
-    [SerializeField] private Transform _ceilingCheck;
-    [SerializeField] private float _ceilingRadius = 0.2f;
-    [SerializeField] private float _heightMultiplier = 0.7f;
-    [SerializeField] private Rigidbody2D _rigidbody;
-    [SerializeField] private CapsuleCollider2D _collider;
-    [SerializeField] private PlayerPlatformHandler _platformHandler;
+    [SerializeField] private Transform _ceilingCheckAnchor;
+    [SerializeField] private float _ceilingCheckRadius ;
+
     private IInputService _inputService;
-    private Vector2 _originalSize;
-    private Vector2 _originalOffset;
+    private Player _player;
 
     [Inject]
-    public void Construct(IInputService inputService)
+    public void Construct(IInputService inputService, Player player)
     {
         _inputService = inputService;
+        _player = player;
     }
-    private void Awake()
-    {
-        _originalSize = _collider.size;
-        _originalOffset = _collider.offset;
-    }
-
     private void Update()
     {
+        ReadInputState();
         CheckGrounded();
-        UpdateCrouch();
-        HandleJump();
+        UpdateCrouchState();
+        TryHandleJump();
     }
+
     private void FixedUpdate()
     {
-        ApplyMovement();
+        ApplyHorizontalMovement();
     }
-
+    private void ReadInputState()
+    {
+        HorizontalInput = _inputService.Move;
+        IsRunHeld = _inputService.RunHeld;
+        IsCrouchHeld = _inputService.CrouchHeld;
+        IsJumpPressed = _inputService.JumpPressed;
+    }
     private void CheckGrounded()
     {
-        IsGrounded = Physics2D.OverlapCircle(
-            _groundCheck.position, _groundRadius, _groundLayer);
+        IsGrounded = Physics2D.OverlapCircle(_groundCheckAnchor.position, _groundCheckRadius, _groundLayer);
     }
-    private void HandleJump()
+    private void UpdateCrouchState()
     {
-        if (!_inputService.JumpPressed || !IsGrounded)
+        IsCeiling = Physics2D.OverlapCircle(_ceilingCheckAnchor.position, _ceilingCheckRadius, _groundLayer);
+        bool shouldCrouch = IsCrouchHeld || IsCeiling;
+        if(shouldCrouch != IsCrouchingNow)
+        {
+            IsCrouchingNow = shouldCrouch;
+            _player.SetCrouchCollider(IsCrouchingNow);
+        }
+    }
+    private void TryHandleJump()
+    {
+        if (!IsJumpPressed || !IsGrounded)
             return;
 
-        _rigidbody.linearVelocity = new Vector2(_rigidbody.linearVelocity.x, _jumpForce);
+        _player.Rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
         _inputService.ConsumeJump();
     }
-    private void UpdateCrouch()
+    private void ApplyHorizontalMovement()
     {
-        bool ceilingBlocked = Physics2D.OverlapCircle(
-            _ceilingCheck.position, _ceilingRadius, _groundLayer);
-
-        IsCrouching = _inputService.CrouchHeld || ceilingBlocked;
-        UpdateCollider();
-    }
-    private void UpdateCollider()
-    {
-        if (IsCrouching)
-        {
-            _collider.size = new Vector2(
-                _originalSize.x, _originalSize.y * _heightMultiplier);
-
-            _collider.offset = new Vector2(_originalOffset.x,
-                _originalOffset.y - (_originalSize.y - _collider.size.y) / 2f);
-        }
+        float moveSpeed;
+        if (IsRunHeld)
+            moveSpeed = _runSpeed;
         else
-        {
-            _collider.size = _originalSize;
-            _collider.offset = _originalOffset;
-        }
-    }
-    private void ApplyMovement()
-    {
-        float speed;
-        if (_inputService.RunHeld)
-            speed = _runSpeed;
-        else
-            speed = _walkSpeed;
+            moveSpeed = _walkSpeed;
 
-        if (IsCrouching)
-            speed *= _crawlSpeedMultiplier;
+        if (IsCrouchingNow)
+            moveSpeed *= _crawlSpeedMultiplier;
 
-        float platformX;
-        if (_platformHandler != null)
-            platformX = _platformHandler.PlatformVelocity.x;
-        else
-            platformX = 0f;
-        
-        Vector2 velocity = _rigidbody.linearVelocity;
-        velocity.x = _inputService.Move * speed + platformX;
-        _rigidbody.linearVelocity = velocity;
+        float platformVelocityX = 0f;
+        platformVelocityX = _platformHandler.PlatformVelocity.x;
+
+        Vector2 finalVelocity = _player.Rigidbody.linearVelocity;
+        finalVelocity.x = (HorizontalInput * moveSpeed) + platformVelocityX;
+        _player.Rigidbody.linearVelocity = finalVelocity;
     }
 }
