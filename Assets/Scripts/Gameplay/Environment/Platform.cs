@@ -2,41 +2,35 @@
 
 public class Platform : MonoBehaviour
 {
-
-    [SerializeField] private Transform _pointA;  //точки откуда куда двигается
+    [SerializeField] private Rigidbody2D _rigidbody;
+    [SerializeField] private Transform _pointA;  
     [SerializeField] private Transform _pointB;
-    [SerializeField] private float _speed = 2f;  //скорость движения
+    [SerializeField] private float _speed = 2f;  
+    public Vector2 Velocity { get; private set; }
+    private Vector2 _target;
 
-    private Vector3 _target;  //текущая цель движения(А или В)
-    private Vector3 _lastPos;  //предыдущая позиция для расчета скорости
-    public Vector2 PlatformVelocity { get; private set; }  //текущая скорость (единица/сек)  можно читать/нельзя изменять извне
-
-    private void Start()
+    private void Awake()
     {
-        _target = _pointB.position; //начинает двигаться к В
-        _lastPos = transform.position; //для вычисления скорости
+        _target = _pointB.position;
     }
 
     private void FixedUpdate()
     {
-        // движение платформы
-        transform.position = Vector3.MoveTowards(
-            transform.position,             //текущая позиция
-            _target,                         //куда двигается
-            _speed * Time.fixedDeltaTime    //расстояние за шаг(кадр)
-        );
+        Vector2 curerentPosition = _rigidbody.position;
+        Vector2 nextPosition = Vector2.MoveTowards(_rigidbody.position,
+            _target, _speed * Time.fixedDeltaTime);
 
-        // меняем цель
-        if (Vector3.Distance(transform.position, _target) < 0.05f)   //если близко к точке
-        {
-            // проверяем, куда пришли
-            bool nearA = Vector3.Distance(_target, _pointA.position) < 0.1f; //true если близок к А
-            _target = nearA ? _pointB.position : _pointA.position;  //меняет от bool направление
-        }
+        Velocity = (nextPosition - curerentPosition) / Time.fixedDeltaTime;
+        _rigidbody.MovePosition(nextPosition);
 
-        // вычисление скорости
-        PlatformVelocity = (transform.position - _lastPos) / Time.fixedDeltaTime;  //назначает вектор перемещения 
-        _lastPos = transform.position;  //обновляет текущую позицию 
+        if (Vector2.Distance(nextPosition, _target) > 0.05f)
+            return;
+
+        bool targetIsPointA = Vector2.Distance(_target,_pointA.position)<0.1f;
+        if (targetIsPointA)
+            _target = _pointB.position;
+        else
+            _target = _pointA.position;
     }
 }
 

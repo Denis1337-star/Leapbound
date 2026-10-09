@@ -2,20 +2,18 @@
 
 public class PigEnemy : EnemyBase
 {
-    [Header("Patrol")]
     [SerializeField] private Transform _pointA;
     [SerializeField] private Transform _pointB;
     [SerializeField] private float _speed = 2f;
     [SerializeField] private int _damage = 50;
+    [SerializeField] private SpriteRenderer _sprite;
+    [SerializeField] private Collider2D _collider;
 
     private Vector3 _target;
-    private SpriteRenderer _sprite;
-    private Collider2D _collider;
 
-    private void Awake()
+    protected override void Awake()
     {
-        _sprite = GetComponent<SpriteRenderer>();
-        _collider = GetComponent<Collider2D>();
+        base.Awake();
         _target = _pointB.position;
     }
 
@@ -44,20 +42,15 @@ public class PigEnemy : EnemyBase
         float playerBottom = collision.collider.bounds.min.y;
         float enemyTop = _collider.bounds.max.y;
 
-        PlayerHealth playerHealth = collision.collider.GetComponent<PlayerHealth>();
 
         if (playerBottom > enemyTop - 0.05f)
         {
             TakeDamage(MaxHealth, Vector2.up);
         }
-        else
+        else if(collision.collider.TryGetComponent(out Player player))
         {
-            if (playerHealth != null)
-            {
-                Vector2 hitDirection = (collision.collider.transform.position - transform.position).normalized;
-
-                playerHealth.TakeDamage(_damage, hitDirection);
-            }    
+                Vector2 hitDirection = (player.transform.position - transform.position).normalized;
+                player.PlayerHealth.TakeDamage(_damage, hitDirection);
         }
     }
 }

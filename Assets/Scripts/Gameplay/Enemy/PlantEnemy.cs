@@ -13,8 +13,9 @@ public class PlantEnemy : EnemyBase
 
     private float _timer;
     private List<PlantBullet> _bulletPoolList;
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         InitializePool();
     }
 

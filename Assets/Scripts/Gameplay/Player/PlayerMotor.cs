@@ -1,98 +1,84 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class PlayerMotor : MonoBehaviour
+public sealed class PlayerMotor : ITickable, IFixedTickable
 {
-    public float HorizontalInput { get; private set; }
-    public bool IsRunHeld { get; private set; }
-    public bool IsCrouchHeld { get; private set; }
-    public bool IsJumpPressed { get; private set; }
-    public bool IsGrounded { get; private set; }
-    public bool IsCrouchingNow { get; private set; }
-    public bool IsCeiling { get; private set; }
-
-    [Header("Movement")]
-    [SerializeField] private float _walkSpeed;
-    [SerializeField] private float _runSpeed;
-    [SerializeField] private float _crawlSpeedMultiplier;
-    [SerializeField] private float _jumpForce;
-
-    [Header("Ground Check")]
-    [SerializeField] private Transform _groundCheckAnchor;
-    [SerializeField] private float _groundCheckRadius ;
-    [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private PlayerPlatformHandler _platformHandler;
-
-    [Header("Ceiling Check")]
-    [SerializeField] private Transform _ceilingCheckAnchor;
-    [SerializeField] private float _ceilingCheckRadius ;
-
-    private IInputService _inputService;
-    private Player _player;
-
-    [Inject]
-    public void Construct(IInputService inputService, Player player)
+    private readonly Player _player;
+    private readonly PlayerConfig _playerConfig;
+    private readonly IInputService _inputService;
+    private readonly PlayerAudio _playerAudio;
+    public float MoveDirection { get; private set; }
+    public bool IsRunButtonHeld { get; private set; }
+    public bool IsCrouchButtonHeld { get; private set; }
+    public bool WasJumpPressed { get; private set; }
+    public bool IsOnGrounded { get; private set; }
+    public bool IsCrouching { get; private set; }
+    public bool IsBlockedByCeiling { get; private set; }
+    public PlayerMotor(Player player, PlayerConfig playerConfig, IInputService inputService, PlayerAudio playerAudio)
     {
-        _inputService = inputService;
         _player = player;
+        _playerConfig = playerConfig;
+        _inputService = inputService;
+        _playerAudio = playerAudio;
     }
-    private void Update()
+    public void Tick()
     {
-        ReadInputState();
-        CheckGrounded();
-        UpdateCrouchState();
-        TryHandleJump();
-    }
+        if (_player.PlayerHealth.CurrentHealth <= 0)
+            return;
 
-    private void FixedUpdate()
-    {
-        ApplyHorizontalMovement();
+        ReadInput();
+        UpdateCrouchState();
+        ProcessJump();
     }
-    private void ReadInputState()
+    public void FixedTick()
     {
-        HorizontalInput = _inputService.Move;
-        IsRunHeld = _inputService.RunHeld;
-        IsCrouchHeld = _inputService.CrouchHeld;
-        IsJumpPressed = _inputService.JumpPressed;
+        ApplyMovement();
     }
-    private void CheckGrounded()
+    private void ReadInput()
     {
-        IsGrounded = Physics2D.OverlapCircle(_groundCheckAnchor.position, _groundCheckRadius, _groundLayer);
+        MoveDirection = _inputService.Move;
+        IsRunButtonHeld = _inputService.RunHeld;
+        IsCrouchButtonHeld = _inputService.CrouchHeld;
+        WasJumpPressed = _inputService.JumpPressed;
     }
     private void UpdateCrouchState()
     {
-        IsCeiling = Physics2D.OverlapCircle(_ceilingCheckAnchor.position, _ceilingCheckRadius, _groundLayer);
-        bool shouldCrouch = IsCrouchHeld || IsCeiling;
-        if(shouldCrouch != IsCrouchingNow)
+        IsOnGrounded = Physics2D.OverlapCircle(_player.GroundCheckAnchor.position,
+    _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
+
+        IsBlockedByCeiling = Physics2D.OverlapCircle(_player.CeilingCheckAnchor.position,
+            _playerConfig.CeilingCheckRadius, _playerConfig.GroundLayer);
+
+        bool shouldCrouch = IsCrouchButtonHeld || IsBlockedByCeiling;
+        if (shouldCrouch != IsCrouching)
         {
-            IsCrouchingNow = shouldCrouch;
-            _player.SetCrouchCollider(IsCrouchingNow);
+            IsCrouching = shouldCrouch;
+            _player.SetCrouchCollider(IsCrouching);
         }
     }
-    private void TryHandleJump()
+    private void ProcessJump()
     {
-        if (!IsJumpPressed || !IsGrounded)
+        if (!WasJumpPressed || !IsOnGrounded || IsCrouching)
             return;
 
-        _player.Rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+        _player.Rigidbody.AddForce(Vector2.up * _playerConfig.JumpForce, ForceMode2D.Impulse);
+        _playerAudio.PlayJump();
         _inputService.ConsumeJump();
     }
-    private void ApplyHorizontalMovement()
+    private void ApplyMovement()
     {
         float moveSpeed;
-        if (IsRunHeld)
-            moveSpeed = _runSpeed;
+        if (IsRunButtonHeld)
+            moveSpeed = _playerConfig.RunSpeed;
         else
-            moveSpeed = _walkSpeed;
+            moveSpeed = _playerConfig.WalkSpeed;
 
-        if (IsCrouchingNow)
-            moveSpeed *= _crawlSpeedMultiplier;
+        if (IsCrouching)
+            moveSpeed *= _playerConfig.CrawlSpeedMultiplier;
 
-        float platformVelocityX = 0f;
-        platformVelocityX = _platformHandler.PlatformVelocity.x;
-
-        Vector2 finalVelocity = _player.Rigidbody.linearVelocity;
-        finalVelocity.x = (HorizontalInput * moveSpeed) + platformVelocityX;
-        _player.Rigidbody.linearVelocity = finalVelocity;
+        Vector2 velocity = _player.Rigidbody.linearVelocity;
+        velocity.x = MoveDirection * moveSpeed + _player.PlatformVelocity.x;
+        velocity.y += _player.PlatformVelocity.y;
+        _player.Rigidbody.linearVelocity = velocity;
     }
 }

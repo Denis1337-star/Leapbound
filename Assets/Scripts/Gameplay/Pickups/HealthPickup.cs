@@ -4,14 +4,13 @@ public class HealthPickup : MonoBehaviour
 {
     [SerializeField] private int _healAmount = 100;
 
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (!col.CompareTag("Player")) return;
+        if (!collider.CompareTag("Player")) return;
 
-        var health = col.GetComponent<PlayerHealth>();
-        if (health != null)
-            health.Heal(_healAmount);
+        if (collider.TryGetComponent(out Player player))
+            player.PlayerHealth.Heal(_healAmount);
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

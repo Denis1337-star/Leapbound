@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Zenject;
 
 public class PlantBullet : MonoBehaviour
 {
@@ -35,11 +34,10 @@ public class PlantBullet : MonoBehaviour
             return;
         }
 
-        var health = colider.GetComponent<PlayerHealth>();
-        if (health != null)
+        if (colider.TryGetComponent(out Player player))
         {
-            Vector2 hitDir = (colider.transform.position - transform.position).normalized;
-            health.TakeDamage(_damage, hitDir);
+            Vector2 hitDir = (player.transform.position - transform.position).normalized;
+            player.PlayerHealth.TakeDamage(_damage, hitDir);
             ReturnToPool();
         }
     }

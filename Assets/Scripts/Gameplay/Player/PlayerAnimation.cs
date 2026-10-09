@@ -1,40 +1,38 @@
 ﻿using UnityEngine;
+using Zenject;
 
-public class PlayerAnimation : MonoBehaviour
+public sealed class PlayerAnimation : ITickable, ILateTickable
 {
-    private Animator _animator;
-    private Rigidbody2D _rb;
-    private PlayerMotor _motor;
-    private PlayerHealth _health;
-    private SpriteRenderer _sprite;
+    private static readonly int SpeedHash = Animator.StringToHash("Speed");
+    private static readonly int IsRunHash = Animator.StringToHash("IsRun");
+    private static readonly int IsCrouchHash = Animator.StringToHash("IsCrouch");
+    private static readonly int IsDeadHash = Animator.StringToHash("IsDead");
+    private static readonly int IsJumpHash = Animator.StringToHash("IsJump");
+    private readonly Player _player;
+    private readonly PlayerMotor _playerMotor;
+    private readonly PlayerHealth _playerHealth;
 
-    private void Awake()
+    public PlayerAnimation(Player player, PlayerMotor playerMotor, PlayerHealth playerHealth)
     {
-        _animator = GetComponent<Animator>();
-        _motor = GetComponent<PlayerMotor>();
-        _rb = GetComponent<Rigidbody2D>();
-        _health = GetComponent<PlayerHealth>();
-        _sprite = GetComponent<SpriteRenderer>();
+        _player = player;
+        _playerMotor = playerMotor;
+        _playerHealth = playerHealth;
     }
-    private void Update()
+    public void Tick()
     {
-        _animator.SetFloat("Speed", Mathf.Abs(_motor.HorizontalInput));
-        _animator.SetBool("IsRun", _motor.IsRunHeld);
-        _animator.SetBool("IsCrouch", _motor.IsCrouchingNow);
-        _animator.SetBool("IsDead", _health != null && _health.CurrentHP <= 0);
-        _animator.SetBool("IsJump", _motor.IsJumpPressed);
+        Animator animator = _player.Animator;
+        animator.SetFloat(SpeedHash, Mathf.Abs(_playerMotor.MoveDirection));
+        animator.SetBool(IsRunHash, _playerMotor.IsRunButtonHeld);
+        animator.SetBool(IsCrouchHash, _playerMotor.IsCrouching);
+        animator.SetBool(IsDeadHash, _playerHealth.CurrentHealth <= 0);
+        animator.SetBool(IsJumpHash, _playerMotor.WasJumpPressed);
     }
-
-
-    private void LateUpdate()
+    public void LateTick()
     {
-        if (_rb.linearVelocity.x > 0.1f)
-        {
-            _sprite.flipX = true;
-        }
-        else if (_rb.linearVelocity.x < -0.1f)
-        {
-            _sprite.flipX = false;
-        }
+        float velocityX = _player.Rigidbody.linearVelocity.x;
+        if (velocityX > 0.1f)
+            _player.SpriteRenderer.flipX = true;
+        else if (velocityX < -0.1f)
+            _player.SpriteRenderer.flipX = false;
     }
 }

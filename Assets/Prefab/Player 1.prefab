@@ -13,14 +13,8 @@ GameObject:
   - component: {fileID: 5049919233515861788}
   - component: {fileID: 4707986558865738393}
   - component: {fileID: 3576545171035203869}
-  - component: {fileID: 4371138879937587682}
-  - component: {fileID: 1444710563746896697}
-  - component: {fileID: 324424805615957231}
-  - component: {fileID: 4524184563120480144}
-  - component: {fileID: 2352494002612472560}
-  - component: {fileID: 6301698722849249129}
-  - component: {fileID: 8678355723974585441}
   - component: {fileID: 2102812715221822836}
+  - component: {fileID: 1248700998934704344}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -43,7 +37,6 @@ Transform:
   m_Children:
   - {fileID: 4626094894885521589}
   - {fileID: 3405612351790542046}
-  - {fileID: 2072051280056657523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5701701950901775379
@@ -191,112 +184,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.7}
   m_Size: {x: 1.35, y: 1}
   m_Direction: 0
---- !u!114 &4371138879937587682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20a4008668daec249b380dad52226d97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  _maxHealth: 100
---- !u!114 &1444710563746896697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5ee0674742b3d14c828e8e0c33e07d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDamageFeedback
-  _knockbackForce: 6
-  _invincibleTime: 1
-  _damageColor: {r: 1, g: 0, b: 0, a: 1}
-  _normalColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &324424805615957231
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edb9f5f80d08207449511288659138a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
---- !u!114 &4524184563120480144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e861d034fc2c71e478011eeb93c71278, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _walkStep: {fileID: 8300000, guid: 56684981319f43148878a1d8b54c8104, type: 3}
-  _runStep: {fileID: 8300000, guid: 56684981319f43148878a1d8b54c8104, type: 3}
-  _jumpClip: {fileID: 8300000, guid: 114815f30efd8b54eb460f2d178c0957, type: 3}
-  _hurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
-  _deathClip: {fileID: 8300000, guid: 349add1a39df26647aeb4433952199d8, type: 3}
---- !u!114 &2352494002612472560
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fd7e872f9fdc3f4d84a656f122be6ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathEffect
---- !u!114 &6301698722849249129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39d4af8754898c8429ad44bd48a31bdb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerPlatformHandler
---- !u!114 &8678355723974585441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487879235409658313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9aed0ed8b8249334492948db249be84c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMotor
-  _walkSpeed: 3
-  _runSpeed: 6
-  _crawlSpeedMultiplier: 0.5
-  _jumpForce: 7
-  _groundCheckAnchor: {fileID: 4626094894885521589}
-  _groundCheckRadius: 3
-  _groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  _platformHandler: {fileID: 6301698722849249129}
-  _ceilingCheckAnchor: {fileID: 3405612351790542046}
-  _ceilingCheckRadius: 3
 --- !u!114 &2102812715221822836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,56 +196,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49c0b9b94229364795bc6a8e95dcbfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  _playerConfig: {fileID: 11400000, guid: be2f357572b77a8458a487119e3c665c, type: 2}
   _rigidbody: {fileID: 4707986558865738393}
   _animator: {fileID: 5049919233515861788}
   _spriteRenderer: {fileID: 5701701950901775379}
   _bodyCollider: {fileID: 3576545171035203869}
-  _playerMotor: {fileID: 8678355723974585441}
-  _playerHealth: {fileID: 4371138879937587682}
-  _playerAnimation: {fileID: 324424805615957231}
-  _standardSize: {x: 1.35, y: 2}
-  _standardOffset: {x: 0, y: 1}
-  _crouchSize: {x: 1.35, y: 1}
-  _crouchOffset: {x: 0, y: 0.7}
---- !u!1 &2524815155094048932
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2072051280056657523}
-  - component: {fileID: 6115539258153163458}
-  m_Layer: 0
-  m_Name: PlayerAudio
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2072051280056657523
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2524815155094048932}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 7300511325364809130}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &6115539258153163458
+  _groundCheckAnchor: {fileID: 4626094894885521589}
+  _ceilingCheckAnchor: {fileID: 3405612351790542046}
+--- !u!82 &1248700998934704344
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2524815155094048932}
+  m_GameObject: {fileID: 487879235409658313}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -3481352936333021671, guid: 43c1699c0fee8ea44b5cb41829e5f1c5, type: 2}
@@ -461,7 +312,7 @@ GameObject:
   m_Layer: 0
   m_Name: CeilingCheck
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -474,7 +325,7 @@ Transform:
   m_GameObject: {fileID: 4080137421146024197}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.639, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -492,7 +343,7 @@ GameObject:
   m_Layer: 0
   m_Name: GroundCheck
   m_TagString: Untagged
-  m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -505,7 +356,7 @@ Transform:
   m_GameObject: {fileID: 7810890849159790420}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0, y: -0.015, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

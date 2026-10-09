@@ -1,41 +1,42 @@
-﻿using System.Collections;
+﻿using System;
 using UnityEngine;
 using Zenject;
 
-public class PlayerDeathEffect : MonoBehaviour
+public sealed class PlayerDeathEffect : IInitializable, ITickable, IDisposable
 {
-    private Player _player;
-    private ISceneFlowService _sceneFlowService;
-    private IGameStateService _gameStateService;
-
-    [Inject]
-    public void Construct(Player player,ISceneFlowService sceneFlowService, IGameStateService gameStateService)
+    private readonly Player _player;
+    private readonly PlayerHealth _playerHealth;
+    private readonly IGameStateService _gameStateService;
+    private readonly ISceneFlowService _sceneFlowService;
+    private float _restartTimer = -1f;
+    public PlayerDeathEffect(Player player, PlayerHealth playerHealth, IGameStateService gameStateService,
+        ISceneFlowService sceneFlowService)
     {
         _player = player;
-        _sceneFlowService = sceneFlowService;
+        _playerHealth = playerHealth;
         _gameStateService = gameStateService;
+        _sceneFlowService = sceneFlowService;
     }
-   
-    private void OnEnable()
+    public void Initialize() { _playerHealth.OnDeath += OnDeath; }
+    public void Dispose() { _playerHealth.OnDeath -= OnDeath; }
+    public void Tick()
     {
-        GetComponent<PlayerHealth>().OnDeath += Play;
-    }
+        if (_restartTimer < 0f)
+            return;
 
-    private void OnDisable()
-    {
-        GetComponent<PlayerHealth>().OnDeath -= Play;
-    }
-    public void Play()
-    {
-        _player.Rigidbody.linearVelocity = Vector2.zero;  
-        StartCoroutine(DeathRoutine());
-    }
+        _restartTimer -= Time.unscaledDeltaTime;
+        if (_restartTimer > 0f)
+            return;
 
-    private IEnumerator DeathRoutine()
+        _restartTimer = -1f;
+        _sceneFlowService.RestartCurrentLevel();
+    }
+    private void OnDeath()
     {
-        _gameStateService.Lose();              
-        _player.SpriteRenderer.color = Color.red;
-        yield return new WaitForSecondsRealtime(1.2f);
-        _sceneFlowService.RestartCurrentLevel();  
+        _player.Rigidbody.linearVelocity = Vector2.zero;
+        _player.SpriteRenderer.enabled = true;
+        _player.Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        _gameStateService.Lose();
+        _restartTimer = 1.2f;
     }
 }

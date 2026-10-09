@@ -6,13 +6,10 @@ using Zenject;
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject _pausePanel;
-    [SerializeField] private GameObject _settingsPanel;
     [SerializeField] private Button _pauseButton;
     [SerializeField] private Button _restartButton;
     [SerializeField] private Button _mainMenuButton;
-    [SerializeField] private Button _settingsButton;
     [SerializeField] private Button _nextLevelButton;
-    [SerializeField] private Button _closeSettingsButton;
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _statusText;
     [SerializeField] private Image[] _stars;
@@ -61,7 +58,6 @@ public class PauseMenu : MonoBehaviour
                 _statusText.SetText("ТЫ ПОБЕДИЛ");
                 ShowStars(LevelStarCalculator.Calculate(_scoreService.Score));
                 SetNextButtonVisiale(true);
-                SetSettingPanelVisiable(false);
                 SetPausePanelVisible(true);
                 SetGameFrozen(true);
                 break;
@@ -70,21 +66,18 @@ public class PauseMenu : MonoBehaviour
                 _statusText.SetText("ТЫ ПРОИГРАЛ");
                 ShowStars(0);
                 SetNextButtonVisiale(false);
-                SetSettingPanelVisiable(false);
                 SetPausePanelVisible(true);
                 SetGameFrozen(true);
                 break;
 
             case GameState.Paused:
                 _statusText.SetText("ПАУЗА");
-                SetSettingPanelVisiable(false);
                 SetPausePanelVisible(true);
                 SetGameFrozen(true);
                 break;
 
             case GameState.Playing:
                 _statusText.SetText(string.Empty);
-                SetSettingPanelVisiable(false);
                 SetPausePanelVisible(false);
                 SetGameFrozen(false);
                 break;
@@ -106,7 +99,6 @@ public class PauseMenu : MonoBehaviour
     {
         SetGameFrozen(false);
         SetPausePanelVisible(false);
-        SetSettingPanelVisiable(false);
         SetNextButtonVisiale(false);
         ShowStars(0);
 
@@ -121,7 +113,6 @@ public class PauseMenu : MonoBehaviour
             _stars[i].enabled = i < count;
     }
     private void SetPausePanelVisible(bool visible) { _pausePanel.SetActive(visible); }
-    private void SetSettingPanelVisiable(bool visible) { _settingsPanel.SetActive(visible); }
     private void SetNextButtonVisiale(bool visible) { _nextLevelButton.gameObject.SetActive(visible); }
     private void SetGameFrozen(bool frozen)
     {
@@ -137,9 +128,5 @@ public class PauseMenu : MonoBehaviour
         _restartButton.onClick.AddListener(() => _sceneFlowService.RestartCurrentLevel());
         _mainMenuButton.onClick.AddListener(() => _sceneFlowService.LoadMainMenu());
         _nextLevelButton.onClick.AddListener(() => _sceneFlowService.LoadNextLevel());
-        _settingsButton.onClick.AddListener(OpenSettingsPanel);
-        _closeSettingsButton.onClick.AddListener(CloseSettingsPanel);
     }
-    public void CloseSettingsPanel() { _settingsPanel.SetActive(false); }
-    public void OpenSettingsPanel() { _settingsPanel.SetActive(true); }
 }

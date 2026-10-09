@@ -3,25 +3,24 @@
 public class Trampoline : MonoBehaviour
 {
     [Header("Trampoline Settings")]
-    [SerializeField] private float _launchForce = 14f;     // сила подкидывания
-    [SerializeField] private float _delayBeforeJump = 1f;  // задержка перед запуском
+    [SerializeField] private float _launchForce = 14f;     
+    [SerializeField] private float _delayBeforeJump = 1f;  
 
-    private Animator _animator;  //ссылка
-    private bool _playerOnPlatform = false;  //флаг есть\нет игрока на трамплине
-    private float _timer = 0f;  //таймер перед подбрасыванием
+    private Animator _animator;  
+    private bool _playerOnPlatform = false; 
+    private float _timer = 0f;  
 
     private void Awake()
     {
-        _animator = GetComponent<Animator>(); //ищем компонет
+        _animator = GetComponent<Animator>(); 
     }
 
     private void Update()
     {
-        if (_playerOnPlatform)  //если игрок на месте
+        if (_playerOnPlatform)  
         {
-            _timer += Time.deltaTime;  //увеличиваем таймер
+            _timer += Time.deltaTime;  
 
-            // через секунду — запуск
             if (_timer >= _delayBeforeJump)
             {
                 LaunchPlayer();
@@ -33,17 +32,16 @@ public class Trampoline : MonoBehaviour
 
     private void LaunchPlayer()
     {
-        _animator.SetTrigger("Jump"); // проиграть анимацию
+        _animator.SetTrigger("Jump"); 
 
-        // найти игрока на платформе(в радиусе сверху )
         Collider2D[] cols = Physics2D.OverlapBoxAll(transform.position, new Vector2(1.2f, 0.5f), 0); 
 
-        foreach (var col in cols) //проверяет все колайдеры
+        foreach (var col in cols) 
         {
-            if (col.CompareTag("Player"))   //если игрок
+            if (col.CompareTag("Player"))   
             {
                 Rigidbody2D rb = col.GetComponent<Rigidbody2D>();
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, _launchForce);  //дает скорость равной force
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, _launchForce);  
             }
         }
     }

@@ -1,24 +1,41 @@
 ﻿using TMPro;
 using UnityEngine;
+using Zenject;
 
 public class PlayerHealthUI : MonoBehaviour
 {
     [SerializeField] private TMP_Text _hpText;
-    [SerializeField] private PlayerHealth _playerHealth;
 
-
+    private Player _player;
+    private bool _isSubscribed;
+    [Inject]
+    public void Construct(Player player)
+    {
+        _player = player;
+    }
     private void Start()
     {
-            UpdateText(_playerHealth.CurrentHP, _playerHealth.MaxHealth);
+        Subscribe();
     }
     private void OnEnable()
     {
-        _playerHealth.OnHealthChanged += UpdateText;
+        Subscribe();
     }
     private void OnDisable()
     {
-        _playerHealth.OnHealthChanged -= UpdateText;
+        if (!_isSubscribed)
+            return;
+
+        _player.PlayerHealth.OnHealthChanged -= UpdateText;
+        _isSubscribed = false;
     }
+    private void Subscribe()
+    {
+        _player.PlayerHealth.OnHealthChanged += UpdateText;
+        _isSubscribed = true;
+        UpdateText(_player.PlayerHealth.CurrentHealth, _player.PlayerHealth.MaxHealth);
+    }
+
     private void UpdateText(int current, int max)
     {
         _hpText.SetText("ХП: {0}/{1}", current, max);

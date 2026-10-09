@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyDeath : MonoBehaviour
 {
-    [SerializeField] private float fadeSpeed = 1f; //Скорость затухания
+    [SerializeField] private float fadeSpeed = 1f; 
 
     private SpriteRenderer _sprite;
     private Collider2D _collider;
@@ -28,7 +28,6 @@ public class EnemyDeath : MonoBehaviour
     private void Die()
     {
         _collider.enabled = false;
-        //Останавливет AI врагов
         MonoBehaviour[] behaviours = GetComponents<MonoBehaviour>();
         foreach (MonoBehaviour behaviour in behaviours)
         {
@@ -46,10 +45,10 @@ public class EnemyDeath : MonoBehaviour
     }
     private IEnumerator FadeOut()
     {
-        float alpha = 1f;  //исходные данные
+        float alpha = 1f;  
         while (alpha > 0)
         {
-            alpha -= Time.deltaTime * fadeSpeed; //уменьшаем прозрачность
+            alpha -= Time.deltaTime * fadeSpeed;
 
             _sprite.color = new Color(1, 1, 1, alpha);
             yield return null;

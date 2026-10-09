@@ -1,44 +1,31 @@
-﻿using UnityEngine;
+﻿using System;
 using Zenject;
+using UnityEngine;
 
-public class PlayerAudio : MonoBehaviour
+public sealed class PlayerAudio : IInitializable, IDisposable
 {
-    [SerializeField] private AudioClip _walkStep;
-    [SerializeField] private AudioClip _runStep;
-    [SerializeField] private AudioClip _jumpClip;
-    [SerializeField] private AudioClip _hurtClip;
-    [SerializeField] private AudioClip _deathClip;
-
-    private IAudioService _audioService;
-
-    [Inject]
-    public void Construct(IAudioService audioService)
+    private readonly PlayerConfig _playerConfig;
+    private readonly PlayerHealth _playerHealth;
+    private readonly IAudioService _audioService;
+    public PlayerAudio(PlayerConfig playerConfig, PlayerHealth playerHealth, IAudioService audioService)
     {
+        _playerConfig = playerConfig;
+        _playerHealth = playerHealth;
         _audioService = audioService;
     }
-
-    public void PlayWalkStep()
+    public void Initialize()
     {
-        _audioService?.PlaySFX(_walkStep);
+        _playerHealth.OnDamaged += PlayHurt;
+        _playerHealth.OnDeath += PlayDeath;
     }
-
-    public void PlayRunStep()
+    public void Dispose()
     {
-        _audioService?.PlaySFX(_runStep);
+        _playerHealth.OnDamaged -= PlayHurt;
+        _playerHealth.OnDeath -= PlayDeath;
     }
-
-    public void PlayJump()
-    {
-        _audioService?.PlaySFX(_jumpClip);
-    }
-
-    public void PlayHurt()
-    {
-        _audioService?.PlaySFX(_hurtClip);
-    }
-
-    public void PlayDeath()
-    {
-        _audioService?.PlaySFX(_deathClip);
-    }
+    public void PlayWalkStep() { _audioService.PlaySFX(_playerConfig.WalkStep); }
+    public void PlayRunStep() { _audioService.PlaySFX(_playerConfig.RunStep); }
+    public void  PlayJump() { _audioService.PlaySFX(_playerConfig.JumpClip); }
+    private void PlayHurt(Vector2 _) { _audioService.PlaySFX(_playerConfig.HurtClip); }
+    private void PlayDeath() { _audioService.PlaySFX(_playerConfig.DeathClip); }
 }

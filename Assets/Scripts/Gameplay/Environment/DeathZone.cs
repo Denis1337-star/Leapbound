@@ -2,12 +2,11 @@
 
 public class DeathZone : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (!col.CompareTag("Player")) return;
+        if (!collider.CompareTag("Player")) return;
 
-        var player = col.GetComponent<PlayerHealth>();
-        if (player != null)
-            player.Kill();
+        if (collider.TryGetComponent(out Player player))
+            player.PlayerHealth.Kill();
     }
 }

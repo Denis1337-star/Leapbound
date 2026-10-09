@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8484953fba5ec434eb209635a1a0c78e, type: 3}
+  m_Name: PlayerConfig
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
+  WalkSpeed: 7
+  RunSpeed: 12
+  CrawlSpeedMultiplier: 0.5
+  JumpForce: 25
+  GroundCheckRadius: 0.5
+  CeilingCheckRadius: 0.5
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  StandardSize: {x: 1.35, y: 2}
+  StandardOffset: {x: 0, y: 1}
+  CrouchSize: {x: 1.35, y: 1}
+  CrouchOffset: {x: 0, y: 0.7}
+  MaxHealth: 100
+  KnockbackForce: 6
+  InvincibleTime: 1
+  DamageColor: {r: 1, g: 0, b: 0, a: 1}
+  NormalColor: {r: 1, g: 1, b: 1, a: 1}
+  WalkStep: {fileID: 8300000, guid: 56684981319f43148878a1d8b54c8104, type: 3}
+  RunStep: {fileID: 8300000, guid: bfef15295ae00c14b8e471601cdba233, type: 3}
+  JumpClip: {fileID: 8300000, guid: 114815f30efd8b54eb460f2d178c0957, type: 3}
+  HurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
+  DeathClip: {fileID: 8300000, guid: 349add1a39df26647aeb4433952199d8, type: 3}

@@ -12,7 +12,7 @@ public abstract class EnemyBase : MonoBehaviour
     public event Action OnDeath;
     public int MaxHealth => _maxHealth;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         CurrentHP = _maxHealth;
     }

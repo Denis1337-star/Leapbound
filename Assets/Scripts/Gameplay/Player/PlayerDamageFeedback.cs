@@ -1,68 +1,75 @@
-﻿using System.Collections;
+﻿using System;
 using UnityEngine;
+using Zenject;
 
 
-//Визуальны эффект получения урона игроком
-[RequireComponent (typeof(PlayerHealth))]
-public class PlayerDamageFeedback : MonoBehaviour
+
+public sealed class PlayerDamageFeedback : IInitializable, ITickable, IDisposable
 {
-    [SerializeField] private float _knockbackForce = 6f; //Сила отбрасывания
-    [SerializeField] private float _invincibleTime = 1f; //Время после урона в неузявимости
-    [SerializeField] private Color _damageColor = Color.red;  //Цвет спрайта при получение урона
-    [SerializeField] private Color _normalColor = Color.white;  //Исходный цвет
-
-    private Rigidbody2D _rb;
-    private SpriteRenderer _sprite;
-    private PlayerHealth _health;
-    private PlayerAudio _audioSource;
-    private void Awake()
+    private readonly Player _player;
+    private readonly PlayerConfig _playerConfig;
+    private readonly PlayerHealth _playerHealth;
+    private bool _isBlinking;
+    private float _invincibleTimer;
+    private float _blinkTimer;
+    private bool _spriteVisible = true;
+    public PlayerDamageFeedback(Player player, PlayerConfig playerConfig, PlayerHealth playerHealth)
     {
-        _rb = GetComponent<Rigidbody2D>();
-        _sprite = GetComponent<SpriteRenderer>();
-        _health = GetComponent<PlayerHealth>();
-        _audioSource = GetComponent<PlayerAudio>();
+        _player = player;
+        _playerConfig = playerConfig;
+        _playerHealth = playerHealth;
     }
-
-    //При активации обьекта
-    private void OnEnable()
+    public void Initialize()
     {
-        //При срабатывании OnDamaged 
-        _health.OnDamaged += StartDamageEffect;
+        _playerHealth.OnDamaged += OnDamaged;
+        _playerHealth.OnDeath += StopBlink;
     }
-    private void OnDisable()
+    public void Dispose()
     {
-       _health.OnDamaged -= StartDamageEffect;
+        _playerHealth.OnDamaged -= OnDamaged;
+        _playerHealth.OnDeath -= StopBlink;
     }
-    private void StartDamageEffect(Vector2 hitDir)
+    public void Tick()
     {
-        StopAllCoroutines(); //чтобы избежать наложение эффекта
-        StartCoroutine(DamageEffect(hitDir));
-        
-    }
-    private IEnumerator DamageEffect(Vector2 hitDir)
-    {
+        if (!_isBlinking)
+            return;
 
-        _audioSource?.PlayHurt(); //Звук урона
-        _health.SetInvincible(true); //Неязвим на время
+        _invincibleTimer -= Time.deltaTime;
+        _blinkTimer -= Time.deltaTime;
 
-        //Обнуляем текущию скоростьи применяем силу отбрасывания
-        _rb.linearVelocity = Vector2.zero;
-        _rb.AddForce(hitDir.normalized * _knockbackForce,ForceMode2D.Impulse);
-
-        _sprite.color = _damageColor;  //меняем цвет
-
-        //эффект мигания
-        float timer = _invincibleTime;
-        while (timer > 0)
+        if (_blinkTimer <= 0f)
         {
-            _sprite.enabled = false;
-            yield return new WaitForSeconds(0.08f); 
-            _sprite.enabled = true;
-            yield return new WaitForSeconds(0.08f); 
-            timer -= 0.16f; 
+            _spriteVisible = !_spriteVisible;
+            _player.SpriteRenderer.enabled = _spriteVisible;
+            _blinkTimer = 0.08f;
         }
-        //возрощаем исходные данные
-        _sprite.color = _normalColor;
-        _health.SetInvincible(false);
-    }    
+
+        if (_invincibleTimer > 0f)
+            return;
+
+        _isBlinking = false;
+        _player.SpriteRenderer.enabled = true;
+        _player.SpriteRenderer.color = _playerConfig.NormalColor;
+        _playerHealth.SetInvincible(false);
+    }
+    private void OnDamaged(Vector2 hitDirection)
+    {
+        _playerHealth.SetInvincible(true);
+        _player.Rigidbody.linearVelocity = Vector2.zero;
+        _player.Rigidbody.AddForce(hitDirection.normalized * _playerConfig.KnockbackForce,
+            ForceMode2D.Impulse);
+
+        _player.SpriteRenderer.color = _playerConfig.DamageColor;
+        _isBlinking = true;
+        _invincibleTimer = _playerConfig.InvincibleTime;
+        _blinkTimer = 0.08f;
+        _spriteVisible = false;
+        _player.SpriteRenderer.enabled = false;
+    }
+    private void StopBlink()
+    {
+        _isBlinking = false;
+        _player.SpriteRenderer.enabled = true;
+    }
+
 }
