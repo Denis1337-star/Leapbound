@@ -1,49 +1,20 @@
 ﻿using UnityEngine;
-using Zenject;
-
-public class EnemyAudio : MonoBehaviour
+public sealed class EnemyAudio 
 {
-    [SerializeField] private AudioClip _hurtClip;
-    [SerializeField] private AudioClip _deathClip;
+    private readonly IAudioService _audioService;
+    private readonly AudioClip _hurtClip;
+    private readonly AudioClip _deathClip;
 
-    private IAudioService _audioService;
-    private EnemyBase _enemy;
-
-    [Inject]
-    public void Construct(IAudioService audioService)
+    public EnemyAudio(IAudioService audioService, AudioClip hurtClip, AudioClip deathClip)
     {
         _audioService = audioService;
-    }
-    private void Awake()
-    {
-        _enemy = GetComponent<EnemyBase>();
+        _hurtClip = hurtClip;
+        _deathClip = deathClip;
     }
 
-    private void OnEnable()
-    {
-        _enemy.OnDamaged += OnDamaged;
-        _enemy.OnDeath += OnDeath;
-    }
+    public void PlayHurt(Vector2 _) { Play(_hurtClip); }
 
-    private void OnDisable()
-    {
-        _enemy.OnDamaged -= OnDamaged;
-        _enemy.OnDeath -= OnDeath;
-    }
+    public void PlayDeath() { Play(_deathClip); }
 
-    private void OnDamaged(Vector2 _)
-    {
-        Play(_hurtClip);
-    }
-
-    private void OnDeath()
-    {
-        Play(_deathClip);
-    }
-
-    private void Play(AudioClip clip)
-    {
-        if (clip)
-            _audioService.PlaySFX(clip);
-    }
+    private void Play(AudioClip clip) { _audioService.PlaySFX(clip); }
 }

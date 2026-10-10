@@ -43,7 +43,6 @@ GameObject:
   - component: {fileID: 7745538792665073270}
   - component: {fileID: 6439507509562151277}
   - component: {fileID: 2333020069232292816}
-  - component: {fileID: 2370523352001548230}
   m_Layer: 0
   m_Name: PlaintEnemy
   m_TagString: Untagged
@@ -160,24 +159,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba9fc6a5be05874982468a8c983dcf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlantEnemy
-  maxHealth: 50
+  _maxHealth: 50
+  _spriteRenderer: {fileID: 7745538792665073270}
+  _hostCollider: {fileID: 0}
+  _animator: {fileID: 6439507509562151277}
+  _hurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
+  _deathClip: {fileID: 8300000, guid: b1735d1292ec4e04983427dce0f844ed, type: 3}
   _firePoint: {fileID: 4991463169880435521}
   _fireInterval: 1.5
   _shootDirection: {x: -1, y: 0}
   _bulletPoolRoot: {fileID: 4991463169880435521}
   _bulletPrefab: {fileID: 7734287715752573909, guid: 3c173bb323780374ebe6b7a04dc5d631, type: 3}
   _poolSize: 5
---- !u!114 &2370523352001548230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3372245646393290305}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebf941b0bf656f44ba5e5933c8af6df0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAudio
-  _hurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
-  _deathClip: {fileID: 8300000, guid: b1735d1292ec4e04983427dce0f844ed, type: 3}

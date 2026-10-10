@@ -1,8 +1,8 @@
 ﻿public interface ISettingsService 
 {
-    float GetMusicValue();
-    float GetSFXValue();
-    void SetMusicValue(float value);
-    void SetSFXValue(float value);
+    float MusicVolume { get; }
+    float SfxVolume { get; }
+    void SetMusicVolume(float value);
+    void SetSfxVolume(float value);
 
 }

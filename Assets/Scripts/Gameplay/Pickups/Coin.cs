@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class Coin : MonoBehaviour
+public sealed class Coin : MonoBehaviour
 {
     [SerializeField] private int _value = 10;
 
     private IScoreService _scoreService;
+    private bool _isCollected;
 
     [Inject]
     public void Construct(IScoreService scoreService)
@@ -15,8 +16,13 @@ public class Coin : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (_isCollected)
+            return;
 
+        if (!other.TryGetComponent(out Player player))
+            return;
+
+        _isCollected = true;
         _scoreService.Add(_value);
         gameObject.SetActive(false);
     }

@@ -3,7 +3,8 @@ using Zenject;
 
 public class SceneInstaller : MonoInstaller
 {
-    [SerializeField] private Player _player; 
+    [SerializeField] private Player _player;
+    [SerializeField] private int _threeStarScore;
     public override void InstallBindings()
     {
         Container.Bind<Player>().FromInstance(_player).AsSingle();
@@ -18,6 +19,7 @@ public class SceneInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<ScoreService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<GameStateService>().AsSingle().NonLazy();
+        Container.Bind<LevelStarCalculator>().AsSingle().WithArguments(_threeStarScore);
 
      
     }

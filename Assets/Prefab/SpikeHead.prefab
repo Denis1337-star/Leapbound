@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 2332757187373441867}
   - component: {fileID: 966321506925095644}
   - component: {fileID: 3703784657698138585}
-  - component: {fileID: 796322427563573616}
   - component: {fileID: 7894877119892205866}
   - component: {fileID: 1654188629518671304}
+  - component: {fileID: 1221058663025283659}
+  - component: {fileID: 3135294341173547012}
   m_Layer: 0
   m_Name: SpikeHead
   m_TagString: Untagged
@@ -117,8 +118,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &796322427563573616
-PolygonCollider2D:
+--- !u!114 &7894877119892205866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3840053161538930460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42308b9717c44334fb53a97fb9695ab2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 3135294341173547012}
+  _pointA: {fileID: 0}
+  _pointB: {fileID: 0}
+  _speed: 2
+--- !u!114 &1654188629518671304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3840053161538930460}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e387ad94fbb3894b8d7e4d09e342866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathZone
+--- !u!61 &1221058663025283659
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -151,56 +180,42 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.025084019, y: -0.030234694}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.54, y: 0.52}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 3.375, y: 3.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 2.524303, y: 1.4295266}
-      - {x: 1.6897035, y: 1.7144814}
-      - {x: 1.4647622, y: 2.4521594}
-      - {x: -1, y: 2.4169226}
-      - {x: -1.3926189, y: 2.1493044}
-      - {x: -1.7264643, y: 1.6585652}
-      - {x: -2.3464496, y: 1.2114202}
-      - {x: -2.3112133, y: -1.0369081}
-      - {x: -1.638372, y: -1.7290388}
-      - {x: -1.0192904, y: -2.4185948}
-      - {x: 1.375, y: -2.4538305}
-      - {x: 1.8131089, y: -1.7514453}
-      - {x: 2.5066848, y: -1.3221453}
-  m_UseDelaunayMesh: 0
---- !u!114 &7894877119892205866
-MonoBehaviour:
+  m_Size: {x: 2.68571, y: 2.6897485}
+  m_EdgeRadius: 0
+--- !u!50 &3135294341173547012
+Rigidbody2D:
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3840053161538930460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42308b9717c44334fb53a97fb9695ab2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pointA: {fileID: 0}
-  _pointB: {fileID: 0}
-  _speed: 2
---- !u!114 &1654188629518671304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3840053161538930460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e387ad94fbb3894b8d7e4d09e342866, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DeathZone
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 1
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4

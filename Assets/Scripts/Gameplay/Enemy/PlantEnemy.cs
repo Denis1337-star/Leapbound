@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PlantEnemy : EnemyBase
+public sealed class PlantEnemy : EnemyBase
 {
-    [Header("Shooting")]
     [SerializeField] private Transform _firePoint;
     [SerializeField] private float _fireInterval = 1.5f;
     [SerializeField] private Vector2 _shootDirection = Vector2.left;
-    [SerializeField] private Transform _bulletPoolRoot;
     [SerializeField] private PlantBullet _bulletPrefab;
     [SerializeField] private int _poolSize;
 
@@ -21,6 +19,9 @@ public class PlantEnemy : EnemyBase
 
     private void Update()
     {
+        if (IsDead)
+            return;
+
         _timer += Time.deltaTime;
         if (_timer >= _fireInterval)
         {
@@ -33,11 +34,7 @@ public class PlantEnemy : EnemyBase
     {
         PlantBullet bullet = GetBulletFromPool();
         if (bullet == null) return;
-
-        bullet.transform.position = _firePoint.position;
-        bullet.transform.rotation = Quaternion.identity;
-
-        bullet.Setup(_shootDirection);
+        bullet.Launch(_shootDirection);
     }
     private void InitializePool()
     {
@@ -45,7 +42,8 @@ public class PlantEnemy : EnemyBase
 
         while (_bulletPoolList.Count < _poolSize)
         {
-            PlantBullet newBullet = Instantiate(_bulletPrefab, _bulletPoolRoot.position, Quaternion.identity, _bulletPoolRoot);
+            PlantBullet newBullet = Instantiate(_bulletPrefab, _firePoint);
+            newBullet.transform.localPosition = Vector3.zero;
             newBullet.gameObject.SetActive(false);
             _bulletPoolList.Add(newBullet);
         }
@@ -55,10 +53,9 @@ public class PlantEnemy : EnemyBase
         for(int i = 0; i<_bulletPoolList.Count; i++)
         {
             PlantBullet bullet = _bulletPoolList[i];
-            if (bullet == null) continue;
-            if (!bullet.gameObject.activeInHierarchy)
+            if (bullet != null && !bullet.gameObject.activeInHierarchy) 
                 return bullet;
         }
-        return _bulletPoolList[0];
+        return null;
     }
 }

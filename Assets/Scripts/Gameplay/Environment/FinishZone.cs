@@ -2,27 +2,38 @@
 using UnityEngine.SceneManagement;
 using Zenject;
 
-public class FinishZone : MonoBehaviour
+public sealed class FinishZone : MonoBehaviour
 {
     private IScoreService _scoreService;
-    private IGameStateService _gameState;
+    private IGameStateService _gameStateService;
+    private LevelResultManager _levelResultManager;
+    private LevelStarCalculator _levelStarCalculator;
+    private bool _isCompleted;
 
     [Inject]
-    public void Construct(IScoreService scoreService, IGameStateService gameState)
+    public void Construct(IScoreService scoreService, IGameStateService gameState,
+        LevelResultManager levelResultManager, LevelStarCalculator levelStarCalculator)
     {
         _scoreService = scoreService;
-        _gameState = gameState;
+        _gameStateService = gameState;
+        _levelResultManager = levelResultManager;
+        _levelStarCalculator = levelStarCalculator;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (_isCompleted)
+            return;
 
-        _gameState.Win();
+        if (!other.TryGetComponent(out Player player)) 
+            return;
 
-        int stars = LevelStarCalculator.Calculate(_scoreService.Score);
+        _isCompleted = true;
+        player.FreezeBody();
+        _gameStateService.Win();
 
         Scene scene = SceneManager.GetActiveScene();
-        LevelResultManager.SaveLevelResult(scene.name, scene.buildIndex, stars);
+        int stars = _levelStarCalculator.Calculate(_scoreService.Score);
+        _levelResultManager.SaveLevelResult(scene.name, scene.buildIndex, stars);
     }
 }

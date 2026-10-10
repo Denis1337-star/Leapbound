@@ -18,15 +18,17 @@ public class PauseMenu : MonoBehaviour
     private IScoreService _scoreService;
     private IGameStateService _gameStateService;
     private IInputService _inputService;
+    private LevelStarCalculator _levelStarCalculator;
 
     [Inject]
     public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService,
-        IGameStateService gameStateService, IInputService inputService)
+        IGameStateService gameStateService, IInputService inputService, LevelStarCalculator levelStarCalculator)
     {
         _sceneFlowService = sceneFlowService;
         _scoreService = scoreService;
         _gameStateService = gameStateService;
         _inputService = inputService;
+        _levelStarCalculator = levelStarCalculator;
     }
     private void Awake()
     {
@@ -56,18 +58,13 @@ public class PauseMenu : MonoBehaviour
         {
             case GameState.Win:
                 _statusText.SetText("ТЫ ПОБЕДИЛ");
-                ShowStars(LevelStarCalculator.Calculate(_scoreService.Score));
-                SetNextButtonVisiale(true);
+                ShowStars(_levelStarCalculator.Calculate(_scoreService.Score));
+                SetNextButtonVisible(true);
                 SetPausePanelVisible(true);
                 SetGameFrozen(true);
                 break;
 
             case GameState.Lose:
-                _statusText.SetText("ТЫ ПРОИГРАЛ");
-                ShowStars(0);
-                SetNextButtonVisiale(false);
-                SetPausePanelVisible(true);
-                SetGameFrozen(true);
                 break;
 
             case GameState.Paused:
@@ -93,13 +90,13 @@ public class PauseMenu : MonoBehaviour
         if (currentGameState == GameState.Playing)
             _gameStateService.SetPaused(true);
         else if (currentGameState == GameState.Paused)
-            _gameStateService.SetPaused(true);
+            _gameStateService.SetPaused(false);
     }
     private void ResetAllUI()
     {
         SetGameFrozen(false);
         SetPausePanelVisible(false);
-        SetNextButtonVisiale(false);
+        SetNextButtonVisible(false);
         ShowStars(0);
 
     }
@@ -113,7 +110,7 @@ public class PauseMenu : MonoBehaviour
             _stars[i].enabled = i < count;
     }
     private void SetPausePanelVisible(bool visible) { _pausePanel.SetActive(visible); }
-    private void SetNextButtonVisiale(bool visible) { _nextLevelButton.gameObject.SetActive(visible); }
+    private void SetNextButtonVisible(bool visible) { _nextLevelButton.gameObject.SetActive(visible); }
     private void SetGameFrozen(bool frozen)
     {
         if (frozen)

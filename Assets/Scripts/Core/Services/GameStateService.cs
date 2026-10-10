@@ -12,18 +12,9 @@ public sealed class GameStateService : IGameStateService
         else
             ChangeState(GameState.Playing);
     }
-    public void Win()
-    {
-        ChangeState(GameState.Win);
-    }
-    public void Lose()
-    {
-        ChangeState(GameState.Lose);
-    }
-    public void Reset()
-    {
-        ChangeState(GameState.Playing);
-    }
+    public void Win() { ChangeState(GameState.Win); }
+    public void Lose() { ChangeState(GameState.Lose); }
+    public void Reset() { ChangeState(GameState.Playing); }
     private void ChangeState(GameState newState)
     {
         if (CurrentState == newState)

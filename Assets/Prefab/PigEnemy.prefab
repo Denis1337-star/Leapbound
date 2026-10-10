@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 5266498211581707342}
   - component: {fileID: 5502286411287795606}
   - component: {fileID: 5677045281195420601}
-  - component: {fileID: 8983770465477680857}
-  - component: {fileID: 623038214662215228}
   - component: {fileID: 5323270887291671975}
   m_Layer: 6
   m_Name: PigEnemy
@@ -129,7 +127,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 1993252380459878518}
   m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
@@ -142,9 +140,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &5677045281195420601
 BoxCollider2D:
@@ -192,33 +190,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.696852, y: 1.7796297}
   m_EdgeRadius: 0
---- !u!114 &8983770465477680857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993252380459878518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebf941b0bf656f44ba5e5933c8af6df0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAudio
-  _hurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
-  _deathClip: {fileID: 8300000, guid: b1735d1292ec4e04983427dce0f844ed, type: 3}
---- !u!114 &623038214662215228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993252380459878518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 416b83b27f7b17b47a6d117be7567a7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyDeath
-  fadeSpeed: 2
 --- !u!114 &5323270887291671975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,9 +203,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PigEnemy
   _maxHealth: 50
+  _spriteRenderer: {fileID: 3716346366750663592}
+  _hostCollider: {fileID: 5677045281195420601}
+  _animator: {fileID: 5266498211581707342}
+  _hurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
+  _deathClip: {fileID: 8300000, guid: b1735d1292ec4e04983427dce0f844ed, type: 3}
+  _rigidbody: {fileID: 5502286411287795606}
   _pointA: {fileID: 0}
   _pointB: {fileID: 0}
   _speed: 2
   _damage: 50
-  _sprite: {fileID: 3716346366750663592}
-  _collider: {fileID: 5677045281195420601}

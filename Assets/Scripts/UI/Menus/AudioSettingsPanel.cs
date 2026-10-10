@@ -25,14 +25,8 @@ public class AudioSettingsPanel : MonoBehaviour
     {
         if (_isBound) return;
 
-        if (_musicSlider == null || _sfxSlider == null)
-        {
-            Debug.LogError($"{name} Sliders is miss");
-            return;
-        }
-
-        _musicSlider.SetValueWithoutNotify(_settingsService.GetMusicValue());
-        _sfxSlider.SetValueWithoutNotify(_settingsService.GetSFXValue());
+        _musicSlider.SetValueWithoutNotify(_settingsService.MusicVolume);
+        _sfxSlider.SetValueWithoutNotify(_settingsService.SfxVolume);
 
         _musicSlider.onValueChanged.AddListener(OnMusicChanged);
         _sfxSlider.onValueChanged.AddListener(OnSfxChanged);
@@ -41,20 +35,11 @@ public class AudioSettingsPanel : MonoBehaviour
     }
     private void OnDisable()
     {
-        if (_musicSlider != null)
-            _musicSlider.onValueChanged.RemoveListener(OnMusicChanged);
-
-        if (_sfxSlider != null)
-            _sfxSlider.onValueChanged.RemoveListener(OnSfxChanged);
+        _musicSlider.onValueChanged.RemoveListener(OnMusicChanged);
+        _sfxSlider.onValueChanged.RemoveListener(OnSfxChanged);
 
         _isBound = false;
     }
-    private void OnMusicChanged(float value)
-    {
-        _settingsService.SetMusicValue(value);
-    }
-    private void OnSfxChanged(float value)
-    {
-        _settingsService.SetSFXValue(value);
-    }
+    private void OnMusicChanged(float value) { _settingsService.SetMusicVolume(value); }
+    private void OnSfxChanged(float value) { _settingsService.SetSfxVolume(value); }
 }

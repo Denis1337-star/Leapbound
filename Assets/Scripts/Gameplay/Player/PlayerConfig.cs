@@ -22,6 +22,7 @@ public sealed class PlayerConfig : ScriptableObject
     [Header("Hit")]
     public float KnockbackForce = 6f;
     public float InvincibleTime = 1f;
+    public float KnockbackLockTime = 0.2f;
     public Color DamageColor = Color.red;
     public Color NormalColor = Color.white;
     [Header("Audio")]

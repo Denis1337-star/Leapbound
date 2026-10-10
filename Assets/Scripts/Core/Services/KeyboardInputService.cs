@@ -18,8 +18,5 @@ public class KeyboardInputService : IInputService, ITickable
         if (Input.GetKeyDown(KeyCode.Escape))
             PausedRequested?.Invoke();
     }
-    public void ConsumeJump()
-    {
-        JumpPressed = false;
-    }
+    public void ConsumeJump() { JumpPressed = false; }
 }

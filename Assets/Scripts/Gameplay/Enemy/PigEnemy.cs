@@ -1,14 +1,12 @@
 ﻿using UnityEngine;
 
-public class PigEnemy : EnemyBase
+public sealed class PigEnemy : EnemyBase
 {
+    [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private Transform _pointA;
     [SerializeField] private Transform _pointB;
     [SerializeField] private float _speed = 2f;
     [SerializeField] private int _damage = 50;
-    [SerializeField] private SpriteRenderer _sprite;
-    [SerializeField] private Collider2D _collider;
-
     private Vector3 _target;
 
     protected override void Awake()
@@ -17,40 +15,57 @@ public class PigEnemy : EnemyBase
         _target = _pointB.position;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        if (IsDead)
+            return;
+
         Patrol();
     }
 
     private void Patrol()
     {
-        transform.position = Vector3.MoveTowards(transform.position,
-            _target,_speed * Time.deltaTime);
+        Vector2 currentPosition = _rigidbody.position;
+        Vector2 nextPosition = Vector2.MoveTowards(currentPosition, _target,
+            _speed * Time.fixedDeltaTime);
 
-        if (Vector3.Distance(transform.position, _target) < 0.05f)
-        {
-            _target = _target == _pointA.position ? _pointB.position : _pointA.position;
-            _sprite.flipX = !_sprite.flipX;
-        }
+        _rigidbody.MovePosition(nextPosition);
+        FaceMovement(nextPosition.x - currentPosition.x);
+
+        if (Vector2.Distance(nextPosition, _target) > 0.05f)
+            return;
+
+        bool targetIsPointA = Vector2.Distance(_target, _pointA.position) < 0.1f;
+        if (targetIsPointA)
+            _target = _pointB.position;
+        else
+            _target = _pointA.position;
+       
+    }
+    private void FaceMovement(float deltaX)
+    {
+        if (deltaX > 0.01f)
+            Sprite.flipX = true;
+        else if (deltaX < -0.01f)
+            Sprite.flipX = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.collider.CompareTag("Player"))
+        if (!collision.collider.TryGetComponent(out Player player))
             return;
 
-        float playerBottom = collision.collider.bounds.min.y;
-        float enemyTop = _collider.bounds.max.y;
+        float playerBottom = player.BodyCollider.bounds.min.y;
+        float enemyTop = BodyCollider.bounds.max.y;
 
 
         if (playerBottom > enemyTop - 0.05f)
         {
             TakeDamage(MaxHealth, Vector2.up);
+            return;
         }
-        else if(collision.collider.TryGetComponent(out Player player))
-        {
-                Vector2 hitDirection = (player.transform.position - transform.position).normalized;
-                player.PlayerHealth.TakeDamage(_damage, hitDirection);
-        }
+
+        Vector2 hitDirection = (player.transform.position - transform.position).normalized;
+        player.PlayerHealth.TakeDamage(_damage, hitDirection);
     }
 }

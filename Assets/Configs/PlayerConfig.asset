@@ -16,13 +16,13 @@ MonoBehaviour:
   RunSpeed: 12
   CrawlSpeedMultiplier: 0.5
   JumpForce: 25
-  GroundCheckRadius: 0.5
-  CeilingCheckRadius: 0.5
+  GroundCheckRadius: 0.2
+  CeilingCheckRadius: 0.2
   GroundLayer:
     serializedVersion: 2
     m_Bits: 8
-  StandardSize: {x: 1.35, y: 2}
-  StandardOffset: {x: 0, y: 1}
+  StandardSize: {x: 1.35, y: 1.75}
+  StandardOffset: {x: 0, y: 0.87}
   CrouchSize: {x: 1.35, y: 1}
   CrouchOffset: {x: 0, y: 0.7}
   MaxHealth: 100

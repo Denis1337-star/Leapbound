@@ -7,23 +7,30 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     private readonly PlayerConfig _playerConfig;
     private readonly IInputService _inputService;
     private readonly PlayerAudio _playerAudio;
+    private readonly IGameStateService _gameStateService;
+    private readonly PlayerDamageFeedback _playerDamageFeedback;
     public float MoveDirection { get; private set; }
     public bool IsRunButtonHeld { get; private set; }
     public bool IsCrouchButtonHeld { get; private set; }
     public bool WasJumpPressed { get; private set; }
-    public bool IsOnGrounded { get; private set; }
+    public bool IsOnGround { get; private set; }
     public bool IsCrouching { get; private set; }
     public bool IsBlockedByCeiling { get; private set; }
-    public PlayerMotor(Player player, PlayerConfig playerConfig, IInputService inputService, PlayerAudio playerAudio)
+    public PlayerMotor(Player player, PlayerConfig playerConfig, IInputService inputService, PlayerAudio playerAudio,
+        IGameStateService gameStateService, PlayerDamageFeedback playerDamageFeedback)
     {
         _player = player;
         _playerConfig = playerConfig;
         _inputService = inputService;
         _playerAudio = playerAudio;
+        _gameStateService = gameStateService;
+        _playerDamageFeedback = playerDamageFeedback;
     }
     public void Tick()
     {
         if (_player.PlayerHealth.CurrentHealth <= 0)
+            return;
+        if (_gameStateService.CurrentState != GameState.Playing)
             return;
 
         ReadInput();
@@ -32,6 +39,11 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     }
     public void FixedTick()
     {
+        if (_player.PlayerHealth.CurrentHealth <= 0)
+            return;
+        if (_gameStateService.CurrentState != GameState.Playing)
+            return;
+
         ApplyMovement();
     }
     private void ReadInput()
@@ -43,7 +55,7 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     }
     private void UpdateCrouchState()
     {
-        IsOnGrounded = Physics2D.OverlapCircle(_player.GroundCheckAnchor.position,
+        IsOnGround = Physics2D.OverlapCircle(_player.GroundCheckAnchor.position,
     _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
 
         IsBlockedByCeiling = Physics2D.OverlapCircle(_player.CeilingCheckAnchor.position,
@@ -58,7 +70,7 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     }
     private void ProcessJump()
     {
-        if (!WasJumpPressed || !IsOnGrounded || IsCrouching)
+        if (!WasJumpPressed || !IsOnGround || IsCrouching)
             return;
 
         _player.Rigidbody.AddForce(Vector2.up * _playerConfig.JumpForce, ForceMode2D.Impulse);
@@ -67,6 +79,9 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     }
     private void ApplyMovement()
     {
+        if (_playerDamageFeedback.IsInKnockback)
+            return;
+
         float moveSpeed;
         if (IsRunButtonHeld)
             moveSpeed = _playerConfig.RunSpeed;

@@ -1,58 +1,41 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-
-public class EnemyDeath : MonoBehaviour
+public sealed class EnemyDeath 
 {
-    [SerializeField] private float fadeSpeed = 1f; 
-
-    private SpriteRenderer _sprite;
-    private Collider2D _collider;
-    private EnemyBase _enemyBase;
-    private void Awake()
+    private readonly MonoBehaviour _host;
+    private readonly SpriteRenderer _spriteRenderer;
+    private readonly Collider2D _collider;
+    private readonly Animator _animator;
+    private readonly float _fadeSpeed;
+    public EnemyDeath(MonoBehaviour host, SpriteRenderer sprite, Collider2D collider, Animator animator, float fadeSpeed)
     {
-        _sprite = GetComponent<SpriteRenderer>();
-        _collider = GetComponent<Collider2D>();
-        _enemyBase = GetComponent<EnemyBase>();
+        _host = host;
+        _spriteRenderer = sprite;
+        _collider = collider;
+        _animator = animator;
+        _fadeSpeed = fadeSpeed;
     }
-
-    private void OnEnable()
-    {
-        _enemyBase.OnDeath += Die;
-    }
-
-    private void OnDisable()
-    {
-        _enemyBase.OnDeath -= Die;
-    }
-    private void Die()
+    public void Begin()
     {
         _collider.enabled = false;
-        MonoBehaviour[] behaviours = GetComponents<MonoBehaviour>();
-        foreach (MonoBehaviour behaviour in behaviours)
-        {
-            if(behaviour ==this)
-                continue;
+        _animator.enabled = false;
 
-            behaviour.enabled = false;
-        }
-        
-        Animator animator = GetComponent<Animator>();
-        if(animator != null)
-            animator.enabled = false;
-
-        StartCoroutine(FadeOut());  
+       _host.StartCoroutine(FadeOut());
     }
+
     private IEnumerator FadeOut()
     {
-        float alpha = 1f;  
+        Color color = _spriteRenderer.color;
+        float alpha = color.a;
+
         while (alpha > 0)
         {
-            alpha -= Time.deltaTime * fadeSpeed;
-
-            _sprite.color = new Color(1, 1, 1, alpha);
+            alpha -= Time.deltaTime * _fadeSpeed;
+            color.a = alpha;
+            _spriteRenderer.color = color;
             yield return null;
         }
-        Destroy(gameObject);
+       _host.gameObject.SetActive(false);
     }
 }

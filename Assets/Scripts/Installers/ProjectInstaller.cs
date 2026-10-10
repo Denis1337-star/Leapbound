@@ -21,5 +21,8 @@ public class ProjectInstaller : MonoInstaller
 
         Container.BindInterfacesTo<KeyboardInputService>()
          .AsSingle();
+
+        Container.Bind<LevelResultManager>()
+            .AsSingle();
     }
 }

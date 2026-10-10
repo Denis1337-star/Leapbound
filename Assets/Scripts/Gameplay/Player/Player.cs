@@ -45,6 +45,12 @@ public sealed class Player : MonoBehaviour
         _bodyCollider.size = _playerConfig.StandardSize;
         _bodyCollider.offset = _playerConfig.StandardOffset;
     }
+    public void FreezeBody()
+    {
+        _rigidbody.linearVelocity = Vector2.zero;
+        _rigidbody.angularVelocity = 0f;
+        _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (!collision.collider.TryGetComponent(out Platform platform))

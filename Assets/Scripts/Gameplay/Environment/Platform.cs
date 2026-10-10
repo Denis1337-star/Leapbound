@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Platform : MonoBehaviour
+public sealed class Platform : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private Transform _pointA;  
@@ -16,11 +16,11 @@ public class Platform : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 curerentPosition = _rigidbody.position;
+        Vector2 currentPosition = _rigidbody.position;
         Vector2 nextPosition = Vector2.MoveTowards(_rigidbody.position,
             _target, _speed * Time.fixedDeltaTime);
 
-        Velocity = (nextPosition - curerentPosition) / Time.fixedDeltaTime;
+        Velocity = (nextPosition - currentPosition) / Time.fixedDeltaTime;
         _rigidbody.MovePosition(nextPosition);
 
         if (Vector2.Distance(nextPosition, _target) > 0.05f)

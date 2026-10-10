@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Zenject;
 
@@ -7,67 +8,81 @@ public class MainMenuUI : MonoBehaviour
     [System.Serializable]
     public class LevelButton
     {
-        public string levelName;  
-        public int levelIndex; 
-        public Button button;  
-        public Image[] stars;  
+        [SerializeField,FormerlySerializedAs("levelName")]
+        private string _levelName;
+        [SerializeField, FormerlySerializedAs("levelIndex")]
+        private int _levelIndex;
+        [SerializeField, FormerlySerializedAs("button")]
+        private Button _button;
+        [SerializeField, FormerlySerializedAs("star")]
+        private Image[] _stars;
+        public string LevelName => _levelName;
+        public int LevelIndex => _levelIndex;
+        public Button Button => _button;
+        public Image[] Stars => _stars;
     }
 
     [SerializeField] private LevelButton[] _levelButtons;  
     [SerializeField] private Button _playButton;  
     [SerializeField] private Button _settingsButton;  
     [SerializeField] private GameObject _settingsPanel;
-
     private ISceneFlowService _sceneFlowService;
+    private LevelResultManager _levelResultManager;
 
     [Inject]
-    public void Construct(ISceneFlowService sceneFlowService)
+    public void Construct(ISceneFlowService sceneFlowService, LevelResultManager levelResultManager)
     {
         _sceneFlowService = sceneFlowService;
+        _levelResultManager = levelResultManager;
     }
 
     private void Start()
     {
         _playButton.onClick.AddListener(PlayLastLevel); 
-        _settingsButton.onClick.AddListener(() => _settingsPanel.SetActive(true));
+        _settingsButton.onClick.AddListener(OpenSetting);
 
-        UpdateLevelButtons();  
+        BindLevelButtons();  
     }
-
-    private void UpdateLevelButtons()
+    private void OnDestroy()
     {
-        foreach (var lvl in _levelButtons)  
+        _playButton.onClick.RemoveListener(PlayLastLevel);
+        _settingsButton.onClick.RemoveListener(OpenSetting);
+    }
+    private void OpenSetting() { _settingsPanel.SetActive(true); }
+    private void BindLevelButtons()
+    {
+        for (int i =0; i <_levelButtons.Length;i++)
         {
-            bool unlocked = LevelResultManager.IsLevelUnlocked(lvl.levelIndex);
-            lvl.button.interactable = unlocked;  
+            LevelButton levelButton = _levelButtons[i];
+            bool unlocked = _levelResultManager.IsLevelUnlocked(levelButton.LevelIndex);
+            levelButton.Button.interactable = unlocked;
 
-            int count = LevelResultManager.GetStarsForLevel(lvl.levelName);  
-            for (int i = 0; i < lvl.stars.Length; i++) 
-            {
-                lvl.stars[i].enabled = i < count; 
-            }
+            int starCount = _levelResultManager.GetStarsForLevel(levelButton.LevelName);
+            for (int starIndex = 0; starIndex < levelButton.Stars.Length; starIndex++)
+                levelButton.Stars[starIndex].enabled = starIndex < starCount;
 
-            lvl.button.onClick.RemoveAllListeners();   
-            if (unlocked)  
-            {
-                string sceneName = lvl.levelName;
+            if (!unlocked)
+                continue;
 
-                lvl.button.onClick.AddListener(() => _sceneFlowService.LoadLevelByBuildIndex(lvl.levelIndex));  
-            }
+            int levelIndex = levelButton.LevelIndex;
+            levelButton.Button.onClick.AddListener(() => LoadLevel(levelIndex));
         }
     }
-
     private void PlayLastLevel()
     {
-        int index = LevelResultManager.GetLastUnlockedLevel();
+        int index = _levelResultManager.GetLastUnlockedLevel();
 
-        foreach (var lvl in _levelButtons)
+        for (int i = 0; i < _levelButtons.Length; i++)
         {
-            if (lvl.levelIndex == index)
-            {
-                _sceneFlowService.LoadLevelByBuildIndex(lvl.levelIndex);
-                return;
-            }
+            if (_levelButtons[i].LevelIndex != index)
+                continue;
+
+            _sceneFlowService.LoadLevelByBuildIndex(index);
+            return;
         }
+    }
+    private void LoadLevel(int levelIndex)
+    {
+        _sceneFlowService.LoadLevelByBuildIndex(levelIndex);
     }
 }

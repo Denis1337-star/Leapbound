@@ -1,12 +1,20 @@
-﻿public static class LevelStarCalculator 
+﻿public sealed class LevelStarCalculator 
 {
-    public const int ThreeStarsThreshold = 100;
-    public const int TwoStarsThreshold = 50;
-
-    public static int Calculate(int score)
+    public readonly int _threeStarScore;
+    public LevelStarCalculator(int threeStarScore)
     {
-        if (score >= ThreeStarsThreshold) return 3;
-        if(score >= TwoStarsThreshold) return 2;
+        _threeStarScore = threeStarScore;
+    }
+
+    public  int Calculate(int score)
+    {
+        int twoStarsScore = _threeStarScore / 2;
+        if (score >= _threeStarScore)
+            return 3;
+
+        if (score >= twoStarsScore)
+            return 2;
+
         return 1;
     }
 }

@@ -13,10 +13,6 @@ public class PlayerHealthUI : MonoBehaviour
     {
         _player = player;
     }
-    private void Start()
-    {
-        Subscribe();
-    }
     private void OnEnable()
     {
         Subscribe();
@@ -31,6 +27,9 @@ public class PlayerHealthUI : MonoBehaviour
     }
     private void Subscribe()
     {
+        if (_isSubscribed)
+            return;
+
         _player.PlayerHealth.OnHealthChanged += UpdateText;
         _isSubscribed = true;
         UpdateText(_player.PlayerHealth.CurrentHealth, _player.PlayerHealth.MaxHealth);

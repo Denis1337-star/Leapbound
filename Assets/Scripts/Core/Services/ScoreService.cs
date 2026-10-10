@@ -4,11 +4,7 @@ public sealed class ScoreService : IScoreService
     public int Score { get; private set; }
     public event Action<int> OnScoreChanged;
 
-    public ScoreService ()
-    {
-        Score = 0;
-    }
-
+    public ScoreService() { Score = 0; }
     public void Add(int amount)
     {
         if (amount <= 0)

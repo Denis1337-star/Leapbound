@@ -25,7 +25,7 @@ public sealed class PlayerAnimation : ITickable, ILateTickable
         animator.SetBool(IsRunHash, _playerMotor.IsRunButtonHeld);
         animator.SetBool(IsCrouchHash, _playerMotor.IsCrouching);
         animator.SetBool(IsDeadHash, _playerHealth.CurrentHealth <= 0);
-        animator.SetBool(IsJumpHash, _playerMotor.WasJumpPressed);
+        animator.SetBool(IsJumpHash, !_playerMotor.IsOnGround);
     }
     public void LateTick()
     {

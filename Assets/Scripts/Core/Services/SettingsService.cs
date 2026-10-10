@@ -7,6 +7,8 @@ public  sealed class SettingsService : ISettingsService, IInitializable
 
     private float _musicVolume = 1f;
     private float _sfxVolume = 1f;
+    public float MusicVolume => _musicVolume;
+    public float SfxVolume => _sfxVolume;
 
     public SettingsService (IAudioService audioService)
     {
@@ -20,21 +22,13 @@ public  sealed class SettingsService : ISettingsService, IInitializable
         _audioService.SetMusicVolume(_musicVolume);
         _audioService.SetSFXVolume(_sfxVolume);
     }
-    public float GetMusicValue()
-    { 
-        return _musicVolume;
-    }
-    public float GetSFXValue()
-    {
-        return _sfxVolume;
-    }
-    public void SetMusicValue(float value)
+    public void SetMusicVolume(float value)
     {
         _musicVolume = value;
         PlayerPrefs.SetFloat("MusicVolume",value);
         _audioService.SetMusicVolume(value);
     }
-    public void SetSFXValue(float value)
+    public void SetSfxVolume(float value)
     {
         _sfxVolume = value;
         PlayerPrefs.SetFloat("SFXVolume", value);

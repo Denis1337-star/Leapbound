@@ -155,7 +155,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &7734287715752573909
 MonoBehaviour:
@@ -172,3 +172,7 @@ MonoBehaviour:
   _speed: 8
   _lifeTime: 2
   _damage: 50
+  _stopLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  _rigidbody: {fileID: 3933613669433136338}
