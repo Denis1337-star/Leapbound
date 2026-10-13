@@ -11,11 +11,8 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     private readonly PlayerDamageFeedback _playerDamageFeedback;
     public float MoveDirection { get; private set; }
     public bool IsRunButtonHeld { get; private set; }
-    public bool IsCrouchButtonHeld { get; private set; }
     public bool WasJumpPressed { get; private set; }
     public bool IsOnGround { get; private set; }
-    public bool IsCrouching { get; private set; }
-    public bool IsBlockedByCeiling { get; private set; }
     public PlayerMotor(Player player, PlayerConfig playerConfig, IInputService inputService, PlayerAudio playerAudio,
         IGameStateService gameStateService, PlayerDamageFeedback playerDamageFeedback)
     {
@@ -34,7 +31,6 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
             return;
 
         ReadInput();
-        UpdateCrouchState();
         ProcessJump();
     }
     public void FixedTick()
@@ -50,27 +46,15 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     {
         MoveDirection = _inputService.Move;
         IsRunButtonHeld = _inputService.RunHeld;
-        IsCrouchButtonHeld = _inputService.CrouchHeld;
         WasJumpPressed = _inputService.JumpPressed;
     }
-    private void UpdateCrouchState()
-    {
-        IsOnGround = Physics2D.OverlapCircle(_player.GroundCheckAnchor.position,
-    _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
 
-        IsBlockedByCeiling = Physics2D.OverlapCircle(_player.CeilingCheckAnchor.position,
-            _playerConfig.CeilingCheckRadius, _playerConfig.GroundLayer);
-
-        bool shouldCrouch = IsCrouchButtonHeld || IsBlockedByCeiling;
-        if (shouldCrouch != IsCrouching)
-        {
-            IsCrouching = shouldCrouch;
-            _player.SetCrouchCollider(IsCrouching);
-        }
-    }
     private void ProcessJump()
     {
-        if (!WasJumpPressed || !IsOnGround || IsCrouching)
+        IsOnGround = Physics2D.OverlapCircle(_player.GroundCheckAnchor.position,
+_playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
+
+        if (!WasJumpPressed || !IsOnGround )
             return;
 
         _player.Rigidbody.AddForce(Vector2.up * _playerConfig.JumpForce, ForceMode2D.Impulse);
@@ -87,9 +71,6 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
             moveSpeed = _playerConfig.RunSpeed;
         else
             moveSpeed = _playerConfig.WalkSpeed;
-
-        if (IsCrouching)
-            moveSpeed *= _playerConfig.CrawlSpeedMultiplier;
 
         Vector2 velocity = _player.Rigidbody.linearVelocity;
         velocity.x = MoveDirection * moveSpeed + _player.PlatformVelocity.x;

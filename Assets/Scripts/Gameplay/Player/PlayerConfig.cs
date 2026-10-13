@@ -6,17 +6,10 @@ public sealed class PlayerConfig : ScriptableObject
     [Header("Movement")]
     public float WalkSpeed;
     public float RunSpeed;
-    public float CrawlSpeedMultiplier;
     public float JumpForce;
     [Header("Checks")]
     public float GroundCheckRadius;
-    public float CeilingCheckRadius;
     public LayerMask GroundLayer;
-    [Header("Collider")]
-    public Vector2 StandardSize = new Vector2(1.35f, 2f);
-    public Vector2 StandardOffset = new Vector2(0f, 1f);
-    public Vector2 CrouchSize = new Vector2(1.35f, 2f);
-    public Vector2 CrouchOffset = new Vector2(0f, 0.7f);
     [Header("Health")]
     public int MaxHealth;
     [Header("Hit")]
