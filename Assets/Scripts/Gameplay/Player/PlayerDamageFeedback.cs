@@ -4,14 +4,12 @@ using Zenject;
 
 public sealed class PlayerDamageFeedback : IInitializable, ITickable, IDisposable
 {
+    private static readonly int HurtHash = Animator.StringToHash("Hurt");
     private readonly Player _player;
     private readonly PlayerConfig _playerConfig;
     private readonly PlayerHealth _playerHealth;
-    private bool _isBlinking;
     private float _invincibleTimer;
-    private float _blinkTimer;
     private float _knockbackTimer;
-    private bool _spriteVisible = true;
     public bool IsInKnockback => _knockbackTimer > 0f;
     public PlayerDamageFeedback(Player player, PlayerConfig playerConfig, PlayerHealth playerHealth)
     {
@@ -22,37 +20,26 @@ public sealed class PlayerDamageFeedback : IInitializable, ITickable, IDisposabl
     public void Initialize()
     {
         _playerHealth.OnDamaged += OnDamaged;
-        _playerHealth.OnDeath += StopBlink;
+        _playerHealth.OnDeath += OnDeath;
     }
     public void Dispose()
     {
         _playerHealth.OnDamaged -= OnDamaged;
-        _playerHealth.OnDeath -= StopBlink;
+        _playerHealth.OnDeath -= OnDeath;
     }
     public void Tick()
     {
-        if (!_isBlinking)
-            return;
-
         if (_knockbackTimer > 0f)
             _knockbackTimer -= Time.deltaTime;
 
-        _invincibleTimer -= Time.deltaTime;
-        _blinkTimer -= Time.deltaTime;
+        if (_invincibleTimer <= 0f)
+            return;
 
-        if (_blinkTimer <= 0f)
-        {
-            _spriteVisible = !_spriteVisible;
-            _player.SpriteRenderer.enabled = _spriteVisible;
-            _blinkTimer = 0.08f;
-        }
+        _invincibleTimer -= Time.deltaTime;
 
         if (_invincibleTimer > 0f)
             return;
 
-        _isBlinking = false;
-        _player.SpriteRenderer.enabled = true;
-        _player.SpriteRenderer.color = _playerConfig.NormalColor;
         _playerHealth.SetInvincible(false);
     }
     private void OnDamaged(Vector2 hitDirection)
@@ -63,17 +50,15 @@ public sealed class PlayerDamageFeedback : IInitializable, ITickable, IDisposabl
             ForceMode2D.Impulse);
 
         _knockbackTimer = _playerConfig.KnockbackLockTime;
-        _player.SpriteRenderer.color = _playerConfig.DamageColor;
-        _isBlinking = true;
         _invincibleTimer = _playerConfig.InvincibleTime;
-        _blinkTimer = 0.08f;
-        _spriteVisible = false;
-        _player.SpriteRenderer.enabled = false;
+
+        _player.Animator.SetTrigger(HurtHash); 
     }
-    private void StopBlink()
+    private void OnDeath()
     {
-        _isBlinking = false;
-        _player.SpriteRenderer.enabled = true;
+        _knockbackTimer = 0f;
+        _invincibleTimer = 0f;
+        _playerHealth.SetInvincible(false);
     }
 
 }

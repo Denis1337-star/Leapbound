@@ -16,7 +16,7 @@ MonoBehaviour:
   RunSpeed: 5
   JumpForce: 11
   MaxJumpCount: 2
-  GroundCheckRadius: 0.2
+  GroundCheckRadius: 0.4
   GroundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -24,8 +24,6 @@ MonoBehaviour:
   KnockbackForce: 6
   InvincibleTime: 1
   KnockbackLockTime: 0.2
-  DamageColor: {r: 1, g: 0, b: 0, a: 1}
-  NormalColor: {r: 1, g: 1, b: 1, a: 1}
   WalkStep: {fileID: 8300000, guid: 56684981319f43148878a1d8b54c8104, type: 3}
   RunStep: {fileID: 8300000, guid: bfef15295ae00c14b8e471601cdba233, type: 3}
   JumpClip: {fileID: 8300000, guid: 114815f30efd8b54eb460f2d178c0957, type: 3}

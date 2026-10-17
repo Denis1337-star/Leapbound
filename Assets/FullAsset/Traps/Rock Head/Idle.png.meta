@@ -1,12 +1,5 @@
 fileFormatVersion: 2
 guid: a523882d12071fc4d8462784f8d72064
-AssetOrigin:
-  serializedVersion: 1
-  productId: 155360
-  packageName: Pixel Adventure 1
-  packageVersion: 1.0
-  assetPath: Assets/SettingsGame/Traps/Rock Head/Idle.png
-  uploadId: 332803
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -148,3 +141,10 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 155360
+  packageName: Pixel Adventure 1
+  packageVersion: 
+  assetPath: Assets/FullAsset/Traps/Rock Head/Idle.png
+  uploadId: 0

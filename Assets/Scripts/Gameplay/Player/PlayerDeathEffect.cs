@@ -30,10 +30,9 @@ public sealed class PlayerDeathEffect : IInitializable, ITickable, IDisposable
     }
     private void OnDeath()
     {
-        _player.FreezeBody();
         _player.SpriteRenderer.enabled = true;
         _player.Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
-
+        _player.FreezeBody();
         _restartTimer = 1.6f;
     }
 }

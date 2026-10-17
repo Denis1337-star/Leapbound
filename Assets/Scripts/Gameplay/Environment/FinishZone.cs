@@ -4,6 +4,7 @@ using Zenject;
 
 public sealed class FinishZone : MonoBehaviour
 {
+    [SerializeField] private Collider2D _bodyCollider;
     private IScoreService _scoreService;
     private IGameStateService _gameStateService;
     private LevelResultManager _levelResultManager;
@@ -20,12 +21,21 @@ public sealed class FinishZone : MonoBehaviour
         _levelStarCalculator = levelStarCalculator;
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (_isCompleted)
             return;
 
-        if (!other.TryGetComponent(out Player player)) 
+        if (!collision.collider.TryGetComponent(out Player player))
+            return;
+
+        if (player.PlayerHealth.CurrentHealth <= 0)
+            return;
+
+        float playerBottom = player.BodyCollider.bounds.min.y;
+        float finishTop = _bodyCollider.bounds.max.y;
+
+        if (playerBottom <= finishTop - 0.05f)
             return;
 
         _isCompleted = true;
