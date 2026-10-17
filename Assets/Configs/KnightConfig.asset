@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerConfig
   WalkSpeed: 3
   RunSpeed: 5
-  JumpForce: 10
+  JumpForce: 11
+  MaxJumpCount: 2
   GroundCheckRadius: 0.2
   GroundLayer:
     serializedVersion: 2

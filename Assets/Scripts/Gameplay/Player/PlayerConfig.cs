@@ -7,6 +7,7 @@ public sealed class PlayerConfig : ScriptableObject
     public float WalkSpeed;
     public float RunSpeed;
     public float JumpForce;
+    public int MaxJumpCount = 2;
     [Header("Checks")]
     public float GroundCheckRadius;
     public LayerMask GroundLayer;

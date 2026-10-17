@@ -13,6 +13,9 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     public bool IsRunButtonHeld { get; private set; }
     public bool WasJumpPressed { get; private set; }
     public bool IsOnGround { get; private set; }
+    public bool IsDoubleJumping { get; private set; }
+    private bool _wasOnGround;
+    private int _jumpsLeft;
     public PlayerMotor(Player player, PlayerConfig playerConfig, IInputService inputService, PlayerAudio playerAudio,
         IGameStateService gameStateService, PlayerDamageFeedback playerDamageFeedback)
     {
@@ -22,6 +25,7 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
         _playerAudio = playerAudio;
         _gameStateService = gameStateService;
         _playerDamageFeedback = playerDamageFeedback;
+        _jumpsLeft = _playerConfig.MaxJumpCount;
     }
     public void Tick()
     {
@@ -54,10 +58,25 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
         IsOnGround = Physics2D.OverlapCircle(_player.GroundCheckAnchor.position,
 _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
 
-        if (!WasJumpPressed || !IsOnGround )
+        if (IsOnGround && !_wasOnGround)
+            _jumpsLeft = _playerConfig.MaxJumpCount;
+
+        _wasOnGround = IsOnGround;
+        if (IsOnGround)
+            IsDoubleJumping = false;
+
+        if (!WasJumpPressed || _jumpsLeft <= 0)
             return;
 
+        bool isAirJump = !IsOnGround;
+
+        Vector2 velocity = _player.Rigidbody.linearVelocity;
+        velocity.y = 0f;
+        _player.Rigidbody.linearVelocity = velocity;
+
         _player.Rigidbody.AddForce(Vector2.up * _playerConfig.JumpForce, ForceMode2D.Impulse);
+        _jumpsLeft--;
+        IsDoubleJumping = isAirJump;
         _playerAudio.PlayJump();
         _inputService.ConsumeJump();
     }

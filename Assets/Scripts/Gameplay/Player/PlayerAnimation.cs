@@ -7,6 +7,7 @@ public sealed class PlayerAnimation : ITickable, ILateTickable
     private static readonly int IsRunHash = Animator.StringToHash("IsRun");
     private static readonly int IsDeadHash = Animator.StringToHash("IsDead");
     private static readonly int IsJumpHash = Animator.StringToHash("IsJump");
+    private static readonly int IsDoubleJumpHash = Animator.StringToHash("IsDoubleJump");
     private readonly Player _player;
     private readonly PlayerMotor _playerMotor;
     private readonly PlayerHealth _playerHealth;
@@ -23,7 +24,8 @@ public sealed class PlayerAnimation : ITickable, ILateTickable
         animator.SetFloat(SpeedHash, Mathf.Abs(_playerMotor.MoveDirection));
         animator.SetBool(IsRunHash, _playerMotor.IsRunButtonHeld);
         animator.SetBool(IsDeadHash, _playerHealth.CurrentHealth <= 0);
-        animator.SetBool(IsJumpHash, !_playerMotor.IsOnGround);
+        animator.SetBool(IsJumpHash, !_playerMotor.IsOnGround && !_playerMotor.IsDoubleJumping);
+        animator.SetBool(IsDoubleJumpHash, _playerMotor.IsDoubleJumping);
     }
     public void LateTick()
     {
