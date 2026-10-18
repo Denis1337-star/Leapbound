@@ -2,7 +2,7 @@
 - Project name: Leapbound
 - Unity version: Unity 6000.4.10f1
 - Active game object:
-  - Name: Knight
-  - Tag: Player
+  - Name: Main Camera
+  - Tag: MainCamera
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

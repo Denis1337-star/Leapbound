@@ -16,6 +16,7 @@ MonoBehaviour:
   RunSpeed: 5
   JumpForce: 11
   MaxJumpCount: 2
+  StopmBounceForce: 10
   GroundCheckRadius: 0.4
   GroundLayer:
     serializedVersion: 2

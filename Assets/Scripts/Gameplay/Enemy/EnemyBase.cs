@@ -15,6 +15,7 @@ public abstract class EnemyBase : MonoBehaviour
     private EnemyDeath _enemyDeath;
     private EnemyAudio _enemyAudio;
     private IAudioService _audioService;
+    private IScoreService _scoreService;
     private Vector2 _lastHitDirection = Vector2.up;
     public int CurrentHP { get; private set; }
     public bool IsDead { get; private set; }
@@ -27,9 +28,10 @@ public abstract class EnemyBase : MonoBehaviour
     protected Rigidbody2D Rigidbody => _rigidbody;
 
     [Inject]
-    public void Construct(IAudioService audioService)
+    public void Construct(IAudioService audioService, IScoreService scoreService)
     {
         _audioService = audioService;
+        _scoreService = scoreService;
     }
     protected virtual void Awake()
     {
@@ -64,6 +66,7 @@ public abstract class EnemyBase : MonoBehaviour
         if (IsDead)
             return;
         IsDead = true;
+        _scoreService.Add(10);
         OnDeath?.Invoke();
         _enemyDeath.Begin(_lastHitDirection);
     }
@@ -86,6 +89,10 @@ public abstract class EnemyBase : MonoBehaviour
                 side = 1f;
 
             TakeDamage(MaxHealth, new Vector2(side, 1f));
+
+            Vector2 veloccity = player.Rigidbody.linearVelocity;
+            veloccity.y = player.PlayerConfig.StopmBounceForce;
+            player.Rigidbody.linearVelocity = veloccity;
             return;
         }
 

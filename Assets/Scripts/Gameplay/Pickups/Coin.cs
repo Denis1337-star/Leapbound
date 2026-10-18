@@ -24,6 +24,6 @@ public sealed class Coin : MonoBehaviour
 
         _isCollected = true;
         _scoreService.Add(_value);
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
