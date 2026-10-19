@@ -9,6 +9,7 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     private readonly PlayerAudio _playerAudio;
     private readonly IGameStateService _gameStateService;
     private readonly PlayerDamageFeedback _playerDamageFeedback;
+    private readonly PlayerDust _playerDust;
     public float MoveDirection { get; private set; }
     public bool IsRunButtonHeld { get; private set; }
     public bool WasJumpPressed { get; private set; }
@@ -16,8 +17,9 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     public bool IsDoubleJumping { get; private set; }
     private bool _wasOnGround;
     private int _jumpsLeft;
+    
     public PlayerMotor(Player player, PlayerConfig playerConfig, IInputService inputService, PlayerAudio playerAudio,
-        IGameStateService gameStateService, PlayerDamageFeedback playerDamageFeedback)
+        IGameStateService gameStateService, PlayerDamageFeedback playerDamageFeedback, PlayerDust playerDust)
     {
         _player = player;
         _playerConfig = playerConfig;
@@ -26,6 +28,7 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
         _gameStateService = gameStateService;
         _playerDamageFeedback = playerDamageFeedback;
         _jumpsLeft = _playerConfig.MaxJumpCount;
+        _playerDust = playerDust;
     }
     public void Tick()
     {
@@ -45,6 +48,10 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
             return;
 
         ApplyMovement();
+        bool runDust = IsOnGround && IsRunButtonHeld && Mathf.Abs(MoveDirection) > 0.01f;
+        bool flipX = MoveDirection < 0f;
+        _playerDust.SetRunning(runDust, flipX);
+        
     }
     private void ReadInput()
     {
@@ -59,7 +66,10 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
 _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
 
         if (IsOnGround && !_wasOnGround)
+        {
             _jumpsLeft = _playerConfig.MaxJumpCount;
+            _playerDust.PlayLand();
+        }
 
         _wasOnGround = IsOnGround;
         if (IsOnGround)
@@ -78,6 +88,7 @@ _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
         _jumpsLeft--;
         IsDoubleJumping = isAirJump;
         _playerAudio.PlayJump();
+        _playerDust.PlayJump();
         _inputService.ConsumeJump();
     }
     private void ApplyMovement()

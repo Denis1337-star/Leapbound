@@ -11,6 +11,7 @@ public sealed class Player : MonoBehaviour
     [SerializeField] private Transform _groundCheckAnchor;
     private PlayerHealth _playerHealth;
     private PlayerAudio _playerAudio;
+    private PlayerDust _playerDust;
     private readonly ContactPoint2D[] _contactPoints = new ContactPoint2D[8];
     public Vector2 PlatformVelocity { get; private set; }
     public PlayerConfig PlayerConfig => _playerConfig;
@@ -22,10 +23,11 @@ public sealed class Player : MonoBehaviour
     public Collider2D BodyCollider => _bodyCollider;
 
     [Inject]
-    public void Construct(PlayerHealth playerHealth, PlayerAudio playerAudio)
+    public void Construct(PlayerHealth playerHealth, PlayerAudio playerAudio, PlayerDust playerDust)
     {
         _playerHealth = playerHealth;
         _playerAudio = playerAudio;
+        _playerDust = playerDust;
     }
 
     public void FreezeBody()
@@ -56,6 +58,8 @@ public sealed class Player : MonoBehaviour
     }
     public void PlayWalkStep(){ _playerAudio.PlayWalkStep(); }
     public void PlayRunStep() { _playerAudio.PlayRunStep(); }
+    public void PlayLandDust() { _playerDust.PlayLand(); }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;

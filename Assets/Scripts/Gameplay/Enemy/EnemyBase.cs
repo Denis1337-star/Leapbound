@@ -93,6 +93,7 @@ public abstract class EnemyBase : MonoBehaviour
             Vector2 veloccity = player.Rigidbody.linearVelocity;
             veloccity.y = player.PlayerConfig.StopmBounceForce;
             player.Rigidbody.linearVelocity = veloccity;
+            player.PlayLandDust();
             return;
         }
 

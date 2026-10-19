@@ -2095,7 +2095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4581474659406981310, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5290922331253046447, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_text
@@ -10950,6 +10950,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SceneInstaller
   _player: {fileID: 1312787127}
   _threeStarScore: 570
+  _dustOneShotPrefab: {fileID: 3729262866567920934, guid: ee8a90c20768d134fa8a7155a6177a4d, type: 3}
+  _dustRun: {fileID: 1893334347}
 --- !u!1001 &1055290738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22793,6 +22795,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6008132102281944831, guid: c5fed818c423b4d4e87dba7ffeeae482, type: 3}
   m_PrefabInstance: {fileID: 1889637650}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1893334347 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3464127028398203637, guid: c17ae649c21aaf047a39fa4de45d070c, type: 3}
+  m_PrefabInstance: {fileID: 261588766}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 241c88acd8286fa4eb1e2d94addab305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DustRun
 --- !u!1001 &1893757618
 PrefabInstance:
   m_ObjectHideFlags: 0
