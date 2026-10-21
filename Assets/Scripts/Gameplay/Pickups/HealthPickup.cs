@@ -1,10 +1,17 @@
 ﻿using UnityEngine;
+using Zenject;
 
 public sealed class HealthPickup : MonoBehaviour
 {
     [SerializeField] private int _healAmount = 100;
+    private HealthOneShot _healthOneShot;
     private bool _isCollected;
 
+    [Inject]
+    private void Construct(HealthOneShot healthOneShot)
+    {
+        _healthOneShot = healthOneShot;
+    }
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (_isCollected)
@@ -15,6 +22,7 @@ public sealed class HealthPickup : MonoBehaviour
 
         _isCollected = true;
         player.PlayerHealth.Heal(_healAmount);
+        _healthOneShot.Play();
         gameObject.SetActive(false);
     }
 }
