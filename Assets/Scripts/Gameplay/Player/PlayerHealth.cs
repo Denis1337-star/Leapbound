@@ -48,4 +48,11 @@ public sealed class PlayerHealth
         _isDead = true;
         OnDeath?.Invoke();
     }
+    public void Revive()
+    {
+        _isDead = false;
+        IsInvincible = false;
+        CurrentHealth = _maxHealth;
+        OnHealthChanged?.Invoke(CurrentHealth, _maxHealth);
+    }
 }

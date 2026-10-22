@@ -107,4 +107,13 @@ _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
         velocity.y += _player.PlatformVelocity.y;
         _player.Rigidbody.linearVelocity = velocity;
     }
+    public void ResetMotion()
+    {
+        MoveDirection = 0f;
+        IsRunButtonHeld = false;
+        WasJumpPressed = false;
+        IsDoubleJumping = false;
+        _wasOnGround = false;
+        _jumpsLeft = _playerConfig.MaxJumpCount;
+    }
 }

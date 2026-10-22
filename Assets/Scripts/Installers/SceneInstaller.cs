@@ -30,6 +30,9 @@ public class SceneInstaller : MonoInstaller
 
         Container.BindInterfacesAndSelfTo<ScoreService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<GameStateService>().AsSingle().NonLazy();
+        Container.Bind<CheckpointService>().AsSingle().NonLazy();
+        Container.Bind<PlayerRespawn>().AsSingle();
+
         Container.Bind<LevelStarCalculator>().AsSingle().WithArguments(_threeStarScore);
 
      

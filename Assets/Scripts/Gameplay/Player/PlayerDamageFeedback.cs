@@ -54,11 +54,12 @@ public sealed class PlayerDamageFeedback : IInitializable, ITickable, IDisposabl
 
         _player.Animator.SetTrigger(HurtHash); 
     }
-    private void OnDeath()
+    public void OnDeath()
     {
         _knockbackTimer = 0f;
         _invincibleTimer = 0f;
         _playerHealth.SetInvincible(false);
+        _player.Animator.ResetTrigger(HurtHash);
     }
 
 }

@@ -36,6 +36,15 @@ public sealed class Player : MonoBehaviour
         _rigidbody.angularVelocity = 0f;
         _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
     }
+    public void RestoreBody(Vector3 position)
+    {
+        PlatformVelocity = Vector2.zero;
+        _rigidbody.linearVelocity = Vector2.zero;
+        _rigidbody.angularVelocity = 0f;
+        _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _rigidbody.position = position;
+        Physics2D.SyncTransforms();
+    }
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (!collision.collider.TryGetComponent(out Platform platform))

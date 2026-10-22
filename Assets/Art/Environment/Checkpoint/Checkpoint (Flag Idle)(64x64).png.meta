@@ -86,7 +86,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -164,11 +164,11 @@ TextureImporter:
       name: Checkpoint (Flag Idle)(64x64)_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 211
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
+        width: 30
+        height: 46
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -186,11 +186,11 @@ TextureImporter:
       name: Checkpoint (Flag Idle)(64x64)_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 275
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
+        width: 30
+        height: 46
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -208,11 +208,11 @@ TextureImporter:
       name: Checkpoint (Flag Idle)(64x64)_2
       rect:
         serializedVersion: 2
-        x: 128
+        x: 339
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
+        width: 30
+        height: 46
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -230,11 +230,11 @@ TextureImporter:
       name: Checkpoint (Flag Idle)(64x64)_3
       rect:
         serializedVersion: 2
-        x: 192
+        x: 403
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
+        width: 30
+        height: 46
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -252,11 +252,11 @@ TextureImporter:
       name: Checkpoint (Flag Idle)(64x64)_4
       rect:
         serializedVersion: 2
-        x: 256
+        x: 467
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
+        width: 30
+        height: 46
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -274,11 +274,11 @@ TextureImporter:
       name: Checkpoint (Flag Idle)(64x64)_5
       rect:
         serializedVersion: 2
-        x: 320
+        x: 531
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
+        width: 30
+        height: 46
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -296,11 +296,11 @@ TextureImporter:
       name: Checkpoint (Flag Idle)(64x64)_6
       rect:
         serializedVersion: 2
-        x: 384
+        x: 595
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
+        width: 30
+        height: 46
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -318,11 +318,11 @@ TextureImporter:
       name: Checkpoint (Flag Idle)(64x64)_7
       rect:
         serializedVersion: 2
-        x: 448
+        x: 659
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
+        width: 30
+        height: 46
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -340,11 +340,11 @@ TextureImporter:
       name: Checkpoint (Flag Idle)(64x64)_8
       rect:
         serializedVersion: 2
-        x: 512
+        x: 723
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
+        width: 30
+        height: 46
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -362,11 +362,11 @@ TextureImporter:
       name: Checkpoint (Flag Idle)(64x64)_9
       rect:
         serializedVersion: 2
-        x: 576
+        x: 787
         y: 0
-        width: 64
-        height: 64
-      alignment: 0
+        width: 30
+        height: 46
+      alignment: 6
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
@@ -392,7 +392,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":6,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
       Checkpoint (Flag Idle)(64x64)_0: -8187355101989356663
       Checkpoint (Flag Idle)(64x64)_1: 3854939560234354291

@@ -6,13 +6,13 @@ public sealed class PlayerDeathEffect : IInitializable, ITickable, IDisposable
 {
     private readonly Player _player;
     private readonly PlayerHealth _playerHealth;
-    private readonly ISceneFlowService _sceneFlowService;
+    private readonly PlayerRespawn _playerRespawn;
     private float _restartTimer = -1f;
-    public PlayerDeathEffect(Player player, PlayerHealth playerHealth, ISceneFlowService sceneFlowService)
+    public PlayerDeathEffect(Player player, PlayerHealth playerHealth, PlayerRespawn playerRespawn)
     {
         _player = player;
         _playerHealth = playerHealth;
-        _sceneFlowService = sceneFlowService;
+        _playerRespawn = playerRespawn;
     }
     public void Initialize() { _playerHealth.OnDeath += OnDeath; }
     public void Dispose() { _playerHealth.OnDeath -= OnDeath; }
@@ -26,7 +26,7 @@ public sealed class PlayerDeathEffect : IInitializable, ITickable, IDisposable
             return;
 
         _restartTimer = -1f;
-        _sceneFlowService.RestartCurrentLevel();
+        _playerRespawn.Respawn();
     }
     private void OnDeath()
     {
