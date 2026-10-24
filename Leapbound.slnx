@@ -4,4 +4,5 @@
   <Project Path="MerryYellow.CodeAssist.Editor.csproj" />
   <Project Path="Zenject-ReflectionBaking-Editor.csproj" />
   <Project Path="Zenject-Editor.csproj" />
+  <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>

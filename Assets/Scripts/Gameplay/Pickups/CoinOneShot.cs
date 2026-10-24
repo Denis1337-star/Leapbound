@@ -2,7 +2,7 @@ using UnityEngine;
 
 public sealed class CoinOneShot : MonoBehaviour
 {
-    private static readonly int CollectHash = Animator.StringToHash("Collect");
+    private static readonly int CollectHash = Animator.StringToHash("CoinEffect");
     [SerializeField] private Animator _animator;
     [SerializeField] private float _duration = 0.5f;
     private float _timer;

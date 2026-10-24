@@ -2,7 +2,7 @@ using UnityEngine;
 
 public sealed class HealthOneShot : MonoBehaviour
 {
-    private readonly int HealHash = Animator.StringToHash("Heal");
+    private readonly int HealHash = Animator.StringToHash("HealEffect");
     [SerializeField] private Animator _animator;
     [SerializeField] private float _duration = 0.5f;
     private float _timer;

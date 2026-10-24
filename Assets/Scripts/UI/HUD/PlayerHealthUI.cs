@@ -1,10 +1,10 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public class PlayerHealthUI : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _hpText;
+    [SerializeField] private Image _hpFill;
 
     private Player _player;
     private bool _isSubscribed;
@@ -22,7 +22,7 @@ public class PlayerHealthUI : MonoBehaviour
         if (!_isSubscribed)
             return;
 
-        _player.PlayerHealth.OnHealthChanged -= UpdateText;
+        _player.PlayerHealth.OnHealthChanged -= UpdateFill;
         _isSubscribed = false;
     }
     private void Subscribe()
@@ -30,13 +30,13 @@ public class PlayerHealthUI : MonoBehaviour
         if (_isSubscribed)
             return;
 
-        _player.PlayerHealth.OnHealthChanged += UpdateText;
+        _player.PlayerHealth.OnHealthChanged += UpdateFill;
         _isSubscribed = true;
-        UpdateText(_player.PlayerHealth.CurrentHealth, _player.PlayerHealth.MaxHealth);
+        UpdateFill(_player.PlayerHealth.CurrentHealth, _player.PlayerHealth.MaxHealth);
     }
 
-    private void UpdateText(int current, int max)
+    private void UpdateFill(int current, int max)
     {
-        _hpText.SetText("ХП: {0}/{1}", current, max);
+        _hpFill.fillAmount = current / (float)max;
     }
 }

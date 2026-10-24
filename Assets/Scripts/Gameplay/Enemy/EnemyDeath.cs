@@ -3,20 +3,19 @@ using UnityEngine;
 
 public sealed class EnemyDeath 
 {
+    private static readonly int DeathHash = Animator.StringToHash("Death");
     private const float PopForce = 7f;
     private const float GravityScale = 2f;
     private const float LifeTime = 2f;
     private const float SideForce = 4f;
     private readonly MonoBehaviour _host;
-    private readonly SpriteRenderer _spriteRenderer;
     private readonly Collider2D _collider;
     private readonly Animator _animator;
     private readonly Rigidbody2D _rigidbody;
 
-    public EnemyDeath(MonoBehaviour host, SpriteRenderer sprite, Collider2D collider, Animator animator, Rigidbody2D rigidbody)
+    public EnemyDeath(MonoBehaviour host, Collider2D collider, Animator animator, Rigidbody2D rigidbody)
     {
         _host = host;
-        _spriteRenderer = sprite;
         _collider = collider;
         _animator = animator;
         _rigidbody = rigidbody;
@@ -24,8 +23,7 @@ public sealed class EnemyDeath
     public void Begin(Vector2 hitDirection)
     {
         _collider.enabled = false;
-        _animator.enabled = false;
-        _spriteRenderer.flipY = true;
+        _animator.SetTrigger(DeathHash);
 
         float side = Mathf.Sign(hitDirection.x);
         if (Mathf.Abs(side) < 0.1f)

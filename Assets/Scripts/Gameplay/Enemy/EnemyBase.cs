@@ -36,7 +36,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void Awake()
     {
         CurrentHP = _maxHealth;
-        _enemyDeath = new EnemyDeath(this, _spriteRenderer, _hostCollider, _animator, _rigidbody );
+        _enemyDeath = new EnemyDeath(this, _hostCollider, _animator, _rigidbody);
         _enemyAudio = new EnemyAudio(_audioService, _hurtClip, _deathClip);
         OnDamaged += _enemyAudio.PlayHurt;
         OnDeath += _enemyAudio.PlayDeath;
@@ -65,11 +65,13 @@ public abstract class EnemyBase : MonoBehaviour
     {
         if (IsDead)
             return;
+
         IsDead = true;
         _scoreService.Add(10);
         OnDeath?.Invoke();
         _enemyDeath.Begin(_lastHitDirection);
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (IsDead)

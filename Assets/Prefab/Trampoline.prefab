@@ -179,7 +179,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 952fd5ed300fe4d4caf872d85bb0c641, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 2
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -203,6 +203,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _launchForce: 20
-  _launchDelay: 0.01
   _animator: {fileID: 5791692518297409918}
   _bodyCollider: {fileID: 6115787308832930902}
