@@ -23,6 +23,7 @@ public class SceneInstaller : MonoInstaller
 
         Container.Bind<PlayerHealth>().AsSingle();
         Container.BindInterfacesAndSelfTo<PlayerMotor>().AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerAttack>().AsSingle();
         Container.BindInterfacesAndSelfTo<PlayerAnimation>().AsSingle();
         Container.BindInterfacesAndSelfTo<PlayerAudio>().AsSingle();
         Container.BindInterfacesAndSelfTo<PlayerDamageFeedback>().AsSingle();

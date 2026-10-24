@@ -9,9 +9,11 @@ public sealed class Player : MonoBehaviour
     [SerializeField] private Collider2D _bodyCollider;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _groundCheckAnchor;
+    [SerializeField] private PlayerSwordHit _playerSwordHit;
     private PlayerHealth _playerHealth;
     private PlayerAudio _playerAudio;
     private PlayerDust _playerDust;
+    private bool _attackMoveLock;
     private readonly ContactPoint2D[] _contactPoints = new ContactPoint2D[8];
     public Vector2 PlatformVelocity { get; private set; }
     public PlayerConfig PlayerConfig => _playerConfig;
@@ -21,6 +23,8 @@ public sealed class Player : MonoBehaviour
     public Transform GroundCheckAnchor => _groundCheckAnchor;
     public PlayerHealth PlayerHealth => _playerHealth;
     public Collider2D BodyCollider => _bodyCollider;
+    public PlayerSwordHit SwordHit => _playerSwordHit;
+    public bool AttackMoveLock => _attackMoveLock;
 
     [Inject]
     public void Construct(PlayerHealth playerHealth, PlayerAudio playerAudio, PlayerDust playerDust)
@@ -68,6 +72,7 @@ public sealed class Player : MonoBehaviour
     public void PlayWalkStep(){ _playerAudio.PlayWalkStep(); }
     public void PlayRunStep() { _playerAudio.PlayRunStep(); }
     public void PlayLandDust() { _playerDust.PlayLand(); }
+    public void SetAttackMoveLock(bool locked) { _attackMoveLock = locked; }
 
     private void OnDrawGizmosSelected()
     {

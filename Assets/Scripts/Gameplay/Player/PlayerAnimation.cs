@@ -8,6 +8,9 @@ public sealed class PlayerAnimation : ITickable, ILateTickable
     private static readonly int IsDeadHash = Animator.StringToHash("IsDead");
     private static readonly int IsJumpHash = Animator.StringToHash("IsJump");
     private static readonly int IsDoubleJumpHash = Animator.StringToHash("IsDoubleJump");
+    private static readonly int AttackHash = Animator.StringToHash("Attack");
+    private static readonly int AttackKindHash = Animator.StringToHash("AttackKind");
+    private static readonly int IsAttackingHash = Animator.StringToHash("IsAttacking");
     private readonly Player _player;
     private readonly PlayerMotor _playerMotor;
     private readonly PlayerHealth _playerHealth;
@@ -35,4 +38,24 @@ public sealed class PlayerAnimation : ITickable, ILateTickable
         else if (velocityX < -0.1f)
             _player.SpriteRenderer.flipX = true;
     }
+    public void PlayAttack(int kind)
+    {
+        Animator animator = _player.Animator;
+        animator.SetInteger(AttackKindHash, kind);
+        animator.SetBool(IsAttackingHash, true);
+        animator.SetTrigger(AttackHash);
+    }
+    public void StopAttack()
+    {
+        _player.Animator.SetBool(IsAttackingHash, false);
+        _player.Animator.ResetTrigger(AttackHash);
+    }
+    public void SetUnscaled(bool unscaled)
+    {
+        if (unscaled)
+            _player.Animator.updateMode = AnimatorUpdateMode.UnscaledTime;
+        else
+            _player.Animator.updateMode = AnimatorUpdateMode.Normal;
+    }
 }
+

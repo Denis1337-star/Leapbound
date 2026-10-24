@@ -24,4 +24,10 @@ public sealed class PlayerConfig : ScriptableObject
     public AudioClip JumpClip;
     public AudioClip HurtClip;
     public AudioClip DeathClip;
+    [Header("Attack")]
+    public float AttackIdleDuration = 0.4f;
+    public float AttackWalkDuration = 0.4f;
+    public float AttackRunDuration =0.35f;
+    public float AttackHitStart = 0.12f;
+    public float AttackHitEnd = 0.28f;
 }

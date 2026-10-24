@@ -96,13 +96,22 @@ _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
         if (_playerDamageFeedback.IsInKnockback)
             return;
 
+        Vector2 velocity = _player.Rigidbody.linearVelocity;
+
+        if (_player.AttackMoveLock)
+        {
+            velocity.x = _player.PlatformVelocity.x;
+            velocity.y += _player.PlatformVelocity.y;
+            _player.Rigidbody.linearVelocity = velocity;
+            return;
+        }
+
         float moveSpeed;
         if (IsRunButtonHeld)
             moveSpeed = _playerConfig.RunSpeed;
         else
             moveSpeed = _playerConfig.WalkSpeed;
 
-        Vector2 velocity = _player.Rigidbody.linearVelocity;
         velocity.x = MoveDirection * moveSpeed + _player.PlatformVelocity.x;
         velocity.y += _player.PlatformVelocity.y;
         _player.Rigidbody.linearVelocity = velocity;

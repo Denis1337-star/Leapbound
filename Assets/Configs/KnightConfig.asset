@@ -30,3 +30,8 @@ MonoBehaviour:
   JumpClip: {fileID: 8300000, guid: 114815f30efd8b54eb460f2d178c0957, type: 3}
   HurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
   DeathClip: {fileID: 8300000, guid: 349add1a39df26647aeb4433952199d8, type: 3}
+  AttackIdleDuration: 0.42
+  AttackWalkDuration: 0.5
+  AttackRunDuration: 0.67
+  AttackHitStart: 0.12
+  AttackHitEnd: 0.28

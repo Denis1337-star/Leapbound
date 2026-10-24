@@ -52,7 +52,7 @@ public sealed class PlayerDamageFeedback : IInitializable, ITickable, IDisposabl
         _knockbackTimer = _playerConfig.KnockbackLockTime;
         _invincibleTimer = _playerConfig.InvincibleTime;
 
-        _player.Animator.SetTrigger(HurtHash); 
+        _player.Animator.SetTrigger(HurtHash);
     }
     public void OnDeath()
     {

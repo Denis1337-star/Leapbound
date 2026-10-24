@@ -65,8 +65,11 @@ public sealed class PlantBullet : MonoBehaviour
         _rigidbody.position = transform.position;
         gameObject.SetActive(false);
     }
-    private void Break()
+    public void Break()
     {
+        if (!gameObject.activeSelf)
+            return;
+
         _bulletBreakEffectPool.Play(transform.position);
         ReturnToPool();
     }

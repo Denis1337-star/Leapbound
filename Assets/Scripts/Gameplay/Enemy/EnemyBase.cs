@@ -4,11 +4,9 @@ using Zenject;
 
 public abstract class EnemyBase : MonoBehaviour
 {
-    [SerializeField] private int _maxHealth = 50;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Collider2D _hostCollider;
     [SerializeField] private Animator _animator;
-    [SerializeField] private AudioClip _hurtClip;
     [SerializeField] private AudioClip _deathClip;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private int _contactDamage = 50;
@@ -17,11 +15,8 @@ public abstract class EnemyBase : MonoBehaviour
     private IAudioService _audioService;
     private IScoreService _scoreService;
     private Vector2 _lastHitDirection = Vector2.up;
-    public int CurrentHP { get; private set; }
     public bool IsDead { get; private set; }
-    public event Action<Vector2> OnDamaged;
     public event Action OnDeath;
-    public int MaxHealth => _maxHealth;
     protected SpriteRenderer Sprite => _spriteRenderer;
     protected Collider2D BodyCollider => _hostCollider;
     protected Animator Animator => _animator;
@@ -35,32 +30,22 @@ public abstract class EnemyBase : MonoBehaviour
     }
     protected virtual void Awake()
     {
-        CurrentHP = _maxHealth;
         _enemyDeath = new EnemyDeath(this, _hostCollider, _animator, _rigidbody);
-        _enemyAudio = new EnemyAudio(_audioService, _hurtClip, _deathClip);
-        OnDamaged += _enemyAudio.PlayHurt;
+        _enemyAudio = new EnemyAudio(_audioService,  _deathClip);
         OnDeath += _enemyAudio.PlayDeath;
     }
     private void OnDestroy()
     {
-        OnDamaged -= _enemyAudio.PlayHurt;
         OnDeath -= _enemyAudio.PlayDeath;
     }
-
-    public virtual void TakeDamage(int amount, Vector2 hitDirection)
+    public void Kill(Vector2 hitDirection)
     {
-        if (CurrentHP <= 0)
+        if (IsDead)
             return;
 
-        CurrentHP -= amount;
-        CurrentHP = Mathf.Max(CurrentHP, 0);
         _lastHitDirection = hitDirection;
-        OnDamaged?.Invoke(hitDirection);
-
-        if (CurrentHP <= 0)
-            Die();
+        Die();
     }
-
     protected virtual void Die()
     {
         if (IsDead)
@@ -71,7 +56,6 @@ public abstract class EnemyBase : MonoBehaviour
         OnDeath?.Invoke();
         _enemyDeath.Begin(_lastHitDirection);
     }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (IsDead)
@@ -90,7 +74,7 @@ public abstract class EnemyBase : MonoBehaviour
             if (MathF.Abs(side) < 0.1f)
                 side = 1f;
 
-            TakeDamage(MaxHealth, new Vector2(side, 1f));
+            Kill( new Vector2(side, 1f));
 
             Vector2 veloccity = player.Rigidbody.linearVelocity;
             veloccity.y = player.PlayerConfig.StopmBounceForce;
