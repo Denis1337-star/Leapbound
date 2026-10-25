@@ -73,8 +73,6 @@ public sealed class PlayerAttack : ITickable
         _hitActive = false;
         _isAttacking = true;
         _player.SetAttackMoveLock(kind == 0);
-
-        Animator animator = _player.Animator;
         _playerAnimation.PlayAttack(kind);
             
     }
