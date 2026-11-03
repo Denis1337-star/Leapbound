@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public sealed class PlayerRespawn 
@@ -8,6 +9,7 @@ public sealed class PlayerRespawn
     private readonly PlayerDamageFeedback _playerDamageFeedback;
     private readonly CheckpointService _checkpointService;
     private readonly PlayerAnimation _playerAnimation;
+    public event Action OnRespawned;
 
     public PlayerRespawn(Player player, PlayerHealth playerHealth, PlayerMotor playerMotor, PlayerDamageFeedback playerDamageFeedback,
         CheckpointService checkpointService, PlayerAnimation playerAnimation)
@@ -27,5 +29,6 @@ public sealed class PlayerRespawn
         _player.RestoreBody(_checkpointService.SpawnPosition);
         _player.SpriteRenderer.enabled = true;
         _playerAnimation.SetUnscaled(false);
+        OnRespawned?.Invoke();
     }
 }
