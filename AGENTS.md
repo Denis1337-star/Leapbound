@@ -2,7 +2,7 @@
 - Project name: Leapbound
 - Unity version: Unity 6000.4.10f1
 - Active game object:
-  - Name: BackgroudImage
+  - Name: Far_A
   - Tag: Untagged
-  - Layer: UI
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
