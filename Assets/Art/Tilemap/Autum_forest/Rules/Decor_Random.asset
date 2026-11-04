@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1514134bc4fbd41bb739b1b9a49231, type: 3}
+  m_Name: Decor_Random
+  m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.RuleTile
+  m_DefaultSprite: {fileID: 21300000, guid: 4b5adffc12bd1ef49966678f89d985bd, type: 3}
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 1
+  m_TilingRules:
+  - m_Id: 0
+    m_Sprites:
+    - {fileID: 21300000, guid: 4b5adffc12bd1ef49966678f89d985bd, type: 3}
+    - {fileID: 21300000, guid: a53ac0c5ff387684087ec15d45f40bcf, type: 3}
+    - {fileID: 21300000, guid: 53336e88ea6310d4fa2081a8e8d5ce37, type: 3}
+    - {fileID: 21300000, guid: 53f3f0a91e562fe49abbdb980ad92575, type: 3}
+    - {fileID: 21300000, guid: 158e33f7cf426524e9aee23f7401cb6e, type: 3}
+    - {fileID: 21300000, guid: ac5963950ce0db148a54fbbd372eaa7d, type: 3}
+    - {fileID: 21300000, guid: f752554fa3e6f5f438f67388016d56d1, type: 3}
+    - {fileID: 21300000, guid: 6cfa064b411034c4f9e7b5530cd7ff46, type: 3}
+    - {fileID: 21300000, guid: a7f4b279ebb28a145bba9da03dacb5dc, type: 3}
+    - {fileID: 21300000, guid: cfc81d3bfae155e488a5e97af8525b9e, type: 3}
+    - {fileID: 21300000, guid: 81372df20ee6f6e47a1220fae97d4bd0, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.752
+    m_Output: 1
+    m_ColliderType: 1
+    m_RandomTransform: 0
+    m_Neighbors: 
+    m_NeighborPositions:
+    - {x: -1, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 1, y: 1, z: 0}
+    - {x: -1, y: 0, z: 0}
+    - {x: 1, y: 0, z: 0}
+    - {x: -1, y: -1, z: 0}
+    - {x: 0, y: -1, z: 0}
+    - {x: 1, y: -1, z: 0}
+    m_RuleTransform: 0

@@ -70,20 +70,24 @@ public abstract class EnemyBase : MonoBehaviour
 
         if (playerBottom > enemyTop - 0.05f)
         {
-            float side = MathF.Sign(transform.position.x - player.transform.position.x);
-            if (MathF.Abs(side) < 0.1f)
-                side = 1f;
-
-            Kill( new Vector2(side, 1f));
-
-            Vector2 veloccity = player.Rigidbody.linearVelocity;
-            veloccity.y = player.PlayerConfig.StopmBounceForce;
-            player.Rigidbody.linearVelocity = veloccity;
-            player.PlayLandDust();
+            OnStomped(player);
             return;
         }
 
         Vector2 hitDirection = (player.transform.position - transform.position).normalized;
         player.PlayerHealth.TakeDamage(_contactDamage, hitDirection);
+    }
+    protected virtual void OnStomped(Player player)
+    {
+        float side = Mathf.Sign(transform.position.x - player.transform.position.x);
+        if (Mathf.Abs(side) < 0.1f)
+            side = 1f;
+
+        Kill(new Vector2(side, 1f));
+
+        Vector2 veloccity = player.Rigidbody.linearVelocity;
+        veloccity.y = player.PlayerConfig.StopmBounceForce;
+        player.Rigidbody.linearVelocity = veloccity;
+        player.PlayLandDust();
     }
 }
