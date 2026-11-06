@@ -102,6 +102,8 @@ _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
         {
             velocity.x = _player.PlatformVelocity.x;
             velocity.y += _player.PlatformVelocity.y;
+            velocity.x += _player.WindVelocity.x;
+            velocity.y += _player.WindVelocity.y;
             _player.Rigidbody.linearVelocity = velocity;
             return;
         }
@@ -114,6 +116,8 @@ _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
 
         velocity.x = MoveDirection * moveSpeed + _player.PlatformVelocity.x;
         velocity.y += _player.PlatformVelocity.y;
+        velocity.x += _player.WindVelocity.x;
+        velocity.y += _player.WindVelocity.y;
         _player.Rigidbody.linearVelocity = velocity;
     }
     public void ResetMotion()

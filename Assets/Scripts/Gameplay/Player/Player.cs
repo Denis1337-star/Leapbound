@@ -16,6 +16,7 @@ public sealed class Player : MonoBehaviour
     private bool _attackMoveLock;
     private readonly ContactPoint2D[] _contactPoints = new ContactPoint2D[8];
     public Vector2 PlatformVelocity { get; private set; }
+    public Vector2 WindVelocity { get; private set; }
     public PlayerConfig PlayerConfig => _playerConfig;
     public Rigidbody2D Rigidbody => _rigidbody;
     public Animator Animator => _animator;
@@ -43,6 +44,7 @@ public sealed class Player : MonoBehaviour
     public void RestoreBody(Vector3 position)
     {
         PlatformVelocity = Vector2.zero;
+        WindVelocity = Vector2.zero;
         _rigidbody.linearVelocity = Vector2.zero;
         _rigidbody.angularVelocity = 0f;
         _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -69,6 +71,8 @@ public sealed class Player : MonoBehaviour
         if (collision.collider.TryGetComponent<Platform>(out _))
             PlatformVelocity = Vector2.zero;
     }
+    public void SetWindVelocity(Vector2 velocity) { WindVelocity = velocity; }
+    public void ClearWindVelocity() { WindVelocity = Vector2.zero; }
     public void PlayWalkStep(){ _playerAudio.PlayWalkStep(); }
     public void PlayRunStep() { _playerAudio.PlayRunStep(); }
     public void PlayLandDust() { _playerDust.PlayLand(); }
