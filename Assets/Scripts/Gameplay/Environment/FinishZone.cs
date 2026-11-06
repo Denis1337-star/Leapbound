@@ -44,6 +44,6 @@ public sealed class FinishZone : MonoBehaviour
 
         Scene scene = SceneManager.GetActiveScene();
         int stars = _levelStarCalculator.Calculate(_scoreService.Score);
-        _levelResultManager.SaveLevelResult(scene.name, scene.buildIndex, stars);
+        _levelResultManager.SaveLevelResult(scene.buildIndex, stars);
     }
 }

@@ -205,7 +205,7 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 3108645179198402656}
   _hostCollider: {fileID: 3456814561981790512}
   _animator: {fileID: 3370439132064724807}
-  _deathClip: {fileID: 0}
+  _deathClip: {fileID: 8300000, guid: 2cbed0bef70850d4ea14f1c0d4d8c9ba, type: 3}
   _rigidbody: {fileID: 677696941911704187}
   _contactDamage: 50
   _patrolEnable: 0

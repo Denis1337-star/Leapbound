@@ -260,12 +260,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ba9fc6a5be05874982468a8c983dcf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlantEnemy
-  _maxHealth: 50
   _spriteRenderer: {fileID: 7745538792665073270}
   _hostCollider: {fileID: 4663428390704485824}
   _animator: {fileID: 6439507509562151277}
-  _hurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
-  _deathClip: {fileID: 8300000, guid: b1735d1292ec4e04983427dce0f844ed, type: 3}
+  _deathClip: {fileID: 8300000, guid: 2cbed0bef70850d4ea14f1c0d4d8c9ba, type: 3}
   _rigidbody: {fileID: -11925286495918618}
   _contactDamage: 50
   _firePoint: {fileID: 4991463169880435521}

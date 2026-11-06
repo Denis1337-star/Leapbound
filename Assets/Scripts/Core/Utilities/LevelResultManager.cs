@@ -1,43 +1,55 @@
-﻿using UnityEngine;
-public sealed class LevelResultManager 
+﻿using YG;
+public sealed class LevelResultManager
 {
-    private const string LastLevelKey = "LastUnlockedLevel";
-    private const string StarsKey = "Stars_";
-
-    public  void SaveLevelResult(string levelName, int levelIndex, int stars)
+    private const int StarsArraySize = 16;
+    public void SaveLevelResult(int levelIndex, int stars)
     {
-        string key = StarsKey + levelName;
-        int oldStars = PlayerPrefs.GetInt(key, 0);
+        int[] starsByLevel = GetStarsArray();
+        if (levelIndex >= 0 && levelIndex < starsByLevel.Length)
+        {
+            if (stars > starsByLevel[levelIndex])
+                starsByLevel[levelIndex] = stars;
+        }
 
-        if (stars > oldStars)
-            PlayerPrefs.SetInt(key, stars);
+        if (levelIndex + 1 > YG2.saves.lastUnlockedLevelBuildIndex)
+            YG2.saves.lastUnlockedLevelBuildIndex = levelIndex + 1;
 
-        int lastUnlocked = PlayerPrefs.GetInt(LastLevelKey, 1);
-        if (levelIndex + 1 > lastUnlocked)
-            PlayerPrefs.SetInt(LastLevelKey, levelIndex + 1);
-
-        PlayerPrefs.Save();
+        YG2.SaveProgress();
+    }
+    public bool IsLevelUnlocked(int levelIndex)
+    {
+        return levelIndex <= YG2.saves.lastUnlockedLevelBuildIndex;
     }
 
-    public  int GetStarsForLevel(string levelName)
+    public int GetLastUnlockedLevel()
     {
-        return PlayerPrefs.GetInt(StarsKey + levelName, 0);
+        return YG2.saves.lastUnlockedLevelBuildIndex;
     }
 
-    public  bool IsLevelUnlocked(int levelIndex)
+    public void ResetProgress()
     {
-        int lastUnlocked = PlayerPrefs.GetInt(LastLevelKey, 1);
-        return levelIndex <= lastUnlocked;
-    }
+        YG2.saves.lastUnlockedLevelBuildIndex = 1;
+        int[] starsByLevel = GetStarsArray();
+        for (int i = 0; i < starsByLevel.Length; i++)
+            starsByLevel[i] = 0;
 
-    public  int GetLastUnlockedLevel()
-    {
-        return PlayerPrefs.GetInt(LastLevelKey, 1);
+        YG2.SaveProgress();
     }
-
-    public  void ResetProgress()
+    public int GetStarsForLevel(int levelBuildIndex)
     {
-        PlayerPrefs.SetInt(LastLevelKey,1);
-        PlayerPrefs.Save();
+        int[] starsByLevel = GetStarsArray();
+        if (levelBuildIndex < 0 || levelBuildIndex >= starsByLevel.Length)
+            return 0;
+
+        return starsByLevel[levelBuildIndex];
+    }
+    private static int[] GetStarsArray()
+    {
+        if (YG2.saves.starsByLevelBuildIndex == null ||
+            YG2.saves.starsByLevelBuildIndex.Length != StarsArraySize)
+        {
+            YG2.saves.starsByLevelBuildIndex = new int[StarsArraySize];
+        }
+        return YG2.saves.starsByLevelBuildIndex;
     }
 }

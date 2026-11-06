@@ -1,8 +1,8 @@
 ﻿<Solution>
+  <Project Path="Assembly-CSharp-Editor.csproj" />
   <Project Path="Zenject.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="MerryYellow.CodeAssist.Editor.csproj" />
   <Project Path="Zenject-ReflectionBaking-Editor.csproj" />
   <Project Path="Zenject-Editor.csproj" />
-  <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>

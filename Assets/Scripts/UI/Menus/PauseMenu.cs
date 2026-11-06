@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using YG;
 using Zenject;
 
 public class PauseMenu : MonoBehaviour
@@ -50,8 +51,9 @@ public class PauseMenu : MonoBehaviour
         _gameStateService.OnStateChanged -= HandleGameStateChanged;
         _scoreService.OnScoreChanged -= UpdateScoreText;
         _inputService.PausedRequested -= TogglePause;
+        YG2.onCloseAnyAdv -= LoadNextLevelAfterAd;
+        YG2.onCloseAnyAdv -= LoadMainMenuAfterAd;
     }
-
     private void HandleGameStateChanged(GameState newState)
     {
         switch (newState)
@@ -80,7 +82,6 @@ public class PauseMenu : MonoBehaviour
                 break;
         }
     }
-
     public void TogglePause()
     {
         GameState currentGameState = _gameStateService.CurrentState;
@@ -98,7 +99,6 @@ public class PauseMenu : MonoBehaviour
         SetPausePanelVisible(false);
         SetNextButtonVisible(false);
         ShowStars(0);
-
     }
     private void UpdateScoreText(int newScore)
     {
@@ -118,12 +118,43 @@ public class PauseMenu : MonoBehaviour
         else
             Time.timeScale = 1f;
     }
-
     private void BindButtons()
     {
         _pauseButton.onClick.AddListener(TogglePause);
         _restartButton.onClick.AddListener(() => _sceneFlowService.RestartCurrentLevel());
-        _mainMenuButton.onClick.AddListener(() => _sceneFlowService.LoadMainMenu());
-        _nextLevelButton.onClick.AddListener(() => _sceneFlowService.LoadNextLevel());
+        _mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+        _nextLevelButton.onClick.AddListener(OnNextLevelButtonClicked);
+    }
+    private void OnNextLevelButtonClicked()
+    {
+        if (_gameStateService.CurrentState != GameState.Win)
+        {
+            _sceneFlowService.LoadNextLevel();
+            return;
+        }
+
+        YG2.onCloseAnyAdv += LoadNextLevelAfterAd;
+        YG2.InterstitialAdvShow();
+    }
+    private void OnMainMenuButtonClicked()
+    {
+        if (_gameStateService.CurrentState != GameState.Win)
+        {
+            _sceneFlowService.LoadMainMenu();
+            return;
+        }
+
+        YG2.onCloseAnyAdv += LoadMainMenuAfterAd;
+        YG2.InterstitialAdvShow();
+    }
+    private void LoadNextLevelAfterAd()
+    {
+        YG2.onCloseAnyAdv -= LoadNextLevelAfterAd;
+        _sceneFlowService.LoadNextLevel();
+    }
+    private void LoadMainMenuAfterAd()
+    {
+        YG2.onCloseAnyAdv -= LoadMainMenuAfterAd;
+        _sceneFlowService.LoadMainMenu();
     }
 }

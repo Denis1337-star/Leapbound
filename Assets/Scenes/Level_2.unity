@@ -2312,7 +2312,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4581474659406981310, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4912410380921951828, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2328,10 +2328,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5290922331253046447, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_text
-      value: "\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435\n\nA/D
-        - \u043F\u0435\u0440\u0435\u043C\u0435\u0449\u0435\u043D\u0438\u0435\nL.Shift
-        - \u0443\u0441\u043A\u043E\u0440\u0435\u043D\u0438\u0435\nSpace - \u043F\u0440\u044B\u0436\u043E\u043A\nEsc
-        - \u043F\u0430\u0443\u0437\u0430"
+      value: "\u041E\u0441\u0442\u043E\u0440\u043E\u0436\u043D\u0435\u0435 \u0441
+        \u0440\u0430\u0441\u0442\u0435\u043D\u0438\u044F\u043C\u0438: \n\u043E\u043D\u0438
+        \u0441\u0442\u0440\u0435\u043B\u044F\u044E\u0442. \n\u0423\u0434\u0430\u0440\u044C
+        \u043C\u0435\u0447\u043E\u043C \u0438\u043B\u0438 \u043F\u0435\u0440\u0435\u043F\u0440\u044B\u0433\u043D\u0438.
+        \n\n\u041F\u0443\u043B\u044E \u0442\u043E\u0436\u0435 \u043C\u043E\u0436\u043D\u043E
+        \u0441\u0431\u0438\u0442\u044C \u043C\u0435\u0447\u043E\u043C."
+      objectReference: {fileID: 0}
+    - target: {fileID: 5290922331253046447, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+      propertyPath: m_fontSize
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5290922331253046447, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 5290922331253046447, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 6503246157958704821, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_Pivot.x

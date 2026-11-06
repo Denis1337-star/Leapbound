@@ -1,0 +1,3 @@
+﻿Build path: C:/GameTest/Builds/Leapbound
+Build number: 0
+PluginYG version: 2.0092

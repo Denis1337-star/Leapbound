@@ -202,12 +202,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1857bae0af62e3144a65777814260e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PigEnemy
-  _maxHealth: 50
   _spriteRenderer: {fileID: 3716346366750663592}
   _hostCollider: {fileID: 5677045281195420601}
   _animator: {fileID: 5266498211581707342}
-  _hurtClip: {fileID: 8300000, guid: f10fd668054a3bb4c96abbdfcea82433, type: 3}
-  _deathClip: {fileID: 8300000, guid: b1735d1292ec4e04983427dce0f844ed, type: 3}
+  _deathClip: {fileID: 8300000, guid: 2cbed0bef70850d4ea14f1c0d4d8c9ba, type: 3}
   _rigidbody: {fileID: 5502286411287795606}
   _contactDamage: 50
   _patrolEnable: 0
