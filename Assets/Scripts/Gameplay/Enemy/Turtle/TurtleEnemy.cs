@@ -108,7 +108,7 @@ public sealed class TurtleEnemy : EnemyBase
         if (_spikesActive)
         {
             Vector2 hitDirection = (player.transform.position - transform.position).normalized;
-            player.PlayerHealth.TakeDamage(50, hitDirection);
+            player.PlayerHealth.TakeDamage(1, hitDirection);
             Vector2 velocity = player.Rigidbody.linearVelocity;
             velocity.y = player.PlayerConfig.StopmBounceForce;
             player.Rigidbody.linearVelocity = velocity;

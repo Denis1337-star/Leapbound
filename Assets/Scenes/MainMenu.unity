@@ -227,7 +227,7 @@ RectTransform:
   m_Father: {fileID: 855066528}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: -40}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -500,8 +500,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 420147197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.829, y: 0}
-  m_AnchorMax: {x: 0.829, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 70, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -700,8 +700,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1137266770}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.679, y: 0}
-  m_AnchorMax: {x: 0.679, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 70, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -776,7 +776,7 @@ RectTransform:
   m_Father: {fileID: 2139878737}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: -40}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1362,7 +1362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -383228363, guid: c6b2b67b9171de647bb43eb0b35ffb57, type: 3}
+  m_Sprite: {fileID: 6123299755754754370, guid: 7da14ab2f1b862848ba346717f4f9ce8, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3319,7 +3319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &987784974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5366,57 +5366,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelButtons:
-  - _levelName: Level_1
-    _levelIndex: 1
+  - _levelIndex: 1
     _button: {fileID: 46310800}
     _stars:
     - {fileID: 1950381015}
     - {fileID: 80597038}
     - {fileID: 1216631565}
-  - _levelName: Level_2
-    _levelIndex: 2
+  - _levelIndex: 2
     _button: {fileID: 2139096123}
     _stars:
     - {fileID: 1155974691}
     - {fileID: 1128696520}
     - {fileID: 1646419715}
-  - _levelName: Level_3
-    _levelIndex: 3
+  - _levelIndex: 3
     _button: {fileID: 1919435693}
     _stars:
     - {fileID: 2097270450}
     - {fileID: 618689603}
     - {fileID: 1683811651}
-  - _levelName: Level_4
-    _levelIndex: 4
+  - _levelIndex: 4
     _button: {fileID: 1139452060}
     _stars:
     - {fileID: 1626489288}
     - {fileID: 358066528}
     - {fileID: 1218669300}
-  - _levelName: Level_5
-    _levelIndex: 5
+  - _levelIndex: 5
     _button: {fileID: 1563021670}
     _stars:
     - {fileID: 1237300833}
     - {fileID: 18152048}
     - {fileID: 1248251961}
-  - _levelName: Level_6
-    _levelIndex: 6
+  - _levelIndex: 6
     _button: {fileID: 896523216}
     _stars:
     - {fileID: 1782697765}
     - {fileID: 1001933706}
     - {fileID: 376940972}
-  - _levelName: Level_7
-    _levelIndex: 7
+  - _levelIndex: 7
     _button: {fileID: 1126865642}
     _stars:
     - {fileID: 1414310046}
     - {fileID: 2102053570}
     - {fileID: 497895109}
-  - _levelName: Level_8
-    _levelIndex: 8
+  - _levelIndex: 8
     _button: {fileID: 1145013748}
     _stars:
     - {fileID: 2108930476}
@@ -5425,7 +5417,6 @@ MonoBehaviour:
   _playButton: {fileID: 1077205382}
   _settingsButton: {fileID: 529182341}
   _settingsPanel: {fileID: 987784973}
-  _sendYandexGameReady: 1
 --- !u!114 &1512739833
 MonoBehaviour:
   m_ObjectHideFlags: 0

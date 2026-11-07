@@ -19,7 +19,7 @@ public class SceneInstaller : MonoInstaller
         Container.Bind<DustOneShotPool>().AsSingle().WithArguments(_dustOneShotPrefab, 4);
         Container.Bind<CoinOneShotPool>().AsSingle().WithArguments(_coinOneShotPrefab, 8);
         Container.Bind<PlayerDust>().AsSingle().WithArguments(_dustRun, _player.GroundCheckAnchor);
-
+        Container.Bind<PlayerLives>().AsSingle().WithArguments(3);
 
         Container.Bind<PlayerHealth>().AsSingle();
         Container.BindInterfacesAndSelfTo<PlayerMotor>().AsSingle();

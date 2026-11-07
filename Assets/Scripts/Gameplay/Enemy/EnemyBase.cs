@@ -9,7 +9,7 @@ public abstract class EnemyBase : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private AudioClip _deathClip;
     [SerializeField] private Rigidbody2D _rigidbody;
-    [SerializeField] private int _contactDamage = 50;
+    private int _contactDamage = 1;
     private EnemyDeath _enemyDeath;
     private EnemyAudio _enemyAudio;
     private IAudioService _audioService;
@@ -31,7 +31,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void Awake()
     {
         _enemyDeath = new EnemyDeath(this, _hostCollider, _animator, _rigidbody);
-        _enemyAudio = new EnemyAudio(_audioService,  _deathClip);
+        _enemyAudio = new EnemyAudio(_audioService, _deathClip);
         OnDeath += _enemyAudio.PlayDeath;
     }
     private void OnDestroy()

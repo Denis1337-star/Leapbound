@@ -21,7 +21,7 @@ MonoBehaviour:
   GroundLayer:
     serializedVersion: 2
     m_Bits: 8
-  MaxHealth: 100
+  MaxHealth: 3
   KnockbackForce: 6
   InvincibleTime: 1
   KnockbackLockTime: 0.2

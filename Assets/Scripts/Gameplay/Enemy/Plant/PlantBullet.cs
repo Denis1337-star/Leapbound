@@ -4,9 +4,9 @@ public sealed class PlantBullet : MonoBehaviour
 {
     [SerializeField] private float _speed = 8f;
     [SerializeField] private float _lifeTime = 5f;
-    [SerializeField] private int _damage = 50;
     [SerializeField] private LayerMask _stopLayer;
     [SerializeField] private Rigidbody2D _rigidbody;
+    private int _damage = 1;
     private BulletBreakEffectPool _bulletBreakEffectPool;
 
     private Vector2 _direction;

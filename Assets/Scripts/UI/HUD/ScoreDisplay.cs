@@ -25,6 +25,6 @@ public class ScoreDisplay : MonoBehaviour
     }
     private void UpdateText(int score)
     {
-        _scoreText.SetText("Счёт:{0}", score);
+        _scoreText.SetText("{0}", score);
     }
 }
