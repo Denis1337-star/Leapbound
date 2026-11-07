@@ -9,10 +9,9 @@ public class PlayerHealthUI : MonoBehaviour
     [SerializeField] private Sprite _fullHeartSprite;
     [SerializeField] private Sprite _emptyHeartSprite;
 
-    [SerializeField] private float _punchScale = 0.25f;
-    [SerializeField] private float _punchDuration = 0.2f;
-    [SerializeField] private float _swapDuration = 0.15f;
-
+    private float _punchScale = 0.25f;
+    private float _punchDuration = 0.2f;
+    private float _swapDuration = 0.15f;
     private Player _player;
     private bool _isSubscribed;
     private int _displayedHearts;

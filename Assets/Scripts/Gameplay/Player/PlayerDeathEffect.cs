@@ -9,18 +9,18 @@ public sealed class PlayerDeathEffect : IInitializable, ITickable, IDisposable
     private readonly PlayerRespawn _playerRespawn;
     private readonly PlayerAnimation _playerAnimation;
     private readonly PlayerLives _playerLives;
-    private readonly ISceneFlowService _sceneFlowService;
+    private readonly IGameStateService _gameStateService;
     private float _restartTimer = -1f;
 
     public PlayerDeathEffect(Player player, PlayerHealth playerHealth, PlayerRespawn playerRespawn,
-        PlayerAnimation playerAnimation, PlayerLives playerLives, ISceneFlowService sceneFlowService)
+        PlayerAnimation playerAnimation, PlayerLives playerLives, IGameStateService gameStateService)
     {
         _player = player;
         _playerHealth = playerHealth;
         _playerRespawn = playerRespawn;
         _playerAnimation = playerAnimation;
         _playerLives = playerLives;
-        _sceneFlowService = sceneFlowService;
+        _gameStateService = gameStateService;
     }
     public void Initialize() { _playerHealth.OnDeath += OnDeath; }
     public void Dispose() { _playerHealth.OnDeath -= OnDeath; }
@@ -53,6 +53,6 @@ public sealed class PlayerDeathEffect : IInitializable, ITickable, IDisposable
             return;
         }
 
-        _sceneFlowService.RestartCurrentLevel();
+        _gameStateService.Lose();
     }
 }
