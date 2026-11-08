@@ -9,8 +9,9 @@ public sealed class UiFloatBob : MonoBehaviour
     [SerializeField] private float _scaleDuration = 1.4f;
 
     private RectTransform _rect;
-    private Sequence _sequence;
     private Vector2 _startPos;
+    private Tween _moveTween;
+    private Tween _scaleTween;
 
     private void Awake()
     {
@@ -19,35 +20,34 @@ public sealed class UiFloatBob : MonoBehaviour
     }
     private void OnEnable()
     {
-        KillTween();
+        KillTweens();
         _rect.anchoredPosition = _startPos;
         _rect.localScale = Vector3.one;
+        _moveTween = _rect
+            .DOAnchorPosY(_startPos.y + _moveDistance, _moveDuration)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetUpdate(true);
 
-        _sequence = DOTween.Sequence().SetUpdate(true);
-        _sequence.Join(
-            _rect.DOAnchorPosY(_startPos.y + _moveDistance, _moveDuration)
-                .SetEase(Ease.InOutSine)
-                .SetLoops(-1, LoopType.Yoyo));
-        _sequence.Join(
-            _rect.DOScale(_scaleTo, _scaleDuration)
-                .SetEase(Ease.InOutSine)
-                .SetLoops(-1, LoopType.Yoyo));
+        _scaleTween = _rect
+            .DOScale(_scaleTo, _scaleDuration)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetUpdate(true);
     }
     private void OnDisable()
     {
-        KillTween();
+        KillTweens();
         _rect.anchoredPosition = _startPos;
         _rect.localScale = Vector3.one;
     }
     private void OnDestroy()
     {
-        KillTween();
+        KillTweens();
     }
-    private void KillTween()
+    private void KillTweens()
     {
-        if (_sequence == null)
-            return;
-        _sequence.Kill();
-        _sequence = null;
+        if (_moveTween != null) { _moveTween.Kill(); _moveTween = null; }
+        if (_scaleTween != null) { _scaleTween.Kill(); _scaleTween = null; }
     }
 }

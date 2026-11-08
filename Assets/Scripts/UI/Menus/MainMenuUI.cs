@@ -1,81 +1,45 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using YG;
-using Zenject;
 
 public class MainMenuUI : MonoBehaviour
 {
-    [System.Serializable]
-    public class LevelButton
-    {
-        [SerializeField, FormerlySerializedAs("levelIndex")]
-        private int _levelIndex;
-        [SerializeField, FormerlySerializedAs("button")]
-        private Button _button;
-        [SerializeField, FormerlySerializedAs("star")]
-        private Image[] _stars;
-        public int LevelIndex => _levelIndex;
-        public Button Button => _button;
-        public Image[] Stars => _stars;
-    }
-
-    [SerializeField] private LevelButton[] _levelButtons;
     [SerializeField] private Button _playButton;
     [SerializeField] private Button _settingsButton;
+    [SerializeField] private Button _levelsButton;
     [SerializeField] private GameObject _settingsPanel;
-    private bool _reportGameReadyWhenMenuShown = true; //слать ли площадке?
-    private bool _hasReportedGameReady; //отправил Ready?
-    private ISceneFlowService _sceneFlowService;
-    private LevelResultManager _levelResultManager;
+    [SerializeField] private GameObject _levelsPanel;
+    [SerializeField] private LevelsPanelUI _levelsPanelUI;
+ private bool _reportGameReadyWhenMenuShown = true;
+    private bool _hasReportedGameReady;
 
-    [Inject]
-    public void Construct(ISceneFlowService sceneFlowService, LevelResultManager levelResultManager)
-    {
-        _sceneFlowService = sceneFlowService;
-        _levelResultManager = levelResultManager;
-    }
-
-    private void OnEnable()
-    {
-        YG2.onGetSDKData += RefreshLevelButtonsView;
-    }
-    private void OnDisable()
-    {
-        YG2.onGetSDKData -= RefreshLevelButtonsView;
-    }
     private void Start()
     {
-        _playButton.onClick.AddListener(PlayLastLevel);
-        _settingsButton.onClick.AddListener(OpenSetting);
+        _playButton.onClick.AddListener(OnPlayClicked);
+        _settingsButton.onClick.AddListener(OpenSettings);
+        _levelsButton.onClick.AddListener(OpenLevels);
 
-        BindLevelButtonClicks();   
-        RefreshLevelButtonsView(); 
         ReportGameReadyIfNeeded();
     }
     private void OnDestroy()
     {
-        _playButton.onClick.RemoveListener(PlayLastLevel);
-        _settingsButton.onClick.RemoveListener(OpenSetting);
+        _playButton.onClick.RemoveListener(OnPlayClicked);
+        _settingsButton.onClick.RemoveListener(OpenSettings);
+        _levelsButton.onClick.RemoveListener(OpenLevels);
     }
-    private void OpenSetting() { _settingsPanel.SetActive(true); }
-    
-    private void PlayLastLevel()
+    private void OnPlayClicked()
     {
-        int index = _levelResultManager.GetLastUnlockedLevel();
-
-        for (int i = 0; i < _levelButtons.Length; i++)
-        {
-            if (_levelButtons[i].LevelIndex != index)
-                continue;
-
-            _sceneFlowService.LoadLevelByBuildIndex(index);
-            return;
-        }
+        _levelsPanelUI.PlayLastUnlockedLevel();
     }
-    private void LoadLevel(int levelIndex)
+    private void OpenSettings()
     {
-        _sceneFlowService.LoadLevelByBuildIndex(levelIndex);
+        _levelsPanel.SetActive(false);
+        _settingsPanel.SetActive(true);
+    }
+    private void OpenLevels()
+    {
+        _settingsPanel.SetActive(false);
+        _levelsPanel.SetActive(true);
     }
     private void ReportGameReadyIfNeeded()
     {
@@ -84,27 +48,5 @@ public class MainMenuUI : MonoBehaviour
 
         YG2.GameReadyAPI();
         _hasReportedGameReady = true;
-    }
-    private void RefreshLevelButtonsView()
-    {
-        for (int i = 0; i < _levelButtons.Length; i++)
-        {
-            LevelButton levelButton = _levelButtons[i];
-            bool unlocked = _levelResultManager.IsLevelUnlocked(levelButton.LevelIndex);
-            levelButton.Button.interactable = unlocked;
-
-            int starCount = _levelResultManager.GetStarsForLevel(levelButton.LevelIndex);
-            for (int starIndex = 0; starIndex < levelButton.Stars.Length; starIndex++)
-                levelButton.Stars[starIndex].enabled = starIndex < starCount;
-        }
-    }
-    private void BindLevelButtonClicks()
-    {
-        for (int i = 0; i < _levelButtons.Length; i++)
-        {
-            LevelButton levelButton = _levelButtons[i];
-            int levelIndex = levelButton.LevelIndex;
-            levelButton.Button.onClick.AddListener(() => LoadLevel(levelIndex));
-        }
     }
 }
