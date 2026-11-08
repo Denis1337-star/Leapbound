@@ -5,17 +5,17 @@ public sealed class Coin : MonoBehaviour
 {
     [SerializeField] private int _value = 10;
     private CoinOneShotPool _coinOneShotPool;
-
+    private CoinFlyFxPool _coinFlyFxPool;
     private IScoreService _scoreService;
     private bool _isCollected;
 
     [Inject]
-    public void Construct(IScoreService scoreService, CoinOneShotPool coinOneShotPool)
+    public void Construct(IScoreService scoreService, CoinOneShotPool coinOneShotPool, CoinFlyFxPool coinFlyFxPool)
     {
-    _scoreService = scoreService;
+        _scoreService = scoreService;
         _coinOneShotPool = coinOneShotPool;
+        _coinFlyFxPool = coinFlyFxPool;
     }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (_isCollected)
@@ -25,8 +25,10 @@ public sealed class Coin : MonoBehaviour
             return;
 
         _isCollected = true;
+        Vector3 collectPosition = transform.position;
         _scoreService.Add(_value);
-        _coinOneShotPool.Play(transform.position);
+        _coinOneShotPool.Play(collectPosition);
+        _coinFlyFxPool.Play(collectPosition);
         Destroy(gameObject);
     }
 }

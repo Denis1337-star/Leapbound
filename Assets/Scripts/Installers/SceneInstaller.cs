@@ -9,6 +9,9 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private DustRun _dustRun;
     [SerializeField] private CoinOneShot _coinOneShotPrefab;
     [SerializeField] private HealthOneShot _healthOneShot;
+    [SerializeField] private CoinFlyFx _coinFlyFxPrefab;
+    [SerializeField] private Canvas _fxCanvas;
+    [SerializeField] private ScoreDisplay _scoreDisplay;
 
     public override void InstallBindings()
     {
@@ -35,7 +38,7 @@ public class SceneInstaller : MonoInstaller
         Container.Bind<PlayerRespawn>().AsSingle();
 
         Container.Bind<LevelStarCalculator>().AsSingle().WithArguments(_threeStarScore);
+        Container.Bind<CoinFlyFxPool>().AsSingle().WithArguments(_coinFlyFxPrefab, 8, _fxCanvas, _scoreDisplay);
 
-     
     }
 }
