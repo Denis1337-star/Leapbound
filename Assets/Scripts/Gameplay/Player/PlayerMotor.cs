@@ -69,6 +69,7 @@ _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
         {
             _jumpsLeft = _playerConfig.MaxJumpCount;
             _playerDust.PlayLand();
+            _playerAudio.PlayLand();
         }
 
         _wasOnGround = IsOnGround;
@@ -87,7 +88,12 @@ _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
         _player.Rigidbody.AddForce(Vector2.up * _playerConfig.JumpForce, ForceMode2D.Impulse);
         _jumpsLeft--;
         IsDoubleJumping = isAirJump;
-        _playerAudio.PlayJump();
+
+        if (isAirJump)
+            _playerAudio.PlayDoubleJump();
+        else
+            _playerAudio.PlayJump();
+
         _playerDust.PlayJump();
         _inputService.ConsumeJump();
     }

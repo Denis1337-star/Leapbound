@@ -15,11 +15,12 @@ public sealed class PauseMenu : MonoBehaviour
     private PlayerLives _playerLives;
     private PlayerRespawn _playerRespawn;
     private PauseMenuAds _ads;
+    private GameReviewPrompt _gameReviewPrompt;
 
     [Inject]
     public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService,
         IGameStateService gameStateService, IInputService inputService,
-        LevelStarCalculator levelStarCalculator, PlayerLives playerLives, PlayerRespawn playerRespawn)
+        LevelStarCalculator levelStarCalculator, PlayerLives playerLives, PlayerRespawn playerRespawn, GameReviewPrompt gameReviewPrompt)
     {
         _sceneFlowService = sceneFlowService;
         _scoreService = scoreService;
@@ -28,6 +29,7 @@ public sealed class PauseMenu : MonoBehaviour
         _levelStarCalculator = levelStarCalculator;
         _playerLives = playerLives;
         _playerRespawn = playerRespawn;
+        _gameReviewPrompt = gameReviewPrompt;
     }
     private void Awake()
     {
@@ -61,6 +63,7 @@ public sealed class PauseMenu : MonoBehaviour
             case GameState.Win:
                 _view.ShowStars(_levelStarCalculator.Calculate(_scoreService.Score));
                 _view.ShowWin();
+                _view.SetReviewPromptVisible(_gameReviewPrompt.CanShowSoftPrompt());
                 SetGameFrozen(true);
                 break;
             case GameState.Lose:
@@ -92,6 +95,16 @@ public sealed class PauseMenu : MonoBehaviour
     {
         Time.timeScale = frozen ? 0f : 1f;
     }
+    private void OnReviewAccept()
+    {
+        _view.SetReviewPromptVisible(false);
+        _gameReviewPrompt.Accept();
+    }
+    private void OnReviewDecline()
+    {
+        _view.SetReviewPromptVisible(false);
+        _gameReviewPrompt.Decline();
+    }
     private void BindButtons()
     {
         _pauseButton.onClick.AddListener(TogglePause);
@@ -100,5 +113,7 @@ public sealed class PauseMenu : MonoBehaviour
         _view.MainMenuButton.onClick.AddListener(_ads.OnMainMenuClicked);
         _view.NextLevelButton.onClick.AddListener(_ads.OnNextLevelClicked);
         _view.RewardLifeButton.onClick.AddListener(_ads.OnRewardLifeClicked);
+        _view.ReviewAcceptButton.onClick.AddListener(OnReviewAccept);
+        _view.ReviewDeclineButton.onClick.AddListener(OnReviewDecline);
     }
 }

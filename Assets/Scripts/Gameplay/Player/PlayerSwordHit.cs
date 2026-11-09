@@ -76,5 +76,9 @@ public sealed class PlayerSwordHit : MonoBehaviour
 
         Vector2 direction = (enemy.transform.position - transform.position).normalized;
         enemy.Kill(direction);
+
+
+        if (TryGetComponent(out Player player) || transform.root.TryGetComponent(out player))
+            player.PlayHitJuice();
     }
 }

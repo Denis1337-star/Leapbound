@@ -22,6 +22,9 @@ public sealed class PlayerConfig : ScriptableObject
     public AudioClip WalkStep;
     public AudioClip RunStep;
     public AudioClip JumpClip;
+    public AudioClip DoubleJumpClip;
+    public AudioClip LandClip;
+    public AudioClip AttackClip;
     public AudioClip HurtClip;
     public AudioClip DeathClip;
     [Header("Attack")]

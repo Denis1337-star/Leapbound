@@ -26,6 +26,15 @@ public sealed class PlayerAudio : IInitializable, IDisposable
     public void PlayWalkStep() { _audioService.PlaySFX(_playerConfig.WalkStep); }
     public void PlayRunStep() { _audioService.PlaySFX(_playerConfig.RunStep); }
     public void  PlayJump() { _audioService.PlaySFX(_playerConfig.JumpClip); }
+    public void PlayDoubleJump()
+    {
+        AudioClip clip = _playerConfig.DoubleJumpClip;
+        if (clip == null)
+            clip = _playerConfig.JumpClip;
+        _audioService.PlaySFX(clip);
+    }
+    public void PlayLand() { _audioService.PlaySFX(_playerConfig.LandClip); }
+    public void PlayAttack() { _audioService.PlaySFX(_playerConfig.AttackClip); }
     private void PlayHurt(Vector2 _) { _audioService.PlaySFX(_playerConfig.HurtClip); }
     private void PlayDeath() { _audioService.PlaySFX(_playerConfig.DeathClip); }
 }

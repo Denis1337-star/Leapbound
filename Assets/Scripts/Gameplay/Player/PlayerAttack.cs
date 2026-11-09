@@ -74,7 +74,7 @@ public sealed class PlayerAttack : ITickable
         _isAttacking = true;
         _player.SetAttackMoveLock(kind == 0);
         _playerAnimation.PlayAttack(kind);
-            
+        _player.PlayAttackAudio();
     }
     private void UpdateAttack()
     {

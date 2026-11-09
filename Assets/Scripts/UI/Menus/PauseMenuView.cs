@@ -14,6 +14,9 @@ public sealed class PauseMenuView : MonoBehaviour
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _statusText;
     [SerializeField] private Image[] _stars;
+    [SerializeField] private GameObject _reviewPrompt;
+    [SerializeField] private Button _reviewAcceptButton;
+    [SerializeField] private Button _reviewDeclineButton;
 
     [SerializeField] private float _statusPunchScale = 0.20f;
     [SerializeField] private float _statusPunchDuration = 0.3f;
@@ -30,6 +33,8 @@ public sealed class PauseMenuView : MonoBehaviour
     public Button NextLevelButton => _nextLevelButton;
     public Button RewardLifeButton => _rewardLifeButton;
     public Button CloseButton => _closeButton;
+    public Button ReviewAcceptButton => _reviewAcceptButton;
+    public Button ReviewDeclineButton => _reviewDeclineButton;
 
     private void Awake()
     {
@@ -53,6 +58,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetCloseButtonVisible(false);
         SetNextVisible(true);
         SetRewardVisible(false);
+        SetReviewPromptVisible(false);
     }
     public void ShowLose()
     {
@@ -64,6 +70,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetNextVisible(false);
         SetRewardVisible(true);
         StartRewardPulse();
+        SetReviewPromptVisible(false);
     }
     public void ShowPaused()
     {
@@ -73,6 +80,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetCloseButtonVisible(true);
         SetNextVisible(false);
         SetRewardVisible(false);
+        SetReviewPromptVisible(false);
     }
     public void ShowPlaying()
     {
@@ -82,6 +90,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetCloseButtonVisible(false);
         SetNextVisible(false);
         SetRewardVisible(false);
+        SetReviewPromptVisible(false);
     }
     public void StopRewardPulsePublic() { StopRewardPulse(); }
     private void SetCloseButtonVisible(bool visible)
@@ -143,5 +152,9 @@ public sealed class PauseMenuView : MonoBehaviour
     {
         KillStatusTween();
         StopRewardPulse();
+    }
+    public void SetReviewPromptVisible(bool visible)
+    {
+        _reviewPrompt.SetActive(visible);
     }
 }

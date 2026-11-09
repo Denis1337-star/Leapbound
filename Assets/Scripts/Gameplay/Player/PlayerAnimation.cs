@@ -11,9 +11,11 @@ public sealed class PlayerAnimation : ITickable, ILateTickable
     private static readonly int AttackHash = Animator.StringToHash("Attack");
     private static readonly int AttackKindHash = Animator.StringToHash("AttackKind");
     private static readonly int IsAttackingHash = Animator.StringToHash("IsAttacking");
+    private static readonly int IsWinHash = Animator.StringToHash("IsWin");
     private readonly Player _player;
     private readonly PlayerMotor _playerMotor;
     private readonly PlayerHealth _playerHealth;
+    private bool _isWin;
 
     public PlayerAnimation(Player player, PlayerMotor playerMotor, PlayerHealth playerHealth)
     {
@@ -24,6 +26,15 @@ public sealed class PlayerAnimation : ITickable, ILateTickable
     public void Tick()
     {
         Animator animator = _player.Animator;
+        if (_isWin)
+        {
+            animator.SetBool(IsWinHash, true);
+            animator.SetFloat(SpeedHash, 0f);
+            animator.SetBool(IsRunHash, false);
+            animator.SetBool(IsJumpHash, false);
+            animator.SetBool(IsDoubleJumpHash, false);
+            return;
+        }
         animator.SetFloat(SpeedHash, Mathf.Abs(_playerMotor.MoveDirection));
         animator.SetBool(IsRunHash, _playerMotor.IsRunButtonHeld);
         animator.SetBool(IsDeadHash, _playerHealth.CurrentHealth <= 0);
@@ -49,6 +60,11 @@ public sealed class PlayerAnimation : ITickable, ILateTickable
     {
         _player.Animator.SetBool(IsAttackingHash, false);
         _player.Animator.ResetTrigger(AttackHash);
+    }
+    public void PlayWin()
+    {
+        _isWin = true;
+        StopAttack();
     }
     public void SetUnscaled(bool unscaled)
     {

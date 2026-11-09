@@ -10,6 +10,8 @@ public sealed class Player : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Transform _groundCheckAnchor;
     [SerializeField] private PlayerSwordHit _playerSwordHit;
+    [SerializeField] private HitStopPulse _hitStopPulse;
+    [SerializeField] private CameraHitShake _cameraHitShake;
     private PlayerHealth _playerHealth;
     private PlayerAudio _playerAudio;
     private PlayerDust _playerDust;
@@ -41,6 +43,16 @@ public sealed class Player : MonoBehaviour
         _rigidbody.angularVelocity = 0f;
         _rigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
     }
+    public void SnapOntoColliderTop(Collider2D surface)
+    {
+        Bounds surfaceBounds = surface.bounds;
+        Bounds bodyBounds = _bodyCollider.bounds;
+        float bottomOffset = _rigidbody.position.y - bodyBounds.min.y;
+        float x = surfaceBounds.center.x;
+        float y = surfaceBounds.max.y + bottomOffset;
+        _rigidbody.position = new Vector2(x, y);
+        Physics2D.SyncTransforms();
+    }
     public void RestoreBody(Vector3 position)
     {
         PlatformVelocity = Vector2.zero;
@@ -57,7 +69,7 @@ public sealed class Player : MonoBehaviour
             return;
 
         int count = collision.GetContacts(_contactPoints);
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             if (_contactPoints[i].normal.y <= 0.5f)
                 continue;
@@ -71,10 +83,16 @@ public sealed class Player : MonoBehaviour
         if (collision.collider.TryGetComponent<Platform>(out _))
             PlatformVelocity = Vector2.zero;
     }
+    public void PlayHitJuice()
+    {
+        _hitStopPulse.Play();
+        _cameraHitShake.Play();
+    }
     public void SetWindVelocity(Vector2 velocity) { WindVelocity = velocity; }
     public void ClearWindVelocity() { WindVelocity = Vector2.zero; }
-    public void PlayWalkStep(){ _playerAudio.PlayWalkStep(); }
+    public void PlayWalkStep() { _playerAudio.PlayWalkStep(); }
     public void PlayRunStep() { _playerAudio.PlayRunStep(); }
+    public void PlayAttackAudio() { _playerAudio.PlayAttack(); }
     public void PlayLandDust() { _playerDust.PlayLand(); }
     public void SetAttackMoveLock(bool locked) { _attackMoveLock = locked; }
 

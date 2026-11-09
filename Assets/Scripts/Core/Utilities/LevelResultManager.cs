@@ -4,6 +4,7 @@ public sealed class LevelResultManager
     private const int StarsArraySize = 16;
     public void SaveLevelResult(int levelIndex, int stars)
     {
+        YG2.saves.winCount++;
         int[] starsByLevel = GetStarsArray();
         if (levelIndex >= 0 && levelIndex < starsByLevel.Length)
         {
@@ -20,12 +21,10 @@ public sealed class LevelResultManager
     {
         return levelIndex <= YG2.saves.lastUnlockedLevelBuildIndex;
     }
-
     public int GetLastUnlockedLevel()
     {
         return YG2.saves.lastUnlockedLevelBuildIndex;
     }
-
     public void ResetProgress()
     {
         YG2.saves.lastUnlockedLevelBuildIndex = 1;
@@ -33,6 +32,7 @@ public sealed class LevelResultManager
         for (int i = 0; i < starsByLevel.Length; i++)
             starsByLevel[i] = 0;
 
+        YG2.saves.winCount = 0;
         YG2.SaveProgress();
     }
     public int GetStarsForLevel(int levelBuildIndex)

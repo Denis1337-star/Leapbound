@@ -5,46 +5,71 @@ using UnityEngine.UI;
 
 public sealed class SceneFadeView : MonoBehaviour
 {
-    [SerializeField] private Image _fadeImage;
-    [SerializeField] private float _fadeDuration = 0.2f;
+    private static readonly int RadiusId = Shader.PropertyToID("_Radius");
 
+    [SerializeField] private Image _fadeImage;
+    [SerializeField] private float _fadeDuration = 0.35f;
+    [SerializeField] private float _closedRadius = 0f;
+    [SerializeField] private float _openRadius = 1.35f;
+
+    private Material _material;
     private Tween _tween;
+    private float _radius;
 
     private void Awake()
     {
-        SetAlpha(0f);
-        _fadeImage.raycastTarget = false;
+        if (_fadeImage.material != null)
+        {
+            _material = Instantiate(_fadeImage.material);
+            _fadeImage.material = _material;
+        }
+        SetOpenIdle();
     }
     public void FadeOut(Action onComplete)
     {
         KillTween();
+        _fadeImage.enabled = true;
         _fadeImage.raycastTarget = true;
-        _tween = _fadeImage
-            .DOFade(1f, _fadeDuration)
-            .SetUpdate(true)
-            .SetEase(Ease.Linear)
-            .OnComplete(() => onComplete?.Invoke());
+        _radius = _closedRadius;
+        SetRadius(_radius);
+        _tween = DOVirtual.DelayedCall(0.05f, () => onComplete?.Invoke())
+            .SetUpdate(true);
     }
     public void FadeIn(Action onComplete = null)
     {
         KillTween();
-        SetAlpha(1f);
+        _fadeImage.enabled = true;
         _fadeImage.raycastTarget = true;
-        _tween = _fadeImage
-            .DOFade(0f, _fadeDuration)
+        _radius = _closedRadius;
+        SetRadius(_radius);
+        _tween = DOTween
+            .To(() => _radius, value =>
+            {
+                _radius = value;
+                SetRadius(_radius);
+            }, _openRadius, _fadeDuration)
             .SetUpdate(true)
-            .SetEase(Ease.Linear)
+            .SetEase(Ease.OutCubic)
             .OnComplete(() =>
             {
-                _fadeImage.raycastTarget = false;
+                SetOpenIdle();
                 onComplete?.Invoke();
             });
     }
-    private void SetAlpha(float alpha)
+    private void SetOpenIdle()
     {
-        Color color = _fadeImage.color;
-        color.a = alpha;
-        _fadeImage.color = color;
+        KillTween();
+        _radius = _openRadius;
+        SetRadius(_radius);
+        _fadeImage.raycastTarget = false;
+        _fadeImage.enabled = false; 
+    }
+
+    private void SetRadius(float radius)
+    {
+        if (_material == null)
+            return;
+        _material.SetFloat(RadiusId, radius);
     }
     private void KillTween()
     {
@@ -56,5 +81,7 @@ public sealed class SceneFadeView : MonoBehaviour
     private void OnDestroy()
     {
         KillTween();
+        if (_material != null)
+            Destroy(_material);
     }
 }

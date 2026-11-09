@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healAmount: 100
+  _collectClip: {fileID: 8300000, guid: 16b6b86ab83186640b220c529fd06d3c, type: 3}
 --- !u!212 &50103631322680629
 SpriteRenderer:
   serializedVersion: 2

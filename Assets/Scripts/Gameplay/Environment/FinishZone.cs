@@ -9,16 +9,18 @@ public sealed class FinishZone : MonoBehaviour
     private IGameStateService _gameStateService;
     private LevelResultManager _levelResultManager;
     private LevelStarCalculator _levelStarCalculator;
+    private PlayerWinEffect _playerWinEffect;
     private bool _isCompleted;
 
     [Inject]
     public void Construct(IScoreService scoreService, IGameStateService gameState,
-        LevelResultManager levelResultManager, LevelStarCalculator levelStarCalculator)
+        LevelResultManager levelResultManager, LevelStarCalculator levelStarCalculator, PlayerWinEffect playerWinEffect)
     {
         _scoreService = scoreService;
         _gameStateService = gameState;
         _levelResultManager = levelResultManager;
         _levelStarCalculator = levelStarCalculator;
+        _playerWinEffect = playerWinEffect;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -39,8 +41,9 @@ public sealed class FinishZone : MonoBehaviour
             return;
 
         _isCompleted = true;
+        player.SnapOntoColliderTop(_bodyCollider);
         player.FreezeBody();
-        _gameStateService.Win();
+        _playerWinEffect.Begin();
 
         Scene scene = SceneManager.GetActiveScene();
         int stars = _levelStarCalculator.Calculate(_scoreService.Score);

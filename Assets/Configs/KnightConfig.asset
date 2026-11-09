@@ -27,8 +27,11 @@ MonoBehaviour:
   KnockbackLockTime: 0.2
   WalkStep: {fileID: 8300000, guid: bfef15295ae00c14b8e471601cdba233, type: 3}
   RunStep: {fileID: 8300000, guid: 56684981319f43148878a1d8b54c8104, type: 3}
-  JumpClip: {fileID: 8300000, guid: a3e057b0b40455243a8b485a065e4ac3, type: 3}
-  HurtClip: {fileID: 8300000, guid: 63e22882f59d980478a5e3b4aeb82273, type: 3}
+  JumpClip: {fileID: 8300000, guid: 6213c0546698c2240a153e642409889c, type: 3}
+  DoubleJumpClip: {fileID: 8300000, guid: 296d3d31130dc8c40b6e1477fd0a59d7, type: 3}
+  LandClip: {fileID: 8300000, guid: f39cfe1eecc210742a26cbe95c3973c4, type: 3}
+  AttackClip: {fileID: 8300000, guid: 3725eea336179a9448b14a5058c673b1, type: 3}
+  HurtClip: {fileID: 8300000, guid: df6af6dcf07a47f4080eb8bbfffd4fee, type: 3}
   DeathClip: {fileID: 8300000, guid: 349add1a39df26647aeb4433952199d8, type: 3}
   AttackIdleDuration: 0.42
   AttackWalkDuration: 0.5

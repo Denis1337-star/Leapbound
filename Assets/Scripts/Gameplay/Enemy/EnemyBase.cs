@@ -84,6 +84,7 @@ public abstract class EnemyBase : MonoBehaviour
             side = 1f;
 
         Kill(new Vector2(side, 1f));
+        player.PlayHitJuice();
 
         Vector2 veloccity = player.Rigidbody.linearVelocity;
         veloccity.y = player.PlayerConfig.StopmBounceForce;
