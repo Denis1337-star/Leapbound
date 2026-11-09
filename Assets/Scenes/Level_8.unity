@@ -1810,17 +1810,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5fed818c423b4d4e87dba7ffeeae482, type: 3}
---- !u!114 &402398910 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3656095891800362811, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
-  m_PrefabInstance: {fileID: 580433371}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d7b255c5e4a3a43976e84ba985a0b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &404957106
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3016,7 +3005,7 @@ PrefabInstance:
     - target: {fileID: 8313545530666538920, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 402398910}
+      objectReference: {fileID: 0}
     - target: {fileID: 8313545530666538920, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: TogglePause
@@ -3042,6 +3031,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+--- !u!114 &580433372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3998982469346974009, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+  m_PrefabInstance: {fileID: 580433371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 996e6196f3bee1c4cbe948ad2ecf359e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!223 &580433373 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2502763369899662008, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+  m_PrefabInstance: {fileID: 580433371}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &591250872 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6008132102281944831, guid: c5fed818c423b4d4e87dba7ffeeae482, type: 3}
@@ -13407,6 +13412,9 @@ MonoBehaviour:
   _dustRun: {fileID: 1893334347}
   _coinOneShotPrefab: {fileID: 6900956696296746365, guid: 878fa48d297a2c44ba29d75b8600df25, type: 3}
   _healthOneShot: {fileID: 1960755077}
+  _coinFlyFxPrefab: {fileID: 3692929337582477558, guid: 022ea69e93bc05b4aa326413ee1aafd9, type: 3}
+  _fxCanvas: {fileID: 580433373}
+  _scoreDisplay: {fileID: 580433372}
 --- !u!1001 &1039310056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23084,16 +23092,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741826
-  - first: {x: 4, y: 11, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 1
-      m_TileSpriteIndex: 2
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741826
   - first: {x: 4, y: 12, z: 0}
     second:
       serializedVersion: 2
@@ -24300,7 +24298,7 @@ Tilemap:
     m_RefCount: 16
     m_Data: {fileID: 11400000, guid: 41f6bb73003d3de408149e0d6ed6477d, type: 2}
   - serializedVersion: 2
-    m_RefCount: 94
+    m_RefCount: 93
     m_Data: {fileID: 11400000, guid: 427d3e4c05008a649ae92caa5617eed4, type: 2}
   - serializedVersion: 2
     m_RefCount: 9
@@ -24322,7 +24320,7 @@ Tilemap:
     m_RefCount: 17
     m_Data: {fileID: 21300000, guid: 53f3f0a91e562fe49abbdb980ad92575, type: 3}
   - serializedVersion: 2
-    m_RefCount: 9
+    m_RefCount: 8
     m_Data: {fileID: 21300000, guid: ac5963950ce0db148a54fbbd372eaa7d, type: 3}
   - serializedVersion: 2
     m_RefCount: 6
@@ -24353,7 +24351,7 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 81372df20ee6f6e47a1220fae97d4bd0, type: 3}
   m_TileMatrixArray:
   - serializedVersion: 2
-    m_RefCount: 131
+    m_RefCount: 130
     m_Data:
       e00: 1
       e01: 0
@@ -24373,7 +24371,7 @@ Tilemap:
       e33: 1
   m_TileColorArray:
   - serializedVersion: 2
-    m_RefCount: 131
+    m_RefCount: 130
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1

@@ -2223,6 +2223,22 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+--- !u!114 &580433372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3998982469346974009, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+  m_PrefabInstance: {fileID: 580433371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 996e6196f3bee1c4cbe948ad2ecf359e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!223 &580433373 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 2502763369899662008, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+  m_PrefabInstance: {fileID: 580433371}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &582780196
 GameObject:
   m_ObjectHideFlags: 0
@@ -11958,6 +11974,9 @@ MonoBehaviour:
   _dustRun: {fileID: 1893334347}
   _coinOneShotPrefab: {fileID: 6900956696296746365, guid: 878fa48d297a2c44ba29d75b8600df25, type: 3}
   _healthOneShot: {fileID: 1960755077}
+  _coinFlyFxPrefab: {fileID: 3692929337582477558, guid: 022ea69e93bc05b4aa326413ee1aafd9, type: 3}
+  _fxCanvas: {fileID: 580433373}
+  _scoreDisplay: {fileID: 580433372}
 --- !u!4 &1033139764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6008132102281944831, guid: c5fed818c423b4d4e87dba7ffeeae482, type: 3}

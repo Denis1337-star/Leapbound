@@ -207,8 +207,7 @@ MonoBehaviour:
   _animator: {fileID: 5266498211581707342}
   _deathClip: {fileID: 8300000, guid: 2cbed0bef70850d4ea14f1c0d4d8c9ba, type: 3}
   _rigidbody: {fileID: 5502286411287795606}
-  _contactDamage: 50
   _patrolEnable: 0
   _pointA: {fileID: 0}
   _pointB: {fileID: 0}
-  _speed: 2
+  _speed: 3
