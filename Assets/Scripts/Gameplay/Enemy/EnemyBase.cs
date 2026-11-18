@@ -64,9 +64,22 @@ public abstract class EnemyBase : MonoBehaviour
         if (!collision.collider.TryGetComponent(out Player player))
             return;
 
+        HandlePlayerContact(player);
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (IsDead)
+            return;
+
+        if (!other.TryGetComponent(out Player player))
+            return;
+
+        HandlePlayerContact(player);
+    }
+    private void HandlePlayerContact(Player player)
+    {
         float playerBottom = player.BodyCollider.bounds.min.y;
         float enemyTop = BodyCollider.bounds.max.y;
-
 
         if (playerBottom > enemyTop - 0.05f)
         {
@@ -76,6 +89,7 @@ public abstract class EnemyBase : MonoBehaviour
 
         Vector2 hitDirection = (player.transform.position - transform.position).normalized;
         player.PlayerHealth.TakeDamage(_contactDamage, hitDirection);
+        OnDamagedPlayer(player);
     }
     protected virtual void OnStomped(Player player)
     {
@@ -91,4 +105,5 @@ public abstract class EnemyBase : MonoBehaviour
         player.Rigidbody.linearVelocity = veloccity;
         player.PlayLandDust();
     }
+    protected virtual void OnDamagedPlayer(Player player) { }
 }

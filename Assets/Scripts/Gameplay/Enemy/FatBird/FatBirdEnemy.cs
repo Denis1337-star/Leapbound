@@ -57,6 +57,7 @@ public sealed class FatBirdEnemy : EnemyBase
             return;
 
         _birdState = BirdState.Fall;
+        BodyCollider.isTrigger = true;
         SetAnimation(true, false);
     }
     private void TickFall()
@@ -65,6 +66,8 @@ public sealed class FatBirdEnemy : EnemyBase
         Rigidbody.MovePosition(next);
         if (!IsOnGround())
             return;
+
+        BodyCollider.isTrigger = false;
         _birdState = BirdState.Grounded;
         _timer = _groundWait;
         SetAnimation(false, true);

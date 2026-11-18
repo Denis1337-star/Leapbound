@@ -46,12 +46,18 @@ public sealed class PlayerDamageFeedback : IInitializable, ITickable, IDisposabl
     {
         _playerHealth.SetInvincible(true);
         _player.Rigidbody.linearVelocity = Vector2.zero;
-        _player.Rigidbody.AddForce(hitDirection.normalized * _playerConfig.KnockbackForce,
-            ForceMode2D.Impulse);
+
+        Vector2 knockback = hitDirection;
+        if (knockback.sqrMagnitude < 0.001f)
+            knockback = Vector2.up;
+
+        knockback.y = Mathf.Max(knockback.y, 0.35f);
+        knockback.Normalize();
+
+        _player.Rigidbody.AddForce(knockback * _playerConfig.KnockbackForce, ForceMode2D.Impulse);
 
         _knockbackTimer = _playerConfig.KnockbackLockTime;
         _invincibleTimer = _playerConfig.InvincibleTime;
-
         _player.Animator.SetTrigger(HurtHash);
     }
     public void OnDeath()

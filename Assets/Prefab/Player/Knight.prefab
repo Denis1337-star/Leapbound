@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 4089564441933120730}
   - component: {fileID: 8416398504637176676}
   - component: {fileID: 6199401786912140736}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Knight
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -397,7 +397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3765461190891640191}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 4162164826716764455, guid: 0000000000000000d000000000000000, type: 0}
@@ -431,7 +431,7 @@ GameObject:
   - component: {fileID: 3406635240110819349}
   - component: {fileID: 8635890139291313823}
   - component: {fileID: 6155884403005416170}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HealEffect
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -559,7 +559,7 @@ GameObject:
   - component: {fileID: 921733145460239489}
   - component: {fileID: 2519452086334511676}
   - component: {fileID: 6153088534040081022}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SwordHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 5956829377110553265}
   - component: {fileID: 7046082483368888435}
   - component: {fileID: 3464127028398203637}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DustRun
   m_TagString: Untagged
   m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
