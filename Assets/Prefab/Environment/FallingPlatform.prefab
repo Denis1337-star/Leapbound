@@ -133,7 +133,7 @@ MonoBehaviour:
   _animator: {fileID: 7265486358988034914}
   _spriteRenderer: {fileID: 7445042904311234751}
   _collider: {fileID: 3145048740279510958}
-  _delay: 0.3
+  _delay: 0.2
   _hideDelay: 0.7
   _gravityScale: 3
   _respawnDelay: 4
