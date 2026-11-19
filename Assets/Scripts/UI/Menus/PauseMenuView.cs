@@ -75,6 +75,7 @@ public sealed class PauseMenuView : MonoBehaviour
     public void ShowPaused()
     {
         StopRewardPulse();
+        ShowStars(0);
         SetStatus("Пауза");
         _pausePanel.SetActive(true);
         SetCloseButtonVisible(true);

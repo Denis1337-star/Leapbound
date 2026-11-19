@@ -804,7 +804,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 152876295}
   _pointA: {fileID: 2054854519}
   _pointB: {fileID: 193098111}
-  _speed: 2
+  _speed: 3
 --- !u!4 &152876301 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2645899776287981161, guid: 2272d9eaf15b27d44ae1d8a65d397ecb, type: 3}
@@ -11188,7 +11188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneInstaller
   _player: {fileID: 1312787127}
-  _threeStarScore: 600
+  _threeStarScore: 630
   _dustOneShotPrefab: {fileID: 3729262866567920934, guid: ee8a90c20768d134fa8a7155a6177a4d, type: 3}
   _dustRun: {fileID: 1893334347}
   _coinOneShotPrefab: {fileID: 6900956696296746365, guid: 878fa48d297a2c44ba29d75b8600df25, type: 3}
@@ -39202,6 +39202,10 @@ PrefabInstance:
     - target: {fileID: 5606012955903379112, guid: 74e6ae96638f6014382ddb118898f511, type: 3}
       propertyPath: m_Name
       value: SawPl
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169097387708100206, guid: 74e6ae96638f6014382ddb118898f511, type: 3}
+      propertyPath: _speed
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6169097387708100206, guid: 74e6ae96638f6014382ddb118898f511, type: 3}
       propertyPath: _pointA

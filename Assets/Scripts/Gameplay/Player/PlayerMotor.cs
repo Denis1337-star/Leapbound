@@ -17,7 +17,9 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     public bool IsDoubleJumping { get; private set; }
     private bool _wasOnGround;
     private int _jumpsLeft;
-    
+    private float _groundCheckSuppressTimer;
+    private const float GroundCheckSuppressTime = 0.05f;
+
     public PlayerMotor(Player player, PlayerConfig playerConfig, IInputService inputService, PlayerAudio playerAudio,
         IGameStateService gameStateService, PlayerDamageFeedback playerDamageFeedback, PlayerDust playerDust)
     {
@@ -62,8 +64,18 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
 
     private void ProcessJump()
     {
-        IsOnGround = Physics2D.OverlapCircle(_player.GroundCheckAnchor.position,
-_playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
+        if (_groundCheckSuppressTimer > 0f)
+        {
+            _groundCheckSuppressTimer -= Time.deltaTime;
+            IsOnGround = false;
+        }
+        else
+        {
+            IsOnGround = Physics2D.OverlapCircle(
+                _player.GroundCheckAnchor.position,
+                _playerConfig.GroundCheckRadius,
+                _playerConfig.GroundLayer);
+        }
 
         if (IsOnGround && !_wasOnGround)
         {
@@ -88,6 +100,7 @@ _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
         _player.Rigidbody.AddForce(Vector2.up * _playerConfig.JumpForce, ForceMode2D.Impulse);
         _jumpsLeft--;
         IsDoubleJumping = isAirJump;
+        _groundCheckSuppressTimer = GroundCheckSuppressTime;
 
         if (isAirJump)
             _playerAudio.PlayDoubleJump();
@@ -128,6 +141,7 @@ _playerConfig.GroundCheckRadius, _playerConfig.GroundLayer);
     }
     public void ResetMotion()
     {
+        _groundCheckSuppressTimer = 0f;
         MoveDirection = 0f;
         IsRunButtonHeld = false;
         WasJumpPressed = false;

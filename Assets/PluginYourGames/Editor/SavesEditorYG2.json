@@ -1,11 +1,11 @@
 {
-    "idSave": 10,
+    "idSave": 14,
     "lastUnlockedLevelBuildIndex": 12,
     "starsByLevelBuildIndex": [
         0,
         2,
-        0,
-        0,
+        2,
+        2,
         0,
         0,
         0,
@@ -19,7 +19,7 @@
         0,
         0
     ],
-    "winCount": 1,
-    "reviewPromptShown": false,
+    "winCount": 4,
+    "reviewPromptShown": true,
     "reviewCompleted": false
 }

@@ -2,7 +2,7 @@
 - Project name: Leapbound
 - Unity version: Unity 6000.4.10f1
 - Active game object:
-  - Name: Pickup
+  - Name: Platform_1
   - Tag: Untagged
-  - Layer: Default
+  - Layer: Ground
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
