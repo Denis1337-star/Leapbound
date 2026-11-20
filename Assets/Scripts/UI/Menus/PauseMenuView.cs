@@ -13,17 +13,15 @@ public sealed class PauseMenuView : MonoBehaviour
     [SerializeField] private Button _rewardLifeButton;
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _statusText;
-    [SerializeField] private Image[] _stars;
     [SerializeField] private GameObject _reviewPrompt;
     [SerializeField] private Button _reviewAcceptButton;
     [SerializeField] private Button _reviewDeclineButton;
+    [SerializeField] private PauseMenuStarView _starView;
 
-    [SerializeField] private float _statusPunchScale = 0.20f;
-    [SerializeField] private float _statusPunchDuration = 0.3f;
-    [SerializeField] private float _rewardPulseScale = 1.05f;
-    [SerializeField] private float _rewardPulseDuration = 0.55f;
-
-    private RectTransform _pausePanelRect;
+    private float _statusPunchScale = 0.20f;
+    private float _statusPunchDuration = 0.3f;
+    private float _rewardPulseScale = 1.05f;
+    private float _rewardPulseDuration = 0.55f;
     private RectTransform _rewardLifeRect;
     private Tween _statusTween;
     private Tween _rewardPulseTween;
@@ -38,23 +36,17 @@ public sealed class PauseMenuView : MonoBehaviour
 
     private void Awake()
     {
-        _pausePanelRect = _pausePanel.GetComponent<RectTransform>();
         _rewardLifeRect = _rewardLifeButton.transform as RectTransform;
     }
     private void OnDisable() { KillAllPolishTweens(); }
     private void OnDestroy() { KillAllPolishTweens(); }
     public void SetScore(int score) { _scoreText.SetText("{0}", score); }
     public void SetStatus(string text) { _statusText.SetText(text); }
-    public void ShowStars(int count)
-    {
-        for (int i = 0; i < _stars.Length; i++)
-            _stars[i].enabled = i < count;
-    }
     public void ShowWin()
     {
         StopRewardPulse();
         SetStatus("Ты победил");
-        _pausePanel.SetActive(true);   
+        _pausePanel.SetActive(true);
         SetCloseButtonVisible(false);
         SetNextVisible(true);
         SetRewardVisible(false);
@@ -63,9 +55,8 @@ public sealed class PauseMenuView : MonoBehaviour
     public void ShowLose()
     {
         SetStatus("Попытки закончились");
-        ShowStars(0);
-        _pausePanel.SetActive(true);   
-        PlayStatusPunch();             
+        _pausePanel.SetActive(true);
+        PlayStatusPunch();
         SetCloseButtonVisible(false);
         SetNextVisible(false);
         SetRewardVisible(true);
@@ -75,7 +66,6 @@ public sealed class PauseMenuView : MonoBehaviour
     public void ShowPaused()
     {
         StopRewardPulse();
-        ShowStars(0);
         SetStatus("Пауза");
         _pausePanel.SetActive(true);
         SetCloseButtonVisible(true);
@@ -92,22 +82,12 @@ public sealed class PauseMenuView : MonoBehaviour
         SetNextVisible(false);
         SetRewardVisible(false);
         SetReviewPromptVisible(false);
+        _starView.Hide();
     }
     public void StopRewardPulsePublic() { StopRewardPulse(); }
-    private void SetCloseButtonVisible(bool visible)
-    {
-        if (_closeButton == null)
-            return;
-        _closeButton.gameObject.SetActive(visible);
-    }
-    private void SetNextVisible(bool visible)
-    {
-        _nextLevelButton.gameObject.SetActive(visible);
-    }
-    private void SetRewardVisible(bool visible)
-    {
-        _rewardLifeButton.gameObject.SetActive(visible);
-    }
+    private void SetCloseButtonVisible(bool visible) { _closeButton.gameObject.SetActive(visible); }
+    private void SetNextVisible(bool visible) { _nextLevelButton.gameObject.SetActive(visible); }
+    private void SetRewardVisible(bool visible) { _rewardLifeButton.gameObject.SetActive(visible); }
 
     private void PlayStatusPunch()
     {
@@ -154,8 +134,14 @@ public sealed class PauseMenuView : MonoBehaviour
         KillStatusTween();
         StopRewardPulse();
     }
-    public void SetReviewPromptVisible(bool visible)
+    public void SetReviewPromptVisible(bool visible) { _reviewPrompt.SetActive(visible); }
+    public void ApplyStars(LevelStarResult result, int score, int targetScore, bool showBigStars)
     {
-        _reviewPrompt.SetActive(visible);
+        _starView.ShowChecklist(result, score, targetScore);
+
+        if (showBigStars)
+            _starView.ShowBigStars(result);
+        else
+            _starView.ClearBigStars();
     }
 }

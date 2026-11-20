@@ -3,11 +3,13 @@ using UnityEngine;
 
 public sealed class PlayerHealth
 {
-    private readonly int _maxHealth;
+    private int _maxHealth;
     private bool _isDead;
+    private bool _bonusMaxHealthGranted;
     public int CurrentHealth { get; private set; }
-    public int MaxHealth => _maxHealth;
     public bool IsInvincible { get; private set; }
+    public bool HasBonusMaxHealth => _bonusMaxHealthGranted;
+    public int MaxHealth => _maxHealth;
     public event Action<int, int> OnHealthChanged;
     public event Action<Vector2> OnDamaged;
     public event Action OnDeath;
@@ -52,6 +54,16 @@ public sealed class PlayerHealth
     {
         _isDead = false;
         IsInvincible = false;
+        CurrentHealth = _maxHealth;
+        OnHealthChanged?.Invoke(CurrentHealth, _maxHealth);
+    }
+    public void GrantBonusMaxHealth()
+    {
+        if (_bonusMaxHealthGranted)
+            return;
+
+        _bonusMaxHealthGranted = true;
+        _maxHealth += 1;
         CurrentHealth = _maxHealth;
         OnHealthChanged?.Invoke(CurrentHealth, _maxHealth);
     }

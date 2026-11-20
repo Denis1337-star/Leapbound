@@ -4,7 +4,7 @@ using Zenject;
 public class SceneInstaller : MonoInstaller
 {
     [SerializeField] private Player _player;
-    [SerializeField] private int _threeStarScore;
+    [SerializeField] private int _targetScore;
     [SerializeField] private DustOneShot _dustOneShotPrefab;
     [SerializeField] private DustRun _dustRun;
     [SerializeField] private CoinOneShot _coinOneShotPrefab;
@@ -23,7 +23,7 @@ public class SceneInstaller : MonoInstaller
     {
         Container.Bind<Player>().FromInstance(_player).AsSingle();
         Container.Bind<PlayerConfig>().FromInstance(_player.PlayerConfig).AsSingle();
-        Container.Bind<PlayerLives>().AsSingle().WithArguments(3);
+        Container.Bind<PlayerLives>().AsSingle().WithArguments(2);
         Container.Bind<PlayerHealth>().AsSingle();
         Container.BindInterfacesAndSelfTo<PlayerMotor>().AsSingle();
         Container.BindInterfacesAndSelfTo<PlayerAttack>().AsSingle();
@@ -39,7 +39,7 @@ public class SceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<ScoreService>().AsSingle().NonLazy();
         Container.BindInterfacesAndSelfTo<GameStateService>().AsSingle().NonLazy();
         Container.Bind<CheckpointService>().AsSingle().NonLazy();
-        Container.Bind<LevelStarCalculator>().AsSingle().WithArguments(_threeStarScore);
+        Container.Bind<LevelStarCalculator>().AsSingle().WithArguments(_targetScore);
     }
     private void FxInstaller()
     {

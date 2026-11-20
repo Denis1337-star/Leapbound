@@ -15,8 +15,8 @@ public class PlayerHealthUI : MonoBehaviour
     private Player _player;
     private bool _isSubscribed;
     private int _displayedHearts;
+    private int _displayedMaxHearts;
     private Tween[] _heartTweens;
-
     [Inject]
     public void Construct(Player player)
     {
@@ -51,11 +51,19 @@ public class PlayerHealthUI : MonoBehaviour
         _player.PlayerHealth.OnHealthChanged += HandleHealthChanged;
         _isSubscribed = true;
         _displayedHearts = _player.PlayerHealth.CurrentHealth;
-        ApplyHeartsInstant(_displayedHearts);
+        _displayedMaxHearts = _player.PlayerHealth.MaxHealth;
+        ApplyHeartsInstant(_displayedHearts, _displayedMaxHearts);
     }
     private void HandleHealthChanged(int current, int max)
     {
         int targetHearts = Mathf.Clamp(current, 0, _heartImages.Length);
+        int targetMax = Mathf.Clamp(max, 0, _heartImages.Length);
+        if (targetMax != _displayedMaxHearts)
+        {
+            ApplyHeartSlotsVisible(targetMax);
+            _displayedMaxHearts = targetMax;
+        }
+
         if (targetHearts == _displayedHearts)
             return;
 
@@ -66,9 +74,10 @@ public class PlayerHealthUI : MonoBehaviour
 
         _displayedHearts = targetHearts;
     }
-    private void ApplyHeartsInstant(int filledCount)
+    private void ApplyHeartsInstant(int filledCount, int maxHearts)
     {
-        for (int i = 0; i < _heartImages.Length; i++)
+        ApplyHeartSlotsVisible(maxHearts);
+        for (int i = 0; i < maxHearts && i < _heartImages.Length; i++)
         {
             if (i < filledCount)
                 _heartImages[i].sprite = _fullHeartSprite;
@@ -78,6 +87,11 @@ public class PlayerHealthUI : MonoBehaviour
             _heartImages[i].color = Color.white;
             _heartImages[i].rectTransform.localScale = Vector3.one;
         }
+    }
+    private void ApplyHeartSlotsVisible(int maxHearts)
+    {
+        for (int i = 0; i < _heartImages.Length; i++)
+            _heartImages[i].gameObject.SetActive(i < maxHearts);
     }
     private void AnimateLoseHearts(int fromCount, int toCount)
     {

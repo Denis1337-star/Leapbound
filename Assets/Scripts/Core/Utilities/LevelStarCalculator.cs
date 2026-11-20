@@ -1,20 +1,18 @@
-﻿public sealed class LevelStarCalculator 
+﻿
+public sealed class LevelStarCalculator
 {
-    public readonly int _threeStarScore;
-    public LevelStarCalculator(int threeStarScore)
+    private readonly int _targetScore;
+    public int TargetScore => _targetScore;
+
+    public LevelStarCalculator(int targetScore)
     {
-        _threeStarScore = threeStarScore;
+        _targetScore = targetScore;
     }
 
-    public  int Calculate(int score)
+    public LevelStarResult Calculate(int score, bool hasLostLife, bool finished)
     {
-        int twoStarsScore = _threeStarScore / 2;
-        if (score >= _threeStarScore)
-            return 3;
-
-        if (score >= twoStarsScore)
-            return 2;
-
-        return 1;
+        bool scoreMet = score >= _targetScore;
+        bool noDeathMet = !hasLostLife;
+        return new LevelStarResult(finished, scoreMet, noDeathMet);
     }
 }

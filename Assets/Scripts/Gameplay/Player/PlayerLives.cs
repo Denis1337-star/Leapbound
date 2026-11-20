@@ -4,12 +4,14 @@ using UnityEngine;
 public sealed class PlayerLives
 {
     private readonly int _maxLives;
+    private bool _hasLostLife;
     public int CurrentLives { get; private set; }
     public int MaxLives => _maxLives;
+    public bool HasLostLife => _hasLostLife;
     public event Action<int, int> OnLivesChanged;
     public event Action OnLivesDepleted;
 
-    public PlayerLives(int maxLives = 3)
+    public PlayerLives(int maxLives = 2)
     {
         _maxLives = maxLives;
         CurrentLives = maxLives;
@@ -19,6 +21,7 @@ public sealed class PlayerLives
         if (CurrentLives <= 0)
             return;
 
+        _hasLostLife = true;
         CurrentLives--;
         OnLivesChanged?.Invoke(CurrentLives, _maxLives);
 
@@ -32,6 +35,7 @@ public sealed class PlayerLives
     }
     public void ResetLives()
     {
+        _hasLostLife = false;
         CurrentLives = _maxLives;
         OnLivesChanged?.Invoke(CurrentLives, _maxLives);
     }

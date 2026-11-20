@@ -6,21 +6,21 @@ public sealed class FinishZone : MonoBehaviour
 {
     [SerializeField] private Collider2D _bodyCollider;
     private IScoreService _scoreService;
-    private IGameStateService _gameStateService;
     private LevelResultManager _levelResultManager;
     private LevelStarCalculator _levelStarCalculator;
     private PlayerWinEffect _playerWinEffect;
+    private PlayerLives _playerLives;
     private bool _isCompleted;
 
     [Inject]
-    public void Construct(IScoreService scoreService, IGameStateService gameState,
-        LevelResultManager levelResultManager, LevelStarCalculator levelStarCalculator, PlayerWinEffect playerWinEffect)
+    public void Construct(IScoreService scoreService, LevelResultManager levelResultManager, 
+        LevelStarCalculator levelStarCalculator,PlayerWinEffect playerWinEffect, PlayerLives playerLives)
     {
         _scoreService = scoreService;
-        _gameStateService = gameState;
         _levelResultManager = levelResultManager;
         _levelStarCalculator = levelStarCalculator;
         _playerWinEffect = playerWinEffect;
+        _playerLives = playerLives;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -46,7 +46,7 @@ public sealed class FinishZone : MonoBehaviour
         _playerWinEffect.Begin();
 
         Scene scene = SceneManager.GetActiveScene();
-        int stars = _levelStarCalculator.Calculate(_scoreService.Score);
-        _levelResultManager.SaveLevelResult(scene.buildIndex, stars);
+        LevelStarResult result = _levelStarCalculator.Calculate(_scoreService.Score, _playerLives.HasLostLife, true);
+        _levelResultManager.SaveLevelResult(scene.buildIndex, result.Count);
     }
 }

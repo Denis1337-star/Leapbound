@@ -13407,7 +13407,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneInstaller
   _player: {fileID: 1312787127}
-  _threeStarScore: 670
+  _targetScore: 650
   _dustOneShotPrefab: {fileID: 3729262866567920934, guid: ee8a90c20768d134fa8a7155a6177a4d, type: 3}
   _dustRun: {fileID: 1893334347}
   _coinOneShotPrefab: {fileID: 6900956696296746365, guid: 878fa48d297a2c44ba29d75b8600df25, type: 3}

@@ -2712,7 +2712,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4581474659406981310, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4912410380921951828, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2732,16 +2732,16 @@ PrefabInstance:
         \u0440\u0430\u0441\u0442\u0435\u043D\u0438\u044F\u043C\u0438: \n\u043E\u043D\u0438
         \u0441\u0442\u0440\u0435\u043B\u044F\u044E\u0442. \n\u0423\u0434\u0430\u0440\u044C
         \u043C\u0435\u0447\u043E\u043C \u0438\u043B\u0438 \u043F\u0435\u0440\u0435\u043F\u0440\u044B\u0433\u043D\u0438.
-        \n\n\u041F\u0443\u043B\u044E \u0442\u043E\u0436\u0435 \u043C\u043E\u0436\u043D\u043E
+        \n\u041F\u0443\u043B\u044E \u0442\u043E\u0436\u0435 \u043C\u043E\u0436\u043D\u043E
         \u0441\u0431\u0438\u0442\u044C \u043C\u0435\u0447\u043E\u043C."
       objectReference: {fileID: 0}
     - target: {fileID: 5290922331253046447, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_fontSize
-      value: 45
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5290922331253046447, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_fontSizeBase
-      value: 45
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 5290922331253046447, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_VerticalAlignment
@@ -15530,7 +15530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneInstaller
   _player: {fileID: 1312787127}
-  _threeStarScore: 840
+  _targetScore: 750
   _dustOneShotPrefab: {fileID: 3729262866567920934, guid: ee8a90c20768d134fa8a7155a6177a4d, type: 3}
   _dustRun: {fileID: 1893334347}
   _coinOneShotPrefab: {fileID: 6900956696296746365, guid: 878fa48d297a2c44ba29d75b8600df25, type: 3}
@@ -20821,7 +20821,11 @@ MonoBehaviour:
   _rigidbody: {fileID: 1049097632}
   _pointA: {fileID: 1177866490}
   _pointB: {fileID: 1441360603}
+  _platformMode: 0
   _speed: 2
+  _emptySpeed: 6
+  _boardedSpeed: 2
+  _passengerExitGrace: 0.35
 --- !u!4 &1049097638 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2645899776287981161, guid: 2272d9eaf15b27d44ae1d8a65d397ecb, type: 3}

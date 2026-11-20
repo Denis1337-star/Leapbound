@@ -4,7 +4,7 @@ using Zenject;
 
 public sealed class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private PauseMenuView _view;
+    [SerializeField] private PauseMenuView _pauseMenuView;
     [SerializeField] private Button _pauseButton;
 
     private ISceneFlowService _sceneFlowService;
@@ -14,7 +14,7 @@ public sealed class PauseMenu : MonoBehaviour
     private LevelStarCalculator _levelStarCalculator;
     private PlayerLives _playerLives;
     private PlayerRespawn _playerRespawn;
-    private PauseMenuAds _ads;
+    private PauseMenuAds _pauseMenuAds;
     private GameReviewPrompt _gameReviewPrompt;
 
     [Inject]
@@ -33,49 +33,51 @@ public sealed class PauseMenu : MonoBehaviour
     }
     private void Awake()
     {
-        _ads = new PauseMenuAds(_gameStateService, _sceneFlowService, _playerLives, _playerRespawn,
-            _view.StopRewardPulsePublic);
+        _pauseMenuAds = new PauseMenuAds(_gameStateService, _sceneFlowService, _playerLives, _playerRespawn,
+            _pauseMenuView.StopRewardPulsePublic);
         BindButtons();
     }
     private void Start()
     {
-        _view.ShowPlaying();
+        _pauseMenuView.ShowPlaying();
         SetGameFrozen(false);
-        _view.SetScore(_scoreService.Score);
+        _pauseMenuView.SetScore(_scoreService.Score);
     }
     private void OnEnable()
     {
         _gameStateService.OnStateChanged += HandleGameStateChanged;
-        _scoreService.OnScoreChanged += _view.SetScore;
+        _scoreService.OnScoreChanged += _pauseMenuView.SetScore;
         _inputService.PausedRequested += TogglePause;
     }
     private void OnDisable()
     {
         _gameStateService.OnStateChanged -= HandleGameStateChanged;
-        _scoreService.OnScoreChanged -= _view.SetScore;
+        _scoreService.OnScoreChanged -= _pauseMenuView.SetScore;
         _inputService.PausedRequested -= TogglePause;
-        _ads.Dispose();
+        _pauseMenuAds.Dispose();
     }
     private void HandleGameStateChanged(GameState newState)
     {
         switch (newState)
         {
             case GameState.Win:
-                _view.ShowStars(_levelStarCalculator.Calculate(_scoreService.Score));
-                _view.ShowWin();
-                _view.SetReviewPromptVisible(_gameReviewPrompt.CanShowSoftPrompt());
+                RefreshStars(true);
+                _pauseMenuView.ShowWin();
+                _pauseMenuView.SetReviewPromptVisible(_gameReviewPrompt.CanShowSoftPrompt());
                 SetGameFrozen(true);
                 break;
             case GameState.Lose:
-                _view.ShowLose();
+                RefreshStars(false);
+                _pauseMenuView.ShowLose();
                 SetGameFrozen(true);
                 break;
             case GameState.Paused:
-                _view.ShowPaused();
+                RefreshStars(false);
+                _pauseMenuView.ShowPaused();
                 SetGameFrozen(true);
                 break;
             case GameState.Playing:
-                _view.ShowPlaying();
+                _pauseMenuView.ShowPlaying();
                 SetGameFrozen(false);
                 break;
         }
@@ -93,27 +95,36 @@ public sealed class PauseMenu : MonoBehaviour
     }
     private void SetGameFrozen(bool frozen)
     {
-        Time.timeScale = frozen ? 0f : 1f;
+        if (frozen)
+            Time.timeScale = 0f;
+        else
+            Time.timeScale = 1f;
     }
     private void OnReviewAccept()
     {
-        _view.SetReviewPromptVisible(false);
+        _pauseMenuView.SetReviewPromptVisible(false);
         _gameReviewPrompt.Accept();
     }
     private void OnReviewDecline()
     {
-        _view.SetReviewPromptVisible(false);
+        _pauseMenuView.SetReviewPromptVisible(false);
         _gameReviewPrompt.Decline();
     }
     private void BindButtons()
     {
         _pauseButton.onClick.AddListener(TogglePause);
-        _view.CloseButton.onClick.AddListener(TogglePause);
-        _view.RestartButton.onClick.AddListener(() => _sceneFlowService.RestartCurrentLevel());
-        _view.MainMenuButton.onClick.AddListener(_ads.OnMainMenuClicked);
-        _view.NextLevelButton.onClick.AddListener(_ads.OnNextLevelClicked);
-        _view.RewardLifeButton.onClick.AddListener(_ads.OnRewardLifeClicked);
-        _view.ReviewAcceptButton.onClick.AddListener(OnReviewAccept);
-        _view.ReviewDeclineButton.onClick.AddListener(OnReviewDecline);
+        _pauseMenuView.CloseButton.onClick.AddListener(TogglePause);
+        _pauseMenuView.RestartButton.onClick.AddListener(() => _sceneFlowService.RestartCurrentLevel());
+        _pauseMenuView.MainMenuButton.onClick.AddListener(_pauseMenuAds.OnMainMenuClicked);
+        _pauseMenuView.NextLevelButton.onClick.AddListener(_pauseMenuAds.OnNextLevelClicked);
+        _pauseMenuView.RewardLifeButton.onClick.AddListener(_pauseMenuAds.OnRewardLifeClicked);
+        _pauseMenuView.ReviewAcceptButton.onClick.AddListener(OnReviewAccept);
+        _pauseMenuView.ReviewDeclineButton.onClick.AddListener(OnReviewDecline);
+    }
+    private void RefreshStars(bool finished)
+    {
+        LevelStarResult result = _levelStarCalculator.Calculate(
+            _scoreService.Score, _playerLives.HasLostLife, finished);
+        _pauseMenuView.ApplyStars(result, _scoreService.Score, _levelStarCalculator.TargetScore, finished);
     }
 }
