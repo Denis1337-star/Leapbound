@@ -56,26 +56,6 @@ public abstract class EnemyBase : MonoBehaviour
         OnDeath?.Invoke();
         _enemyDeath.Begin(_lastHitDirection);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (IsDead)
-            return;
-
-        if (!collision.collider.TryGetComponent(out Player player))
-            return;
-
-        HandlePlayerContact(player);
-    }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (IsDead)
-            return;
-
-        if (!other.TryGetComponent(out Player player))
-            return;
-
-        HandlePlayerContact(player);
-    }
     private void HandlePlayerContact(Player player)
     {
         float playerBottom = player.BodyCollider.bounds.min.y;
@@ -104,6 +84,18 @@ public abstract class EnemyBase : MonoBehaviour
         veloccity.y = player.PlayerConfig.StopmBounceForce;
         player.Rigidbody.linearVelocity = veloccity;
         player.PlayLandDust();
+    }
+    private void OnCollisionStay2D(Collision2D collision) { TryPlayerContact(collision.collider); }
+    private void OnTriggerStay2D(Collider2D other) { TryPlayerContact(other); }
+    private void TryPlayerContact(Collider2D collider)
+    {
+        if (IsDead)
+            return;
+
+        if (!collider.TryGetComponent(out Player player))
+            return;
+
+        HandlePlayerContact(player);
     }
     protected virtual void OnDamagedPlayer(Player player) { }
 }

@@ -15,7 +15,8 @@ public sealed class LevelsPanelUI : MonoBehaviour
         private Button _button;
         [SerializeField, FormerlySerializedAs("star")]
         private Image[] _stars;
-
+        [SerializeField] private Image _lockIcon;
+        public Image LockIcon => _lockIcon;
         public int LevelIndex => _levelIndex;
         public Button Button => _button;
         public Image[] Stars => _stars;
@@ -83,7 +84,7 @@ public sealed class LevelsPanelUI : MonoBehaviour
     }
     private void RefreshLevelButtonsView()
     {
-        if ( _levelButtons == null)
+        if (_levelButtons == null)
             return;
 
         for (int i = 0; i < _levelButtons.Length; i++)
@@ -94,6 +95,9 @@ public sealed class LevelsPanelUI : MonoBehaviour
 
             bool unlocked = _levelResultManager.IsLevelUnlocked(levelButton.LevelIndex);
             levelButton.Button.interactable = unlocked;
+
+            if (levelButton.LockIcon != null)
+                levelButton.LockIcon.gameObject.SetActive(!unlocked);
 
             if (levelButton.Stars == null)
                 continue;
@@ -107,7 +111,7 @@ public sealed class LevelsPanelUI : MonoBehaviour
                 if (levelButton.Stars[starIndex] == null)
                     continue;
 
-                levelButton.Stars[starIndex].enabled = starIndex < starCount;
+                levelButton.Stars[starIndex].enabled = unlocked && starIndex < starCount;
             }
         }
     }

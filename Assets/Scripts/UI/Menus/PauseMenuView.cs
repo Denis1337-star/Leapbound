@@ -17,14 +17,11 @@ public sealed class PauseMenuView : MonoBehaviour
     [SerializeField] private Button _reviewAcceptButton;
     [SerializeField] private Button _reviewDeclineButton;
     [SerializeField] private PauseMenuStarView _starView;
+    [SerializeField] private UiRewardPulse _rewardLifePulse;
 
     private float _statusPunchScale = 0.20f;
     private float _statusPunchDuration = 0.3f;
-    private float _rewardPulseScale = 1.05f;
-    private float _rewardPulseDuration = 0.55f;
-    private RectTransform _rewardLifeRect;
     private Tween _statusTween;
-    private Tween _rewardPulseTween;
 
     public Button RestartButton => _restartButton;
     public Button MainMenuButton => _mainMenuButton;
@@ -34,17 +31,12 @@ public sealed class PauseMenuView : MonoBehaviour
     public Button ReviewAcceptButton => _reviewAcceptButton;
     public Button ReviewDeclineButton => _reviewDeclineButton;
 
-    private void Awake()
-    {
-        _rewardLifeRect = _rewardLifeButton.transform as RectTransform;
-    }
     private void OnDisable() { KillAllPolishTweens(); }
     private void OnDestroy() { KillAllPolishTweens(); }
     public void SetScore(int score) { _scoreText.SetText("{0}", score); }
     public void SetStatus(string text) { _statusText.SetText(text); }
     public void ShowWin()
     {
-        StopRewardPulse();
         SetStatus("Ты победил");
         _pausePanel.SetActive(true);
         SetCloseButtonVisible(false);
@@ -60,12 +52,10 @@ public sealed class PauseMenuView : MonoBehaviour
         SetCloseButtonVisible(false);
         SetNextVisible(false);
         SetRewardVisible(true);
-        StartRewardPulse();
         SetReviewPromptVisible(false);
     }
     public void ShowPaused()
     {
-        StopRewardPulse();
         SetStatus("Пауза");
         _pausePanel.SetActive(true);
         SetCloseButtonVisible(true);
@@ -75,7 +65,6 @@ public sealed class PauseMenuView : MonoBehaviour
     }
     public void ShowPlaying()
     {
-        StopRewardPulse();
         SetStatus(string.Empty);
         _pausePanel.SetActive(false);
         SetCloseButtonVisible(false);
@@ -84,7 +73,6 @@ public sealed class PauseMenuView : MonoBehaviour
         SetReviewPromptVisible(false);
         _starView.Hide();
     }
-    public void StopRewardPulsePublic() { StopRewardPulse(); }
     private void SetCloseButtonVisible(bool visible) { _closeButton.gameObject.SetActive(visible); }
     private void SetNextVisible(bool visible) { _nextLevelButton.gameObject.SetActive(visible); }
     private void SetRewardVisible(bool visible) { _rewardLifeButton.gameObject.SetActive(visible); }
@@ -96,29 +84,6 @@ public sealed class PauseMenuView : MonoBehaviour
         _statusTween = _statusText.rectTransform
             .DOPunchScale(Vector3.one * _statusPunchScale, _statusPunchDuration, 6, 0.5f)
             .SetUpdate(true);
-    }
-    private void StartRewardPulse()
-    {
-        StopRewardPulse();
-        if (_rewardLifeRect == null)
-            return;
-
-        _rewardLifeRect.localScale = Vector3.one;
-        _rewardPulseTween = _rewardLifeRect
-            .DOScale(_rewardPulseScale, _rewardPulseDuration)
-            .SetEase(Ease.InOutSine)
-            .SetLoops(-1, LoopType.Yoyo)
-            .SetUpdate(true);
-    }
-    private void StopRewardPulse()
-    {
-        if (_rewardPulseTween != null)
-        {
-            _rewardPulseTween.Kill();
-            _rewardPulseTween = null;
-        }
-        if (_rewardLifeRect != null)
-            _rewardLifeRect.localScale = Vector3.one;
     }
 
     private void KillStatusTween()
@@ -132,7 +97,6 @@ public sealed class PauseMenuView : MonoBehaviour
     private void KillAllPolishTweens()
     {
         KillStatusTween();
-        StopRewardPulse();
     }
     public void SetReviewPromptVisible(bool visible) { _reviewPrompt.SetActive(visible); }
     public void ApplyStars(LevelStarResult result, int score, int targetScore, bool showBigStars)
@@ -143,5 +107,10 @@ public sealed class PauseMenuView : MonoBehaviour
             _starView.ShowBigStars(result);
         else
             _starView.ClearBigStars();
+    }
+    public void StopRewardPulsePublic()
+    {
+        if (_rewardLifePulse != null)
+            _rewardLifePulse.Stop();
     }
 }

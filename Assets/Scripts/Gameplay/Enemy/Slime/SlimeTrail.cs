@@ -7,15 +7,12 @@ public sealed class SlimeTrail : MonoBehaviour
 
     private float _lifeTimer;
     private bool _isBusy;
-    private bool _hitPlayer;
-
     public bool IsBusy => _isBusy;
 
     public void Play(Vector3 worldPosition)
     {
         transform.position = worldPosition;
         _lifeTimer = _lifeTime;
-        _hitPlayer = false;
         _isBusy = true;
         gameObject.SetActive(true);
     }
@@ -30,9 +27,9 @@ public sealed class SlimeTrail : MonoBehaviour
 
         Stop();
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
-        if (!_isBusy || _hitPlayer)
+        if (!_isBusy)
             return;
 
         if (!other.TryGetComponent(out Player player))
@@ -43,7 +40,6 @@ public sealed class SlimeTrail : MonoBehaviour
 
         Vector2 hitDirection = (player.transform.position - transform.position).normalized;
         player.PlayerHealth.TakeDamage(_damage, hitDirection);
-        _hitPlayer = true;
     }
     public void Stop()
     {
