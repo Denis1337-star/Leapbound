@@ -16,8 +16,14 @@ public sealed class PauseMenuView : MonoBehaviour
     [SerializeField] private GameObject _reviewPrompt;
     [SerializeField] private Button _reviewAcceptButton;
     [SerializeField] private Button _reviewDeclineButton;
+    [SerializeField] private GameObject _crownIcon;
+    [SerializeField] private GameObject _timeTrialResultRoot;
+    [SerializeField] private TMP_Text _timeResultLabelText;
     [SerializeField] private PauseMenuStarView _starView;
     [SerializeField] private UiRewardPulse _rewardLifePulse;
+    [SerializeField] private Image _timeResultBackground; 
+    [SerializeField] private Color _timeSuccessColor = new Color(0.45f, 0.85f, 0.35f);
+    [SerializeField] private Color _timeFailColor = new Color(0.95f, 0.45f, 0.40f);
 
     private float _statusPunchScale = 0.20f;
     private float _statusPunchDuration = 0.3f;
@@ -43,6 +49,9 @@ public sealed class PauseMenuView : MonoBehaviour
         SetNextVisible(true);
         SetRewardVisible(false);
         SetReviewPromptVisible(false);
+        SetTimeTrialResultVisible(false);
+        if (_crownIcon != null)
+            _crownIcon.SetActive(false);
     }
     public void ShowLose()
     {
@@ -53,6 +62,9 @@ public sealed class PauseMenuView : MonoBehaviour
         SetNextVisible(false);
         SetRewardVisible(true);
         SetReviewPromptVisible(false);
+        SetTimeTrialResultVisible(false);
+        if (_crownIcon != null)
+            _crownIcon.SetActive(false);
     }
     public void ShowPaused()
     {
@@ -62,6 +74,9 @@ public sealed class PauseMenuView : MonoBehaviour
         SetNextVisible(false);
         SetRewardVisible(false);
         SetReviewPromptVisible(false);
+        SetTimeTrialResultVisible(false);
+        if (_crownIcon != null)
+            _crownIcon.SetActive(false);
     }
     public void ShowPlaying()
     {
@@ -72,6 +87,9 @@ public sealed class PauseMenuView : MonoBehaviour
         SetRewardVisible(false);
         SetReviewPromptVisible(false);
         _starView.Hide();
+        SetTimeTrialResultVisible(false);
+        if (_crownIcon != null)
+            _crownIcon.SetActive(false);
     }
     private void SetCloseButtonVisible(bool visible) { _closeButton.gameObject.SetActive(visible); }
     private void SetNextVisible(bool visible) { _nextLevelButton.gameObject.SetActive(visible); }
@@ -112,5 +130,38 @@ public sealed class PauseMenuView : MonoBehaviour
     {
         if (_rewardLifePulse != null)
             _rewardLifePulse.Stop();
+    }
+    public void ShowTimeTrialResult(float elapsedSeconds, float targetSeconds, bool success)
+    {
+        _starView.Hide();
+        SetTimeTrialResultVisible(true);
+        _timeResultLabelText.SetText(string.Format("Время {0} / {1}",
+            LevelTimeFormat.Format(elapsedSeconds),
+            LevelTimeFormat.Format(targetSeconds)));
+
+        if (_crownIcon != null)
+            _crownIcon.SetActive(success);
+
+        if (success)
+        {
+            SetStatus("Корона твоя");
+            _timeResultBackground.color = _timeSuccessColor;
+        }
+        else
+        {
+            SetStatus("Не успел!");
+          _timeResultBackground.color = _timeFailColor;
+        }
+        _pausePanel.SetActive(true);
+        SetCloseButtonVisible(false);
+        SetNextVisible(success);
+        SetRewardVisible(false);
+        SetReviewPromptVisible(false);
+    }
+
+    private void SetTimeTrialResultVisible(bool visible)
+    {
+        if (_timeTrialResultRoot != null)
+            _timeTrialResultRoot.SetActive(visible);
     }
 }

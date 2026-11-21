@@ -10,6 +10,7 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     private readonly IGameStateService _gameStateService;
     private readonly PlayerDamageFeedback _playerDamageFeedback;
     private readonly PlayerDust _playerDust;
+    private readonly LevelRunContext _levelRunContext;
     public float MoveDirection { get; private set; }
     public bool IsRunButtonHeld { get; private set; }
     public bool WasJumpPressed { get; private set; }
@@ -21,7 +22,8 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     private const float GroundCheckSuppressTime = 0.05f;
 
     public PlayerMotor(Player player, PlayerConfig playerConfig, IInputService inputService, PlayerAudio playerAudio,
-        IGameStateService gameStateService, PlayerDamageFeedback playerDamageFeedback, PlayerDust playerDust)
+        IGameStateService gameStateService, PlayerDamageFeedback playerDamageFeedback, PlayerDust playerDust,
+        LevelRunContext levelRunContext)
     {
         _player = player;
         _playerConfig = playerConfig;
@@ -31,29 +33,50 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
         _playerDamageFeedback = playerDamageFeedback;
         _jumpsLeft = _playerConfig.MaxJumpCount;
         _playerDust = playerDust;
+        _levelRunContext = levelRunContext;
     }
     public void Tick()
     {
         if (_player.PlayerHealth.CurrentHealth <= 0)
             return;
+
         if (_gameStateService.CurrentState != GameState.Playing)
             return;
 
+        if (_levelRunContext.IsInputLocked)
+        {
+            MoveDirection = 0f;
+            IsRunButtonHeld = false;
+            WasJumpPressed = false;
+            UpdateGroundState();
+            return;
+        }
         ReadInput();
+        UpdateGroundState();
         ProcessJump();
     }
     public void FixedTick()
     {
         if (_player.PlayerHealth.CurrentHealth <= 0)
             return;
+
         if (_gameStateService.CurrentState != GameState.Playing)
             return;
 
+        if (_levelRunContext.IsInputLocked)
+        {
+            Vector2 velocity = _player.Rigidbody.linearVelocity;
+            velocity.x = _player.PlatformVelocity.x + _player.WindVelocity.x;
+            velocity.y += _player.PlatformVelocity.y + _player.WindVelocity.y;
+            _player.Rigidbody.linearVelocity = velocity;
+            _playerDust.SetRunning(false, false);
+            return;
+        }
         ApplyMovement();
         bool runDust = IsOnGround && IsRunButtonHeld && Mathf.Abs(MoveDirection) > 0.01f;
         bool flipX = MoveDirection < 0f;
         _playerDust.SetRunning(runDust, flipX);
-        
+
     }
     private void ReadInput()
     {
@@ -63,6 +86,30 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
     }
 
     private void ProcessJump()
+    {
+        if (!WasJumpPressed || _jumpsLeft <= 0)
+            return;
+
+        bool isAirJump = !IsOnGround;
+
+        Vector2 velocity = _player.Rigidbody.linearVelocity;
+        velocity.y = 0f;
+        _player.Rigidbody.linearVelocity = velocity;
+
+        _player.Rigidbody.AddForce(Vector2.up * _playerConfig.JumpForce, ForceMode2D.Impulse);
+        _jumpsLeft--;
+        IsDoubleJumping = isAirJump;
+        _groundCheckSuppressTimer = GroundCheckSuppressTime;
+
+        if (isAirJump)
+            _playerAudio.PlayDoubleJump();
+        else
+            _playerAudio.PlayJump();
+
+        _playerDust.PlayJump();
+        _inputService.ConsumeJump();
+    }
+    private void UpdateGroundState()
     {
         if (_groundCheckSuppressTimer > 0f)
         {
@@ -87,28 +134,6 @@ public sealed class PlayerMotor : ITickable, IFixedTickable
         _wasOnGround = IsOnGround;
         if (IsOnGround)
             IsDoubleJumping = false;
-
-        if (!WasJumpPressed || _jumpsLeft <= 0)
-            return;
-
-        bool isAirJump = !IsOnGround;
-
-        Vector2 velocity = _player.Rigidbody.linearVelocity;
-        velocity.y = 0f;
-        _player.Rigidbody.linearVelocity = velocity;
-
-        _player.Rigidbody.AddForce(Vector2.up * _playerConfig.JumpForce, ForceMode2D.Impulse);
-        _jumpsLeft--;
-        IsDoubleJumping = isAirJump;
-        _groundCheckSuppressTimer = GroundCheckSuppressTime;
-
-        if (isAirJump)
-            _playerAudio.PlayDoubleJump();
-        else
-            _playerAudio.PlayJump();
-
-        _playerDust.PlayJump();
-        _inputService.ConsumeJump();
     }
     private void ApplyMovement()
     {

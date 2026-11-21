@@ -7,16 +7,23 @@ public sealed class PauseMenuAds
     private readonly ISceneFlowService _sceneFlowService;
     private readonly PlayerLives _playerLives;
     private readonly PlayerRespawn _playerRespawn;
+    private readonly LevelRunContext _levelRunContext;
     private readonly Action _onRewardStarted;
+    private readonly LevelResultManager _levelResultManager;
+    private readonly LevelTimeCatalog _levelTimeCatalog;
 
     public PauseMenuAds(IGameStateService gameStateService, ISceneFlowService sceneFlowService,
-        PlayerLives playerLives, PlayerRespawn playerRespawn, Action onRewardStarted)
+        PlayerLives playerLives, PlayerRespawn playerRespawn, Action onRewardStarted,
+        LevelRunContext levelRunContext, LevelTimeCatalog levelTimeCatalog, LevelResultManager levelResultManager)
     {
         _gameStateService = gameStateService;
         _sceneFlowService = sceneFlowService;
         _playerLives = playerLives;
         _playerRespawn = playerRespawn;
         _onRewardStarted = onRewardStarted;
+        _levelRunContext = levelRunContext;
+        _levelTimeCatalog = levelTimeCatalog;
+        _levelResultManager = levelResultManager;
     }
     public void Dispose()
     {
@@ -28,6 +35,7 @@ public sealed class PauseMenuAds
     {
         if (_gameStateService.CurrentState != GameState.Win)
         {
+            PrepareNextLevelRunMode();
             _sceneFlowService.LoadNextLevel();
             return;
         }
@@ -39,6 +47,7 @@ public sealed class PauseMenuAds
     {
         if (_gameStateService.CurrentState != GameState.Win)
         {
+            _levelRunContext.SetNormal();
             _sceneFlowService.LoadMainMenu();
             return;
         }
@@ -65,11 +74,13 @@ public sealed class PauseMenuAds
     private void LoadNextLevelAfterAd()
     {
         YG2.onCloseAnyAdv -= LoadNextLevelAfterAd;
+        PrepareNextLevelRunMode();
         _sceneFlowService.LoadNextLevel();
     }
     private void LoadMainMenuAfterAd()
     {
         YG2.onCloseAnyAdv -= LoadMainMenuAfterAd;
+        _levelRunContext.SetNormal();
         _sceneFlowService.LoadMainMenu();
     }
     private void UnfreezeAfterRewardedAd()
@@ -79,5 +90,29 @@ public sealed class PauseMenuAds
             return;
 
         PauseGameYG.SetState(1f, false, true);
+    }
+    private void PrepareNextLevelRunMode()
+    {
+        if (_levelRunContext.Mode != LevelRunMode.TimeTrial)
+        {
+            _levelRunContext.SetNormal();
+            return;
+        }
+
+        int nextIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextIndex >= UnityEngine.SceneManagement.SceneManager.sceneCountInBuildSettings)
+        {
+            _levelRunContext.SetNormal();
+            return;
+        }
+
+        if (!_levelResultManager.CanStartTimeTrial(nextIndex))
+        {
+            _levelRunContext.SetNormal();
+            return;
+        }
+
+        float target = _levelTimeCatalog.GetTargetTimeSeconds(nextIndex);
+        _levelRunContext.SetTimeTrial(target);
     }
 }

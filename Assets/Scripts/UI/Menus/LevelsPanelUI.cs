@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using YG;
 using Zenject;
@@ -9,13 +8,13 @@ public sealed class LevelsPanelUI : MonoBehaviour
     [System.Serializable]
     public class LevelButton
     {
-        [SerializeField, FormerlySerializedAs("levelIndex")]
-        private int _levelIndex;
-        [SerializeField, FormerlySerializedAs("button")]
-        private Button _button;
-        [SerializeField, FormerlySerializedAs("star")]
-        private Image[] _stars;
+        [SerializeField] private int _levelIndex;
+        [SerializeField] private Button _button;
+        [SerializeField] private Image[] _stars;
         [SerializeField] private Image _lockIcon;
+        [SerializeField] private Image _crownIcon;
+
+        public Image CrownIcon => _crownIcon;
         public Image LockIcon => _lockIcon;
         public int LevelIndex => _levelIndex;
         public Button Button => _button;
@@ -23,15 +22,22 @@ public sealed class LevelsPanelUI : MonoBehaviour
     }
 
     [SerializeField] private LevelButton[] _levelButtons;
+    [SerializeField] private LevelModeChoicePanel _levelModeChoicePanel;
 
     private ISceneFlowService _sceneFlowService;
     private LevelResultManager _levelResultManager;
+    private LevelRunContext _levelRunContext;
+    private LevelTimeCatalog _levelTimeCatalog;
+
 
     [Inject]
-    public void Construct(ISceneFlowService sceneFlowService, LevelResultManager levelResultManager)
+    public void Construct(ISceneFlowService sceneFlowService, LevelResultManager levelResultManager,
+        LevelRunContext levelRunContext, LevelTimeCatalog levelTimeCatalog)
     {
         _sceneFlowService = sceneFlowService;
         _levelResultManager = levelResultManager;
+        _levelRunContext = levelRunContext;
+        _levelTimeCatalog = levelTimeCatalog;
     }
     private void OnEnable()
     {
@@ -59,6 +65,7 @@ public sealed class LevelsPanelUI : MonoBehaviour
             if (levelButton == null || levelButton.LevelIndex != index)
                 continue;
 
+            _levelRunContext.SetNormal();
             _sceneFlowService.LoadLevelByBuildIndex(index);
             return;
         }
@@ -80,6 +87,21 @@ public sealed class LevelsPanelUI : MonoBehaviour
     }
     private void LoadLevel(int levelIndex)
     {
+        LevelButton levelButton = FindLevelButton(levelIndex);
+        if (levelButton == null)
+            return;
+
+        if (_levelResultManager.CanStartTimeTrial(levelIndex))
+        {
+            _levelModeChoicePanel.Open(
+                levelIndex,
+           _levelTimeCatalog.GetTargetTimeSeconds(levelIndex),
+                _levelResultManager.GetBestTime(levelIndex),
+                _levelResultManager.HasBestTime(levelIndex));
+            return;
+        }
+
+        _levelRunContext.SetNormal();
         _sceneFlowService.LoadLevelByBuildIndex(levelIndex);
     }
     private void RefreshLevelButtonsView()
@@ -113,6 +135,20 @@ public sealed class LevelsPanelUI : MonoBehaviour
 
                 levelButton.Stars[starIndex].enabled = unlocked && starIndex < starCount;
             }
+
+            if (levelButton.CrownIcon != null)
+                levelButton.CrownIcon.gameObject.SetActive(
+                    unlocked && _levelResultManager.HasCrown(levelButton.LevelIndex));
         }
+
+    }
+    private LevelButton FindLevelButton(int levelIndex)
+    {
+        for (int i = 0; i < _levelButtons.Length; i++)
+        {
+            if (_levelButtons[i] != null && _levelButtons[i].LevelIndex == levelIndex)
+                return _levelButtons[i];
+        }
+        return null;
     }
 }

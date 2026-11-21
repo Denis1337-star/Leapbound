@@ -637,7 +637,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8031875743631250013
 RectTransform:
   m_ObjectHideFlags: 0
@@ -867,7 +867,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74ca6306d62d5c148912e480738948cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenuStarView
-  _bigStars: []
+  _bigStars:
+  - {fileID: 6882389216538175018}
+  - {fileID: 8073880467079102119}
+  - {fileID: 7484269149311087966}
   _finishResultLabelText: {fileID: 601975404278605209}
   _scoreResultLabelText: {fileID: 336517703025311715}
   _noDeathResultLabelText: {fileID: 4464725729434518032}
@@ -2932,18 +2935,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3693322000221854307}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 7921612366626536269}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
@@ -3603,6 +3594,7 @@ GameObject:
   - component: {fileID: 1036868393520457709}
   - component: {fileID: 237893670533882333}
   - component: {fileID: 9051768610881631558}
+  - component: {fileID: 654866782233573884}
   m_Layer: 5
   m_Name: TimerTrial
   m_TagString: Untagged
@@ -3668,6 +3660,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 3
+--- !u!114 &654866782233573884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3133180796482704954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63d08d316b19bfb4a9720a621de622e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TimeTrialHud
+  _timerText: {fileID: 3647222343193880872}
 --- !u!1 &3312943598143825438
 GameObject:
   m_ObjectHideFlags: 0
@@ -4007,7 +4012,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1318568380830375097
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4083,6 +4088,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GuidePanel
   _scoreGoalLabelText: {fileID: 3029065946245021181}
   _bonusHeartButton: {fileID: 4911052753503387963}
+  _okButton: {fileID: 5346302465270528500}
+  _normalGuideRoot: {fileID: 5815747719656277523}
+  _timeTrialGuideRoot: {fileID: 2484481555696749592}
+  _timeTrialTargetText: {fileID: 1226764597253764397}
+  _timeTrialBestText: {fileID: 851142554938390059}
 --- !u!1 &3763844739500980094
 GameObject:
   m_ObjectHideFlags: 0
@@ -4100,7 +4110,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5821876394097722513
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5961,7 +5971,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041A\u043E\u0440\u043E\u043D\u0430 \u0442\u0432\u043E\u044F"
+  m_text: "\u041D\u0435 \u0443\u0441\u043F\u0435\u043B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cd69b064bd0becb4aaccce54c56fe992, type: 2}
   m_sharedMaterial: {fileID: -2224393174783787615, guid: cd69b064bd0becb4aaccce54c56fe992, type: 2}
@@ -6812,8 +6822,14 @@ MonoBehaviour:
   _reviewPrompt: {fileID: 1121113430386738131}
   _reviewAcceptButton: {fileID: 1263311360342090055}
   _reviewDeclineButton: {fileID: 4855545675023302305}
+  _crownIcon: {fileID: 6999219329695254947}
+  _timeTrialResultRoot: {fileID: 7709902318877661978}
+  _timeResultLabelText: {fileID: 2950335055807587707}
   _starView: {fileID: 2043552811697215658}
   _rewardLifePulse: {fileID: 4110597791346938115}
+  _timeResultBackground: {fileID: 3555045120458552378}
+  _timeSuccessColor: {r: 0.33426052, g: 0.9490196, b: 0.31764704, a: 1}
+  _timeFailColor: {r: 0.9490197, g: 0.41960788, b: 0.31764707, a: 1}
 --- !u!114 &8689821923139368153
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7974,7 +7990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7249238260680064568
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8669,7 +8685,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &891048700740339043
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9425,7 +9441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.46379995, b: 0.39999998, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

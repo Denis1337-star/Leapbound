@@ -26,6 +26,7 @@ public sealed class PauseMenuStarView : MonoBehaviour
     }
     public void ShowBigStars(LevelStarResult result)
     {
+        SetBigStarsActive(true);
         if (_bigStars.Length > 0)
             _bigStars[0].enabled = result.FinishMet;
 
@@ -38,12 +39,16 @@ public sealed class PauseMenuStarView : MonoBehaviour
     public void ClearBigStars()
     {
         for (int i = 0; i < _bigStars.Length; i++)
+        {
+            if (_bigStars[i] == null)
+                continue;
             _bigStars[i].enabled = false;
+        }
     }
     public void Hide()
     {
         SetStarResultsVisible(false);
-        ClearBigStars();
+        SetBigStarsActive(false);
     }
     private void SetResultIcon(Image icon, bool met)
     {
@@ -52,5 +57,17 @@ public sealed class PauseMenuStarView : MonoBehaviour
         else
             icon.sprite = _crossSprite;
     }
-    private void SetStarResultsVisible(bool visible) { gameObject.SetActive(visible); }
+    private void SetStarResultsVisible(bool visible)
+    {
+        gameObject.SetActive(visible);
+    }
+    private void SetBigStarsActive(bool active)
+    {
+        for (int i = 0; i < _bigStars.Length; i++)
+        {
+            if (_bigStars[i] == null)
+                continue;
+            _bigStars[i].gameObject.SetActive(active);
+        }
+    }
 }

@@ -40,6 +40,7 @@ public class SceneInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<GameStateService>().AsSingle().NonLazy();
         Container.Bind<CheckpointService>().AsSingle().NonLazy();
         Container.Bind<LevelStarCalculator>().AsSingle().WithArguments(_targetScore);
+        Container.BindInterfacesAndSelfTo<LevelTimer>().AsSingle();
     }
     private void FxInstaller()
     {

@@ -16,11 +16,17 @@ public sealed class PauseMenu : MonoBehaviour
     private PlayerRespawn _playerRespawn;
     private PauseMenuAds _pauseMenuAds;
     private GameReviewPrompt _gameReviewPrompt;
+    private LevelRunContext _levelRunContext;
+    private LevelTimer _levelTimer;
+    private LevelResultManager _levelResultManager;
+    private LevelTimeCatalog _levelTimeCatalog;
 
     [Inject]
     public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService,
         IGameStateService gameStateService, IInputService inputService,
-        LevelStarCalculator levelStarCalculator, PlayerLives playerLives, PlayerRespawn playerRespawn, GameReviewPrompt gameReviewPrompt)
+        LevelStarCalculator levelStarCalculator, PlayerLives playerLives, PlayerRespawn playerRespawn,
+        GameReviewPrompt gameReviewPrompt, LevelRunContext levelRunContext, LevelTimer levelTimer, 
+        LevelResultManager levelResultManager, LevelTimeCatalog levelTimeCatalog)
     {
         _sceneFlowService = sceneFlowService;
         _scoreService = scoreService;
@@ -30,11 +36,15 @@ public sealed class PauseMenu : MonoBehaviour
         _playerLives = playerLives;
         _playerRespawn = playerRespawn;
         _gameReviewPrompt = gameReviewPrompt;
+        _levelRunContext = levelRunContext;
+        _levelTimer = levelTimer;
+        _levelResultManager = levelResultManager;
+        _levelTimeCatalog = levelTimeCatalog;
     }
     private void Awake()
     {
         _pauseMenuAds = new PauseMenuAds(_gameStateService, _sceneFlowService, _playerLives, _playerRespawn,
-            _pauseMenuView.StopRewardPulsePublic);
+            _pauseMenuView.StopRewardPulsePublic, _levelRunContext, _levelTimeCatalog, _levelResultManager);
         BindButtons();
     }
     private void Start()
@@ -61,21 +71,38 @@ public sealed class PauseMenu : MonoBehaviour
         switch (newState)
         {
             case GameState.Win:
-                RefreshStars(true);
-                _pauseMenuView.ShowWin();
-                _pauseMenuView.SetReviewPromptVisible(_gameReviewPrompt.CanShowSoftPrompt());
+                if (_levelRunContext.Mode == LevelRunMode.TimeTrial)
+                {
+                    bool success = _levelTimer.ElapsedSeconds <= _levelTimer.TargetSeconds;
+                    _pauseMenuView.ShowTimeTrialResult(
+                        _levelTimer.ElapsedSeconds, _levelTimer.TargetSeconds, success);
+                }
+                else
+                {
+                    RefreshStars(true);
+                    _pauseMenuView.ShowWin();
+                    _pauseMenuView.SetReviewPromptVisible(_gameReviewPrompt.CanShowSoftPrompt());
+                }
+
                 SetGameFrozen(true);
                 break;
+
             case GameState.Lose:
-                RefreshStars(false);
+                if (_levelRunContext.Mode != LevelRunMode.TimeTrial)
+                    RefreshStars(false);
+
                 _pauseMenuView.ShowLose();
                 SetGameFrozen(true);
                 break;
+
             case GameState.Paused:
-                RefreshStars(false);
+                if (_levelRunContext.Mode != LevelRunMode.TimeTrial)
+                    RefreshStars(false);
+
                 _pauseMenuView.ShowPaused();
                 SetGameFrozen(true);
                 break;
+
             case GameState.Playing:
                 _pauseMenuView.ShowPlaying();
                 SetGameFrozen(false);

@@ -10,17 +10,22 @@ public sealed class FinishZone : MonoBehaviour
     private LevelStarCalculator _levelStarCalculator;
     private PlayerWinEffect _playerWinEffect;
     private PlayerLives _playerLives;
+    private LevelRunContext _levelRunContext;
+    private LevelTimer _levelTimer;
     private bool _isCompleted;
 
     [Inject]
-    public void Construct(IScoreService scoreService, LevelResultManager levelResultManager, 
-        LevelStarCalculator levelStarCalculator,PlayerWinEffect playerWinEffect, PlayerLives playerLives)
+    public void Construct(IScoreService scoreService, LevelResultManager levelResultManager,
+        LevelStarCalculator levelStarCalculator, PlayerWinEffect playerWinEffect, PlayerLives playerLives,
+        LevelRunContext levelRunContext, LevelTimer levelTimer)
     {
         _scoreService = scoreService;
         _levelResultManager = levelResultManager;
         _levelStarCalculator = levelStarCalculator;
         _playerWinEffect = playerWinEffect;
         _playerLives = playerLives;
+        _levelRunContext = levelRunContext;
+        _levelTimer = levelTimer;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -46,7 +51,17 @@ public sealed class FinishZone : MonoBehaviour
         _playerWinEffect.Begin();
 
         Scene scene = SceneManager.GetActiveScene();
-        LevelStarResult result = _levelStarCalculator.Calculate(_scoreService.Score, _playerLives.HasLostLife, true);
-        _levelResultManager.SaveLevelResult(scene.buildIndex, result.Count);
+        if (_levelRunContext.Mode == LevelRunMode.TimeTrial)
+        {
+            _levelTimer.Stop();
+            _levelResultManager.SaveTimeTrialResult(
+                scene.buildIndex, _levelTimer.ElapsedSeconds, _levelTimer.TargetSeconds);
+        }
+        else
+        {
+            LevelStarResult result = _levelStarCalculator.Calculate(
+                _scoreService.Score, _playerLives.HasLostLife, true);
+            _levelResultManager.SaveLevelResult(scene.buildIndex, result.Count);
+        }
     }
 }

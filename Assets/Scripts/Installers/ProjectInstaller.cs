@@ -5,6 +5,7 @@ public class ProjectInstaller : MonoInstaller
 {
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private SceneFadeView _sceneFade;
+    [SerializeField] private LevelTimeCatalog _levelTimeCatalog;
 
     public override void InstallBindings()
     {
@@ -15,5 +16,7 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<SceneFadeView>().FromInstance(_sceneFade).AsSingle();
         Container.Bind<ISceneFlowService>().To<SceneFlowService>().AsSingle();
         Container.BindInterfacesAndSelfTo<GameReviewPrompt>().AsSingle().NonLazy();
+        Container.Bind<LevelRunContext>().AsSingle();
+        Container.BindInstance(_levelTimeCatalog);
     }
 }
