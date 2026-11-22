@@ -13,6 +13,14 @@ MonoBehaviour:
   m_Name: LevelTimeCatalog
   m_EditorClassIdentifier: Assembly-CSharp::LevelTimeCatalog
   _targetTimeByBuildIndex:
+  - 0
   - 60
   - 90
-  - 90
+  - 75
+  - 75
+  - 75
+  - 75
+  - 75
+  - 75
+  - 75
+  - 75

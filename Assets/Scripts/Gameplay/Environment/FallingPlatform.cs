@@ -21,9 +21,6 @@ public sealed class FallingPlatform : MonoBehaviour
     private void Awake()
     {
         _startPosition = _rigidbody.position;
-        _rigidbody.bodyType = RigidbodyType2D.Kinematic;
-        _rigidbody.gravityScale = 0f;
-        _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -81,9 +78,10 @@ public sealed class FallingPlatform : MonoBehaviour
 
         _falling = true;
         _respawnTimer = _respawnDelay;
+        _collider.enabled = false;
         _rigidbody.bodyType = RigidbodyType2D.Dynamic;
         _rigidbody.gravityScale = _gravityScale;
-        _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionX;
+        _rigidbody.constraints =  RigidbodyConstraints2D.FreezePositionX;
     }
     private void Respawn()
     {
@@ -97,7 +95,6 @@ public sealed class FallingPlatform : MonoBehaviour
         _rigidbody.angularVelocity = 0f;
         _rigidbody.bodyType = RigidbodyType2D.Kinematic;
         _rigidbody.gravityScale = 0f;
-        _rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         _rigidbody.position = _startPosition;
         Physics2D.SyncTransforms();
         _animator.SetBool(IsOffHash, false);
@@ -115,7 +112,6 @@ public sealed class FallingPlatform : MonoBehaviour
     private void Hide()
     {
         _spriteRenderer.enabled = false;
-        _collider.enabled = false;
         _rigidbody.linearVelocity = Vector2.zero;
         _rigidbody.angularVelocity = 0f;
         _rigidbody.bodyType = RigidbodyType2D.Kinematic;

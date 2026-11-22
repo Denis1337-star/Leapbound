@@ -1095,7 +1095,6 @@ MonoBehaviour:
     - {fileID: 1216631565}
     _lockIcon: {fileID: 0}
     _crownIcon: {fileID: 168305443}
-    _targetTimeSeconds: 60
   - _levelIndex: 2
     _button: {fileID: 916786539}
     _stars:
@@ -1104,7 +1103,6 @@ MonoBehaviour:
     - {fileID: 233382676}
     _lockIcon: {fileID: 1294801127}
     _crownIcon: {fileID: 570730072}
-    _targetTimeSeconds: 90
   - _levelIndex: 3
     _button: {fileID: 1703629238}
     _stars:
@@ -1113,7 +1111,6 @@ MonoBehaviour:
     - {fileID: 1131660819}
     _lockIcon: {fileID: 1390049707}
     _crownIcon: {fileID: 345303778}
-    _targetTimeSeconds: 0
   - _levelIndex: 4
     _button: {fileID: 741024113}
     _stars:
@@ -1122,7 +1119,6 @@ MonoBehaviour:
     - {fileID: 553916853}
     _lockIcon: {fileID: 1303249839}
     _crownIcon: {fileID: 1417060648}
-    _targetTimeSeconds: 0
   - _levelIndex: 5
     _button: {fileID: 1468629408}
     _stars:
@@ -1131,7 +1127,6 @@ MonoBehaviour:
     - {fileID: 1747805086}
     _lockIcon: {fileID: 1183841102}
     _crownIcon: {fileID: 1056905787}
-    _targetTimeSeconds: 0
   - _levelIndex: 6
     _button: {fileID: 479076836}
     _stars:
@@ -1140,7 +1135,6 @@ MonoBehaviour:
     - {fileID: 977361008}
     _lockIcon: {fileID: 862867227}
     _crownIcon: {fileID: 151407938}
-    _targetTimeSeconds: 0
   - _levelIndex: 7
     _button: {fileID: 718702709}
     _stars:
@@ -1149,7 +1143,6 @@ MonoBehaviour:
     - {fileID: 917238918}
     _lockIcon: {fileID: 2046260987}
     _crownIcon: {fileID: 2119356692}
-    _targetTimeSeconds: 0
   - _levelIndex: 8
     _button: {fileID: 1137229960}
     _stars:
@@ -1158,7 +1151,6 @@ MonoBehaviour:
     - {fileID: 373507241}
     _lockIcon: {fileID: 1662582427}
     _crownIcon: {fileID: 1222903176}
-    _targetTimeSeconds: 0
   - _levelIndex: 9
     _button: {fileID: 1574807996}
     _stars:
@@ -1167,7 +1159,6 @@ MonoBehaviour:
     - {fileID: 2048775662}
     _lockIcon: {fileID: 1394923040}
     _crownIcon: {fileID: 142998266}
-    _targetTimeSeconds: 0
   - _levelIndex: 10
     _button: {fileID: 390316669}
     _stars:
@@ -1176,7 +1167,6 @@ MonoBehaviour:
     - {fileID: 584165678}
     _lockIcon: {fileID: 2029790631}
     _crownIcon: {fileID: 1218821940}
-    _targetTimeSeconds: 0
   - _levelIndex: 11
     _button: {fileID: 176260619}
     _stars:
@@ -1185,7 +1175,6 @@ MonoBehaviour:
     - {fileID: 718991662}
     _lockIcon: {fileID: 1290830282}
     _crownIcon: {fileID: 1039267786}
-    _targetTimeSeconds: 0
   _levelModeChoicePanel: {fileID: 776905125}
 --- !u!1 &176260617
 GameObject:
@@ -3685,7 +3674,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &514743616
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4693,7 +4682,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &718991661
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11677,7 +11666,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1978987816
 RectTransform:
   m_ObjectHideFlags: 0
