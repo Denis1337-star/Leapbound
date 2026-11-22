@@ -97,5 +97,12 @@ public abstract class EnemyBase : MonoBehaviour
 
         HandlePlayerContact(player);
     }
+    protected void FaceMovement(float deltaX)
+    {
+        if (deltaX > 0.01f)
+            Sprite.flipX = true;
+        else if (deltaX < -0.01f)
+            Sprite.flipX = false;
+    }
     protected virtual void OnDamagedPlayer(Player player) { }
 }

@@ -62,7 +62,7 @@ public sealed class PauseMenuAds
 
         _onRewardStarted?.Invoke();
         YG2.onCloseRewardedAdv += UnfreezeAfterRewardedAd;
-        YG2.RewardedAdvShow("extra_life", GrantExtraLifeAfterReward);
+        YandexRewardedBridge.Show("extra_life", GrantExtraLifeAfterReward);
     }
     private void GrantExtraLifeAfterReward()
     {
@@ -114,5 +114,19 @@ public sealed class PauseMenuAds
 
         float target = _levelTimeCatalog.GetTargetTimeSeconds(nextIndex);
         _levelRunContext.SetTimeTrial(target);
+    }
+    public void OnTimeTrialOfferClicked()
+    {
+        _levelRunContext.RequestOpenLevelsOnMainMenu();
+
+        if (_gameStateService.CurrentState != GameState.Win)
+        {
+            _levelRunContext.SetNormal();
+            _sceneFlowService.LoadMainMenu();
+            return;
+        }
+
+        YG2.onCloseAnyAdv += LoadMainMenuAfterAd;
+        YG2.InterstitialAdvShow();
     }
 }

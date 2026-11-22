@@ -48,11 +48,4 @@ public sealed class PatrolEnemy : EnemyBase
             _target = _pointA.position;
 
     }
-    private void FaceMovement(float deltaX)
-    {
-        if (deltaX > 0.01f)
-            Sprite.flipX = true;
-        else if (deltaX < -0.01f)
-            Sprite.flipX = false;
-    }
 }

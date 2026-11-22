@@ -1,7 +1,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using YG;
 using Zenject;
 
 public sealed class GuidePanel : MonoBehaviour
@@ -13,6 +12,8 @@ public sealed class GuidePanel : MonoBehaviour
     [SerializeField] private GameObject _timeTrialGuideRoot;
     [SerializeField] private TMP_Text _timeTrialTargetText;
     [SerializeField] private TMP_Text _timeTrialBestText;
+    [SerializeField] private Button _bonusTimeButton;
+    private float _bonusTimeSeconds = 20f;
     private LevelStarCalculator _levelStarCalculator;
     private PlayerHealth _playerHealth;
     private LevelRunContext _levelRunContext;
@@ -34,17 +35,19 @@ public sealed class GuidePanel : MonoBehaviour
     {
         _bonusHeartButton.onClick.AddListener(OnBonusHeartClicked);
         _okButton.onClick.AddListener(OnOkClicked);
+        _bonusTimeButton.onClick.AddListener(OnBonusTimeClicked);
     }
     private void OnDestroy()
     {
         _bonusHeartButton.onClick.RemoveListener(OnBonusHeartClicked);
         _okButton.onClick.RemoveListener(OnOkClicked);
+        _bonusTimeButton.onClick.RemoveListener(OnBonusTimeClicked);
     }
     private void OnBonusHeartClicked()
     {
         if (_playerHealth.HasBonusMaxHealth)
             return;
-        YG2.RewardedAdvShow("extra_heart", GrantBonusHeartAfterReward);
+        YandexRewardedBridge.Show("extra_heart", GrantBonusHeartAfterReward);
     }
     private void GrantBonusHeartAfterReward()
     {
@@ -59,15 +62,15 @@ public sealed class GuidePanel : MonoBehaviour
             _normalGuideRoot.SetActive(false);
             _timeTrialGuideRoot.SetActive(true);
 
-            _timeTrialTargetText.SetText(string.Format("Уложись в {0}",
-                LevelTimeFormat.Format(_levelTimer.TargetSeconds)));
+            _timeTrialTargetText.SetText(LevelTimeLabels.TargetGuide(_levelTimer.TargetSeconds));
 
             int buildIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
             if (_levelResultManager.HasBestTime(buildIndex))
-                _timeTrialBestText.SetText(string.Format("Твой рекорд: {0}",
-                    LevelTimeFormat.Format(_levelResultManager.GetBestTime(buildIndex))));
+                _timeTrialBestText.SetText(LevelTimeLabels.BestGuide(_levelResultManager.GetBestTime(buildIndex)));
             else
-                _timeTrialBestText.SetText("Рекорда ещё нет");
+                _timeTrialBestText.SetText(LevelTimeLabels.NoRecord);
+
+            _bonusTimeButton.gameObject.SetActive(!_levelTimer.HasBonusTime);
         }
         else
         {
@@ -85,5 +88,22 @@ public sealed class GuidePanel : MonoBehaviour
             _levelTimer.StartTimer();
 
         gameObject.SetActive(false);
+    }
+    private void OnBonusTimeClicked()
+    {
+        if (_levelRunContext.Mode != LevelRunMode.TimeTrial)
+            return;
+        if (_levelTimer.HasBonusTime)
+            return;
+
+        YandexRewardedBridge.Show("extra_time", GrantBonusTimeAfterReward);
+    }
+
+    private void GrantBonusTimeAfterReward()
+    {
+        _levelTimer.ExtendTarget(_bonusTimeSeconds);
+        _timeTrialTargetText.SetText(LevelTimeLabels.TargetGuide(_levelTimer.TargetSeconds));
+
+        _bonusTimeButton.gameObject.SetActive(false);
     }
 }

@@ -5,7 +5,7 @@ public sealed class LevelResultManager
     public void SaveLevelResult(int levelIndex, int stars)
     {
         YG2.saves.winCount++;
-        int[] starsByLevel = GetStarsArray();
+        int[] starsByLevel = EnsureArray(ref YG2.saves.starsByLevelBuildIndex);
         if (levelIndex >= 0 && levelIndex < starsByLevel.Length)
         {
             if (stars > starsByLevel[levelIndex])
@@ -28,12 +28,12 @@ public sealed class LevelResultManager
     public void ResetProgress()
     {
         YG2.saves.lastUnlockedLevelBuildIndex = 1;
-        int[] starsByLevel = GetStarsArray();
+        int[] starsByLevel = EnsureArray(ref YG2.saves.starsByLevelBuildIndex);
         for (int i = 0; i < starsByLevel.Length; i++)
             starsByLevel[i] = 0;
 
-        bool[] crowns = GetCrownsArray();
-        float[] times = GetBestTimesArray();
+        bool[] crowns = EnsureArray(ref YG2.saves.crownByLevelBuildIndex);
+        float[] times = EnsureArray(ref YG2.saves.bestTimeByLevelBuildIndex);
         for (int i = 0; i < StarsArraySize; i++)
         {
             crowns[i] = false;
@@ -45,24 +45,16 @@ public sealed class LevelResultManager
     }
     public int GetStarsForLevel(int levelBuildIndex)
     {
-        int[] starsByLevel = GetStarsArray();
+        int[] starsByLevel = EnsureArray(ref YG2.saves.starsByLevelBuildIndex);
         if (levelBuildIndex < 0 || levelBuildIndex >= starsByLevel.Length)
             return 0;
 
         return starsByLevel[levelBuildIndex];
     }
-    private static int[] GetStarsArray()
-    {
-        if (YG2.saves.starsByLevelBuildIndex == null ||
-            YG2.saves.starsByLevelBuildIndex.Length != StarsArraySize)
-        {
-            YG2.saves.starsByLevelBuildIndex = new int[StarsArraySize];
-        }
-        return YG2.saves.starsByLevelBuildIndex;
-    }
+
     public bool HasCrown(int levelBuildIndex)
     {
-        bool[] crowns = GetCrownsArray();
+        bool[] crowns = EnsureArray(ref YG2.saves.crownByLevelBuildIndex);
         if (levelBuildIndex < 0 || levelBuildIndex >= crowns.Length)
             return false;
         return crowns[levelBuildIndex];
@@ -75,7 +67,7 @@ public sealed class LevelResultManager
 
     public float GetBestTime(int levelBuildIndex)
     {
-        float[] times = GetBestTimesArray();
+        float[] times = EnsureArray(ref YG2.saves.bestTimeByLevelBuildIndex);
         if (levelBuildIndex < 0 || levelBuildIndex >= times.Length)
             return 0f;
         return times[levelBuildIndex];
@@ -88,7 +80,7 @@ public sealed class LevelResultManager
 
     public void SaveTimeTrialResult(int levelBuildIndex, float timeSeconds, float targetSeconds)
     {
-        float[] times = GetBestTimesArray();
+        float[] times = EnsureArray(ref YG2.saves.bestTimeByLevelBuildIndex);
         if (levelBuildIndex < 0 || levelBuildIndex >= times.Length)
             return;
 
@@ -98,29 +90,17 @@ public sealed class LevelResultManager
 
         if (timeSeconds <= targetSeconds)
         {
-            bool[] crowns = GetCrownsArray();
+            bool[] crowns = EnsureArray(ref YG2.saves.crownByLevelBuildIndex);
             crowns[levelBuildIndex] = true;
         }
 
         YG2.SaveProgress();
     }
-    private static bool[] GetCrownsArray()
-    {
-        if (YG2.saves.crownByLevelBuildIndex == null ||
-            YG2.saves.crownByLevelBuildIndex.Length != StarsArraySize)
-        {
-            YG2.saves.crownByLevelBuildIndex = new bool[StarsArraySize];
-        }
-        return YG2.saves.crownByLevelBuildIndex;
-    }
 
-    private static float[] GetBestTimesArray()
+    private static T[] EnsureArray<T>(ref T[] field)
     {
-        if (YG2.saves.bestTimeByLevelBuildIndex == null ||
-            YG2.saves.bestTimeByLevelBuildIndex.Length != StarsArraySize)
-        {
-            YG2.saves.bestTimeByLevelBuildIndex = new float[StarsArraySize];
-        }
-        return YG2.saves.bestTimeByLevelBuildIndex;
+        if (field == null || field.Length != StarsArraySize)
+            field = new T[StarsArraySize];
+        return field;
     }
 }

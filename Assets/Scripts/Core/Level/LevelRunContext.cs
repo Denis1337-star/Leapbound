@@ -3,6 +3,7 @@ public sealed class LevelRunContext
     public LevelRunMode Mode { get; private set; } = LevelRunMode.Normal;
     public float TargetTimeSeconds { get; private set; }
     public bool IsInputLocked { get; private set; }
+    public bool OpenLevelsOnMainMenu { get; private set; }
 
     public void SetInputLocked(bool locked)
     {
@@ -18,5 +19,15 @@ public sealed class LevelRunContext
     {
         Mode = LevelRunMode.TimeTrial;
         TargetTimeSeconds = targetTimeSeconds;
+    }
+    public void RequestOpenLevelsOnMainMenu()
+    {
+        OpenLevelsOnMainMenu = true;
+    }
+    public bool ConsumeOpenLevelsOnMainMenu()
+    {
+        bool value = OpenLevelsOnMainMenu;
+        OpenLevelsOnMainMenu = false;
+        return value;
     }
 }

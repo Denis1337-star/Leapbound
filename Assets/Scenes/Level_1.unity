@@ -1347,11 +1347,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7361559094015894371, guid: c17ae649c21aaf047a39fa4de45d070c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.97
+      value: -2.48
       objectReference: {fileID: 0}
     - target: {fileID: 7361559094015894371, guid: c17ae649c21aaf047a39fa4de45d070c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.91
+      value: 1.93
       objectReference: {fileID: 0}
     - target: {fileID: 7361559094015894371, guid: c17ae649c21aaf047a39fa4de45d070c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2021,7 +2021,7 @@ Transform:
   m_GameObject: {fileID: 452225379}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.8572283, y: 1.3052293, z: -10}
+  m_LocalPosition: {x: 3.8572288, y: 1.9300008, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10906,7 +10906,7 @@ Transform:
   m_GameObject: {fileID: 958866895}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.97, y: 0.91, z: -10}
+  m_LocalPosition: {x: -2.48, y: 1.93, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16202,7 +16202,7 @@ CompositeCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_GeometryType: 0
+  m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
   m_ColliderPaths:

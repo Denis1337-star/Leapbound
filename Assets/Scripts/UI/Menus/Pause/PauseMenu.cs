@@ -20,6 +20,7 @@ public sealed class PauseMenu : MonoBehaviour
     private LevelTimer _levelTimer;
     private LevelResultManager _levelResultManager;
     private LevelTimeCatalog _levelTimeCatalog;
+    private LevelEndPresenter _levelEndPresenter;
 
     [Inject]
     public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService,
@@ -45,6 +46,9 @@ public sealed class PauseMenu : MonoBehaviour
     {
         _pauseMenuAds = new PauseMenuAds(_gameStateService, _sceneFlowService, _playerLives, _playerRespawn,
             _pauseMenuView.StopRewardPulsePublic, _levelRunContext, _levelTimeCatalog, _levelResultManager);
+
+        _levelEndPresenter = new LevelEndPresenter(_levelRunContext, _levelTimer, _levelStarCalculator,
+            _scoreService, _playerLives, _pauseMenuView, _gameReviewPrompt, _sceneFlowService);
         BindButtons();
     }
     private void Start()
@@ -68,46 +72,7 @@ public sealed class PauseMenu : MonoBehaviour
     }
     private void HandleGameStateChanged(GameState newState)
     {
-        switch (newState)
-        {
-            case GameState.Win:
-                if (_levelRunContext.Mode == LevelRunMode.TimeTrial)
-                {
-                    bool success = _levelTimer.ElapsedSeconds <= _levelTimer.TargetSeconds;
-                    _pauseMenuView.ShowTimeTrialResult(
-                        _levelTimer.ElapsedSeconds, _levelTimer.TargetSeconds, success);
-                }
-                else
-                {
-                    RefreshStars(true);
-                    _pauseMenuView.ShowWin();
-                    _pauseMenuView.SetReviewPromptVisible(_gameReviewPrompt.CanShowSoftPrompt());
-                }
-
-                SetGameFrozen(true);
-                break;
-
-            case GameState.Lose:
-                if (_levelRunContext.Mode != LevelRunMode.TimeTrial)
-                    RefreshStars(false);
-
-                _pauseMenuView.ShowLose();
-                SetGameFrozen(true);
-                break;
-
-            case GameState.Paused:
-                if (_levelRunContext.Mode != LevelRunMode.TimeTrial)
-                    RefreshStars(false);
-
-                _pauseMenuView.ShowPaused();
-                SetGameFrozen(true);
-                break;
-
-            case GameState.Playing:
-                _pauseMenuView.ShowPlaying();
-                SetGameFrozen(false);
-                break;
-        }
+        _levelEndPresenter.Apply(newState, SetGameFrozen);
     }
     public void TogglePause()
     {
@@ -147,11 +112,6 @@ public sealed class PauseMenu : MonoBehaviour
         _pauseMenuView.RewardLifeButton.onClick.AddListener(_pauseMenuAds.OnRewardLifeClicked);
         _pauseMenuView.ReviewAcceptButton.onClick.AddListener(OnReviewAccept);
         _pauseMenuView.ReviewDeclineButton.onClick.AddListener(OnReviewDecline);
-    }
-    private void RefreshStars(bool finished)
-    {
-        LevelStarResult result = _levelStarCalculator.Calculate(
-            _scoreService.Score, _playerLives.HasLostLife, finished);
-        _pauseMenuView.ApplyStars(result, _scoreService.Score, _levelStarCalculator.TargetScore, finished);
+        _pauseMenuView.TimeTrialOfferButton.onClick.AddListener(_pauseMenuAds.OnTimeTrialOfferClicked);
     }
 }

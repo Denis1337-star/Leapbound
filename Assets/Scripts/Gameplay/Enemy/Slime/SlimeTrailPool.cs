@@ -1,28 +1,19 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public sealed class SlimeTrailPool
 {
-    private readonly List<SlimeTrail> _items;
+    private readonly SimpleFxPool<SlimeTrail> _pool;
 
     public SlimeTrailPool(SlimeTrail prefab, int size)
     {
-        _items = new List<SlimeTrail>(size);
-        for (int i = 0; i < size; i++)
-        {
-            SlimeTrail trail = Object.Instantiate(prefab);
-            trail.Stop();
-            _items.Add(trail);
-        }
+        _pool = new SimpleFxPool<SlimeTrail>(prefab, size,
+            item => item.IsBusy,
+            item => item.Stop());
     }
+
     public void Play(Vector3 worldPosition)
     {
-        for (int i = 0; i < _items.Count; i++)
-        {
-            if (_items[i].IsBusy)
-                continue;
-            _items[i].Play(worldPosition);
-            return;
-        }
+        if (_pool.TryGetFree(out SlimeTrail item))
+            item.Play(worldPosition);
     }
 }

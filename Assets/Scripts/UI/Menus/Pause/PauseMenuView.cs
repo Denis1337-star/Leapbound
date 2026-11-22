@@ -24,6 +24,11 @@ public sealed class PauseMenuView : MonoBehaviour
     [SerializeField] private Image _timeResultBackground; 
     [SerializeField] private Color _timeSuccessColor = new Color(0.45f, 0.85f, 0.35f);
     [SerializeField] private Color _timeFailColor = new Color(0.95f, 0.45f, 0.40f);
+    [SerializeField] private float _crownPopDuration = 0.35f;
+    [SerializeField] private float _crownStartScale = 0.2f;
+    [SerializeField] private GameObject _timeTrialOfferRoot;
+    [SerializeField] private Button _timeTrialOfferButton;
+    private Tween _crownTween;
 
     private float _statusPunchScale = 0.20f;
     private float _statusPunchDuration = 0.3f;
@@ -36,17 +41,19 @@ public sealed class PauseMenuView : MonoBehaviour
     public Button CloseButton => _closeButton;
     public Button ReviewAcceptButton => _reviewAcceptButton;
     public Button ReviewDeclineButton => _reviewDeclineButton;
+    public Button TimeTrialOfferButton => _timeTrialOfferButton;
 
     private void OnDisable() { KillAllPolishTweens(); }
     private void OnDestroy() { KillAllPolishTweens(); }
     public void SetScore(int score) { _scoreText.SetText("{0}", score); }
     public void SetStatus(string text) { _statusText.SetText(text); }
-    public void ShowWin()
+    public void ShowWin(bool isLastLevel)
     {
         SetStatus("Ты победил");
         _pausePanel.SetActive(true);
         SetCloseButtonVisible(false);
-        SetNextVisible(true);
+        SetNextVisible(!isLastLevel);
+        SetTimeTrialOfferVisible(isLastLevel);
         SetRewardVisible(false);
         SetReviewPromptVisible(false);
         SetTimeTrialResultVisible(false);
@@ -65,6 +72,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetTimeTrialResultVisible(false);
         if (_crownIcon != null)
             _crownIcon.SetActive(false);
+        SetTimeTrialOfferVisible(false);
     }
     public void ShowPaused()
     {
@@ -77,6 +85,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetTimeTrialResultVisible(false);
         if (_crownIcon != null)
             _crownIcon.SetActive(false);
+        SetTimeTrialOfferVisible(false);
     }
     public void ShowPlaying()
     {
@@ -90,6 +99,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetTimeTrialResultVisible(false);
         if (_crownIcon != null)
             _crownIcon.SetActive(false);
+        SetTimeTrialOfferVisible(false);
     }
     private void SetCloseButtonVisible(bool visible) { _closeButton.gameObject.SetActive(visible); }
     private void SetNextVisible(bool visible) { _nextLevelButton.gameObject.SetActive(visible); }
@@ -115,6 +125,7 @@ public sealed class PauseMenuView : MonoBehaviour
     private void KillAllPolishTweens()
     {
         KillStatusTween();
+        KillCrownTween();
     }
     public void SetReviewPromptVisible(bool visible) { _reviewPrompt.SetActive(visible); }
     public void ApplyStars(LevelStarResult result, int score, int targetScore, bool showBigStars)
@@ -131,7 +142,7 @@ public sealed class PauseMenuView : MonoBehaviour
         if (_rewardLifePulse != null)
             _rewardLifePulse.Stop();
     }
-    public void ShowTimeTrialResult(float elapsedSeconds, float targetSeconds, bool success)
+    public void ShowTimeTrialResult(float elapsedSeconds, float targetSeconds, bool success, bool isLastLevel)
     {
         _starView.Hide();
         SetTimeTrialResultVisible(true);
@@ -139,11 +150,9 @@ public sealed class PauseMenuView : MonoBehaviour
             LevelTimeFormat.Format(elapsedSeconds),
             LevelTimeFormat.Format(targetSeconds)));
 
-        if (_crownIcon != null)
-            _crownIcon.SetActive(success);
-
         if (success)
         {
+            PlayCrownPop();
             SetStatus("Корона твоя");
             _timeResultBackground.color = _timeSuccessColor;
         }
@@ -151,10 +160,12 @@ public sealed class PauseMenuView : MonoBehaviour
         {
             SetStatus("Не успел!");
           _timeResultBackground.color = _timeFailColor;
+            HideCrown();
         }
         _pausePanel.SetActive(true);
         SetCloseButtonVisible(false);
-        SetNextVisible(success);
+        SetNextVisible(success && !isLastLevel);
+        SetTimeTrialOfferVisible(success && isLastLevel);
         SetRewardVisible(false);
         SetReviewPromptVisible(false);
     }
@@ -163,5 +174,39 @@ public sealed class PauseMenuView : MonoBehaviour
     {
         if (_timeTrialResultRoot != null)
             _timeTrialResultRoot.SetActive(visible);
+    }
+    private void KillCrownTween()
+    {
+        if (_crownTween == null)
+            return;
+
+        _crownTween.Kill();
+        _crownTween = null;
+    }
+    private void PlayCrownPop()
+    {
+        if (_crownIcon == null)
+            return;
+        KillCrownTween();
+        _crownIcon.SetActive(true);
+        RectTransform crownRect = (RectTransform)_crownIcon.transform;
+        crownRect.localScale = Vector3.one * _crownStartScale;
+        _crownTween = crownRect
+            .DOScale(Vector3.one, _crownPopDuration)
+            .SetEase(Ease.OutBack)
+            .SetUpdate(true);
+    }
+    private void HideCrown()
+    {
+        KillCrownTween();
+        if (_crownIcon == null)
+            return;
+        _crownIcon.SetActive(false);
+        _crownIcon.transform.localScale = Vector3.one;
+    }
+    private void SetTimeTrialOfferVisible(bool visible)
+    {
+        if (_timeTrialOfferRoot != null)
+            _timeTrialOfferRoot.SetActive(visible);
     }
 }

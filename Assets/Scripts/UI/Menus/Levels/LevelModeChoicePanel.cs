@@ -44,13 +44,13 @@ public sealed class LevelModeChoicePanel : MonoBehaviour
     {
         _levelBuildIndex = levelBuildIndex;
         _targetTimeSeconds = targetSeconds;
-        _titleText.SetText("Уровень {0}", levelBuildIndex); 
-        _targetTimeText.SetText(string.Format("Цель: {0}", LevelTimeFormat.Format(targetSeconds)));
+        _titleText.SetText("Уровень {0}", levelBuildIndex);
+        _targetTimeText.SetText(LevelTimeLabels.TargetChoice(targetSeconds));
 
         if (hasBestTime)
-            _bestTimeText.SetText(string.Format("Лучшее: {0}", LevelTimeFormat.Format(bestSeconds)));
+            _bestTimeText.SetText(LevelTimeLabels.BestChoice(bestSeconds));
         else
-            _bestTimeText.SetText("Рекорда ещё нет");
+            _bestTimeText.SetText(LevelTimeLabels.NoRecord);
 
         gameObject.SetActive(true);
     }

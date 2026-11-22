@@ -96,13 +96,6 @@ public sealed class TurtleEnemy : EnemyBase
         bool atA = Vector2.Distance(_target, _pointA.position) < 0.1f;
         _target = atA ? _pointB.position : _pointA.position;
     }
-    private void FaceMovement(float deltaX)
-    {
-        if (deltaX > 0.01f)
-            Sprite.flipX = true;
-        else if (deltaX < -0.01f)
-            Sprite.flipX = false;
-    }
     protected override void OnStomped(Player player)
     {
         if (_spikesActive)

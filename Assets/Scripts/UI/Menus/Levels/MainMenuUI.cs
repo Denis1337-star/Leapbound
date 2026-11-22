@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using YG;
+using Zenject;
 
 public class MainMenuUI : MonoBehaviour
 {
@@ -10,9 +11,15 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private GameObject _settingsPanel;
     [SerializeField] private GameObject _levelsPanel;
     [SerializeField] private LevelsPanelUI _levelsPanelUI;
- private bool _reportGameReadyWhenMenuShown = true;
+    private bool _reportGameReadyWhenMenuShown = true;
     private bool _hasReportedGameReady;
+    private LevelRunContext _levelRunContext;
 
+    [Inject]
+    public void Construct(LevelRunContext levelRunContext)
+    {
+        _levelRunContext = levelRunContext;
+    }
     private void Start()
     {
         _playButton.onClick.AddListener(OnPlayClicked);
@@ -20,6 +27,8 @@ public class MainMenuUI : MonoBehaviour
         _levelsButton.onClick.AddListener(OpenLevels);
 
         ReportGameReadyIfNeeded();
+        if (_levelRunContext != null && _levelRunContext.ConsumeOpenLevelsOnMainMenu())
+            OpenLevels();
     }
     private void OnDestroy()
     {

@@ -61,4 +61,9 @@ public sealed class SceneFlowService : ISceneFlowService
             _sceneFade.FadeIn(() => _isLoading = false);
         });
     }
+    public bool IsLastLevel()
+    {
+        int nextIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        return nextIndex >= SceneManager.sceneCountInBuildSettings;
+    }
 }

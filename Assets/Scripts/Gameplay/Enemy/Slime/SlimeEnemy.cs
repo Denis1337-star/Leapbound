@@ -64,11 +64,4 @@ public sealed class SlimeEnemy : EnemyBase
 
         _trailPool.Play(spawnPosition);
     }
-    private void FaceMovement(float moveDeltaX)
-    {
-        if (moveDeltaX > 0.01f)
-            Sprite.flipX = true;
-        else if (moveDeltaX < -0.01f)
-            Sprite.flipX = false;
-    }
 }

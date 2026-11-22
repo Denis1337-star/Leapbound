@@ -5,4 +5,6 @@
     void LoadNextLevel();
     void LoadLevelByBuildIndex(int buildIndex);
     void QuitGame();
+    bool IsLastLevel();
+
 }

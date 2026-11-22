@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,13 @@ public sealed class PauseMenuStarView : MonoBehaviour
     [SerializeField] private Image _noDeathResultCheckIcon;
     [SerializeField] private Sprite _checkSprite;
     [SerializeField] private Sprite _crossSprite;
+    [SerializeField] private float _starPopDuration = 0.28f;
+    [SerializeField] private float _starDelayBetween = 0.18f;
+    [SerializeField] private float _starStartScale = 0.2f;
+    private Sequence _starRevealSequence;
 
+    private void OnDisable() { KillStarReveal(); }
+    private void OnDestroy() { KillStarReveal(); }
     public void ShowChecklist(LevelStarResult result, int score, int targetScore)
     {
         SetStarResultsVisible(true);
@@ -26,16 +33,33 @@ public sealed class PauseMenuStarView : MonoBehaviour
     }
     public void ShowBigStars(LevelStarResult result)
     {
+        KillStarReveal();
         SetBigStarsActive(true);
-        if (_bigStars.Length > 0)
-            _bigStars[0].enabled = result.FinishMet;
 
-        if (_bigStars.Length > 1)
-            _bigStars[1].enabled = result.ScoreMet;
+        bool[] met = { result.FinishMet, result.ScoreMet, result.NoDeathMet };
+        _starRevealSequence = DOTween.Sequence().SetUpdate(true);
 
-        if (_bigStars.Length > 2)
-            _bigStars[2].enabled = result.NoDeathMet;
+        int revealIndex = 0;
+        for (int i = 0; i < _bigStars.Length; i++)
+        {
+            if (_bigStars[i] == null)
+                continue;
+
+            Image star = _bigStars[i];
+            star.enabled = met[i];
+            if (!met[i])
+                continue;
+
+            RectTransform rect = star.rectTransform;
+            rect.localScale = Vector3.one * _starStartScale;
+            float delay = _starDelayBetween * revealIndex;
+            revealIndex++;
+
+            _starRevealSequence.Insert(delay,
+                rect.DOScale(1f, _starPopDuration).SetEase(Ease.OutBack));
+        }
     }
+
     public void ClearBigStars()
     {
         for (int i = 0; i < _bigStars.Length; i++)
@@ -47,6 +71,7 @@ public sealed class PauseMenuStarView : MonoBehaviour
     }
     public void Hide()
     {
+        KillStarReveal();
         SetStarResultsVisible(false);
         SetBigStarsActive(false);
     }
@@ -69,5 +94,13 @@ public sealed class PauseMenuStarView : MonoBehaviour
                 continue;
             _bigStars[i].gameObject.SetActive(active);
         }
+    }
+    private void KillStarReveal()
+    {
+        if (_starRevealSequence == null)
+            return;
+
+        _starRevealSequence.Kill();
+        _starRevealSequence = null;
     }
 }

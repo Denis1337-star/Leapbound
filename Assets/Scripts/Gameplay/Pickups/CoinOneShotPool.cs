@@ -1,28 +1,17 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class CoinOneShotPool 
+public sealed class CoinOneShotPool
 {
-    private readonly List<CoinOneShot> _items;
+    private readonly SimpleFxPool<CoinOneShot> _pool;
     public CoinOneShotPool(CoinOneShot prefab, int size)
     {
-        _items = new List<CoinOneShot>(size);
-        for(int i = 0; i<size; i++)
-        {
-            CoinOneShot effect = Object.Instantiate(prefab);
-            effect.gameObject.SetActive(false);
-            _items.Add(effect);
-        }
+        _pool = new SimpleFxPool<CoinOneShot>(prefab, size,
+            item => item.Isusy,
+            item => item.gameObject.SetActive(false));
     }
-    public void Play(Vector3 worlPosition)
+    public void Play(Vector3 worldPosition)
     {
-        for (int i = 0; i < _items.Count; i++)
-        {
-            if (_items[i].Isusy)
-                continue;
-
-            _items[i].Play(worlPosition);
-            return;
-        }
+        if (_pool.TryGetFree(out CoinOneShot item))
+            item.Play(worldPosition);
     }
 }
