@@ -272,5 +272,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelPillView
   _button: {fileID: 4550824409407792172}
-  _bg: {fileID: 4819204620771016736}
-  _label: {fileID: 7252458388882704728}
+  _labelText: {fileID: 7252458388882704728}

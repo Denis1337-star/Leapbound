@@ -13,9 +13,9 @@ public sealed class CoinFlyFx : MonoBehaviour
     private Canvas _canvas;
     private Camera _uiCamera;
     private Tween _tween;
-    private bool _busy;
+    private bool _isBusy;
 
-    public bool IsBusy => _busy;
+    public bool IsBusy => _isBusy;
 
     private void Awake()
     {
@@ -31,7 +31,7 @@ public sealed class CoinFlyFx : MonoBehaviour
     }
     public void Play(Vector3 worldPosition, RectTransform flyTarget)
     {
-        _busy = true;
+        _isBusy = true;
         KillTween();
 
         gameObject.SetActive(true);
@@ -68,7 +68,7 @@ public sealed class CoinFlyFx : MonoBehaviour
     }
     private void Finish()
     {
-        _busy = false;
+        _isBusy = false;
         KillTween();
         gameObject.SetActive(false);
     }
@@ -83,6 +83,6 @@ public sealed class CoinFlyFx : MonoBehaviour
     private void OnDisable()
     {
         KillTween();
-        _busy = false;
+        _isBusy = false;
     }
 }

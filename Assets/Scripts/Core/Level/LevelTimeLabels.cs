@@ -13,4 +13,9 @@ public static class LevelTimeLabels
         string.Format("Лучшее: {0}", LevelTimeFormat.Format(seconds));
 
     public static string NoRecord => "Рекорда ещё нет";
+
+    public static string ElapsedOverTarget(float elapsedSeconds, float targetSeconds) =>
+    string.Format("{0} / {1}",
+        LevelTimeFormat.Format(elapsedSeconds),
+        LevelTimeFormat.Format(targetSeconds));
 }

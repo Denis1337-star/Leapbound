@@ -80,9 +80,9 @@ public abstract class EnemyBase : MonoBehaviour
         Kill(new Vector2(side, 1f));
         player.PlayHitJuice();
 
-        Vector2 veloccity = player.Rigidbody.linearVelocity;
-        veloccity.y = player.PlayerConfig.StopmBounceForce;
-        player.Rigidbody.linearVelocity = veloccity;
+        Vector2 velocity = player.Rigidbody.linearVelocity;
+        velocity.y = player.PlayerConfig.StompBounceForce;
+        player.Rigidbody.linearVelocity = velocity;
         player.PlayLandDust();
     }
     private void OnCollisionStay2D(Collision2D collision) { TryPlayerContact(collision.collider); }

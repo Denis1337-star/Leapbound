@@ -28,7 +28,7 @@ public sealed class LevelEndPresenter
         switch (newState)
         {
             case GameState.Win:
-                if (_levelRunContext.Mode == LevelRunMode.TimeTrial)
+                if (_levelRunContext.LevelMode == LevelRunMode.TimeTrial)
                 {
                     bool success = _levelTimer.ElapsedSeconds <= _levelTimer.TargetSeconds;
                     _view.ShowTimeTrialResult(
@@ -44,13 +44,13 @@ public sealed class LevelEndPresenter
                 setFrozen(true);
                 break;
             case GameState.Lose:
-                if (_levelRunContext.Mode != LevelRunMode.TimeTrial)
+                if (_levelRunContext.LevelMode != LevelRunMode.TimeTrial)
                     RefreshStars(false);
                 _view.ShowLose();
                 setFrozen(true);
                 break;
             case GameState.Paused:
-                if (_levelRunContext.Mode != LevelRunMode.TimeTrial)
+                if (_levelRunContext.LevelMode != LevelRunMode.TimeTrial)
                     RefreshStars(false);
                 _view.ShowPaused();
                 setFrozen(true);

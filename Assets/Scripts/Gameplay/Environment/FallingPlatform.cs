@@ -7,7 +7,7 @@ public sealed class FallingPlatform : MonoBehaviour
     [SerializeField] private Animator _animator;
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Collider2D _collider;
-    [SerializeField] private float _delay;
+    [SerializeField] private float _fallDelay;
     [SerializeField] private float _hideDelay;
     [SerializeField] private float _gravityScale;
     [SerializeField] private float _respawnDelay;
@@ -17,7 +17,7 @@ public sealed class FallingPlatform : MonoBehaviour
     private float _timer = -1f;
     private float _respawnTimer = -1f;
     private float _hideTimer = -1f;
-    private bool _falling;
+    private bool _isFalling;
     private void Awake()
     {
         _startPosition = _rigidbody.position;
@@ -32,13 +32,13 @@ public sealed class FallingPlatform : MonoBehaviour
     }
     private void TryStart(Collision2D collision)
     {
-        if (_falling || _timer >= 0f)
+        if (_isFalling || _timer >= 0f)
             return;
         if (!collision.collider.TryGetComponent(out Player _))
             return;
         if (!IsStandingOnTop(collision))
             return;
-        _timer = _delay;
+        _timer = _fallDelay;
         _animator.SetBool(IsOffHash, true);
         _hideTimer = _hideDelay;
     }
@@ -76,7 +76,7 @@ public sealed class FallingPlatform : MonoBehaviour
         if (!_collider.enabled)
             return;
 
-        _falling = true;
+        _isFalling = true;
         _respawnTimer = _respawnDelay;
         _collider.enabled = false;
         _rigidbody.bodyType = RigidbodyType2D.Dynamic;
@@ -85,7 +85,7 @@ public sealed class FallingPlatform : MonoBehaviour
     }
     private void Respawn()
     {
-        _falling = false;
+        _isFalling = false;
         _timer = -1f;
         _respawnTimer = -1f;
         _hideTimer = -1f;

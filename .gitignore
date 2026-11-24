@@ -80,3 +80,10 @@ crashlytics-build.properties
 *.lock
 *.tmp
 
+
+# Unity UI Toolkit schema cache (auto-regenerated)
+UIElementsSchema/
+
+# Случайные логи/скрипты агента в корне
+leaderboard_ui_build.log
+*_ui_build.log

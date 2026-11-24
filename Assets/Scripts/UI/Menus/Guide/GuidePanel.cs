@@ -19,11 +19,10 @@ public sealed class GuidePanel : MonoBehaviour
     private LevelRunContext _levelRunContext;
     private LevelTimer _levelTimer;
     private LevelResultManager _levelResultManager;
-
-
+    private GuidePanelAds _guidePanelAds;
     [Inject]
-    public void Construct(LevelStarCalculator levelStarCalculator, PlayerHealth playerHealth,
-        LevelRunContext levelRunContext, LevelTimer levelTimer, LevelResultManager levelResultManager)
+    public void Construct(LevelStarCalculator levelStarCalculator,PlayerHealth playerHealth,
+        LevelRunContext levelRunContext,LevelTimer levelTimer,LevelResultManager levelResultManager)
     {
         _levelStarCalculator = levelStarCalculator;
         _playerHealth = playerHealth;
@@ -33,35 +32,25 @@ public sealed class GuidePanel : MonoBehaviour
     }
     private void Awake()
     {
-        _bonusHeartButton.onClick.AddListener(OnBonusHeartClicked);
+        _guidePanelAds = new GuidePanelAds(_playerHealth,_levelRunContext,_levelTimer,
+            _bonusTimeSeconds,OnHeartGranted,OnTimeGranted);
+
+        _bonusHeartButton.onClick.AddListener(_guidePanelAds.OnBonusHeartClicked);
+        _bonusTimeButton.onClick.AddListener(_guidePanelAds.OnBonusTimeClicked);
         _okButton.onClick.AddListener(OnOkClicked);
-        _bonusTimeButton.onClick.AddListener(OnBonusTimeClicked);
     }
     private void OnDestroy()
     {
-        _bonusHeartButton.onClick.RemoveListener(OnBonusHeartClicked);
+        _bonusHeartButton.onClick.RemoveListener(_guidePanelAds.OnBonusHeartClicked);
+        _bonusTimeButton.onClick.RemoveListener(_guidePanelAds.OnBonusTimeClicked);
         _okButton.onClick.RemoveListener(OnOkClicked);
-        _bonusTimeButton.onClick.RemoveListener(OnBonusTimeClicked);
     }
-    private void OnBonusHeartClicked()
-    {
-        if (_playerHealth.HasBonusMaxHealth)
-            return;
-        YandexRewardedBridge.Show("extra_heart", GrantBonusHeartAfterReward);
-    }
-    private void GrantBonusHeartAfterReward()
-    {
-        _playerHealth.GrantBonusMaxHealth();
-        _bonusHeartButton.gameObject.SetActive(false);
-    }
-
     private void Start()
     {
-        if (_levelRunContext.Mode == LevelRunMode.TimeTrial)
+        if (_levelRunContext.LevelMode == LevelRunMode.TimeTrial)
         {
             _normalGuideRoot.SetActive(false);
             _timeTrialGuideRoot.SetActive(true);
-
             _timeTrialTargetText.SetText(LevelTimeLabels.TargetGuide(_levelTimer.TargetSeconds));
 
             int buildIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
@@ -83,27 +72,18 @@ public sealed class GuidePanel : MonoBehaviour
     private void OnOkClicked()
     {
         _levelRunContext.SetInputLocked(false);
-
-        if (_levelRunContext.Mode == LevelRunMode.TimeTrial)
+        if (_levelRunContext.LevelMode == LevelRunMode.TimeTrial)
             _levelTimer.StartTimer();
 
         gameObject.SetActive(false);
     }
-    private void OnBonusTimeClicked()
+    private void OnHeartGranted()
     {
-        if (_levelRunContext.Mode != LevelRunMode.TimeTrial)
-            return;
-        if (_levelTimer.HasBonusTime)
-            return;
-
-        YandexRewardedBridge.Show("extra_time", GrantBonusTimeAfterReward);
+        _bonusHeartButton.gameObject.SetActive(false);
     }
-
-    private void GrantBonusTimeAfterReward()
+    private void OnTimeGranted()
     {
-        _levelTimer.ExtendTarget(_bonusTimeSeconds);
         _timeTrialTargetText.SetText(LevelTimeLabels.TargetGuide(_levelTimer.TargetSeconds));
-
         _bonusTimeButton.gameObject.SetActive(false);
     }
 }

@@ -11,6 +11,7 @@ public sealed class PauseMenuAds
     private readonly Action _onRewardStarted;
     private readonly LevelResultManager _levelResultManager;
     private readonly LevelTimeCatalog _levelTimeCatalog;
+    private Action _afterInterstitial;
 
     public PauseMenuAds(IGameStateService gameStateService, ISceneFlowService sceneFlowService,
         PlayerLives playerLives, PlayerRespawn playerRespawn, Action onRewardStarted,
@@ -27,9 +28,9 @@ public sealed class PauseMenuAds
     }
     public void Dispose()
     {
-        YG2.onCloseAnyAdv -= LoadNextLevelAfterAd;
-        YG2.onCloseAnyAdv -= LoadMainMenuAfterAd;
+        YG2.onCloseAnyAdv -= OnInterstitialClosed;
         YG2.onCloseRewardedAdv -= UnfreezeAfterRewardedAd;
+        _afterInterstitial = null;
     }
     public void OnNextLevelClicked()
     {
@@ -39,9 +40,7 @@ public sealed class PauseMenuAds
             _sceneFlowService.LoadNextLevel();
             return;
         }
-
-        YG2.onCloseAnyAdv += LoadNextLevelAfterAd;
-        YG2.InterstitialAdvShow();
+        ShowInterstitialThen(LoadNextLevelAfterAd);
     }
     public void OnMainMenuClicked()
     {
@@ -51,9 +50,7 @@ public sealed class PauseMenuAds
             _sceneFlowService.LoadMainMenu();
             return;
         }
-
-        YG2.onCloseAnyAdv += LoadMainMenuAfterAd;
-        YG2.InterstitialAdvShow();
+        ShowInterstitialThen(LoadMainMenuAfterAd);
     }
     public void OnRewardLifeClicked()
     {
@@ -73,13 +70,11 @@ public sealed class PauseMenuAds
     }
     private void LoadNextLevelAfterAd()
     {
-        YG2.onCloseAnyAdv -= LoadNextLevelAfterAd;
         PrepareNextLevelRunMode();
         _sceneFlowService.LoadNextLevel();
     }
     private void LoadMainMenuAfterAd()
     {
-        YG2.onCloseAnyAdv -= LoadMainMenuAfterAd;
         _levelRunContext.SetNormal();
         _sceneFlowService.LoadMainMenu();
     }
@@ -93,7 +88,7 @@ public sealed class PauseMenuAds
     }
     private void PrepareNextLevelRunMode()
     {
-        if (_levelRunContext.Mode != LevelRunMode.TimeTrial)
+        if (_levelRunContext.LevelMode != LevelRunMode.TimeTrial)
         {
             _levelRunContext.SetNormal();
             return;
@@ -118,15 +113,27 @@ public sealed class PauseMenuAds
     public void OnTimeTrialOfferClicked()
     {
         _levelRunContext.RequestOpenLevelsOnMainMenu();
-
         if (_gameStateService.CurrentState != GameState.Win)
         {
             _levelRunContext.SetNormal();
             _sceneFlowService.LoadMainMenu();
             return;
         }
-
-        YG2.onCloseAnyAdv += LoadMainMenuAfterAd;
+        ShowInterstitialThen(LoadMainMenuAfterAd);
+    }
+    private void ShowInterstitialThen(Action afterClose)
+    {
+        _afterInterstitial = afterClose;
+        YG2.onCloseAnyAdv += OnInterstitialClosed;
         YG2.InterstitialAdvShow();
+    }
+    private void OnInterstitialClosed()
+    {
+        YG2.onCloseAnyAdv -= OnInterstitialClosed;
+        Action after = _afterInterstitial;
+        _afterInterstitial = null;
+
+        if (after != null)
+            after();
     }
 }

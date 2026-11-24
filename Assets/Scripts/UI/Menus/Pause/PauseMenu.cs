@@ -45,7 +45,7 @@ public sealed class PauseMenu : MonoBehaviour
     private void Awake()
     {
         _pauseMenuAds = new PauseMenuAds(_gameStateService, _sceneFlowService, _playerLives, _playerRespawn,
-            _pauseMenuView.StopRewardPulsePublic, _levelRunContext, _levelTimeCatalog, _levelResultManager);
+            _pauseMenuView.StopRewardPulse, _levelRunContext, _levelTimeCatalog, _levelResultManager);
 
         _levelEndPresenter = new LevelEndPresenter(_levelRunContext, _levelTimer, _levelStarCalculator,
             _scoreService, _playerLives, _pauseMenuView, _gameReviewPrompt, _sceneFlowService);

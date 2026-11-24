@@ -6,7 +6,7 @@ public sealed class CoinOneShotPool
     public CoinOneShotPool(CoinOneShot prefab, int size)
     {
         _pool = new SimpleFxPool<CoinOneShot>(prefab, size,
-            item => item.Isusy,
+            item => item.IsBusy,
             item => item.gameObject.SetActive(false));
     }
     public void Play(Vector3 worldPosition)

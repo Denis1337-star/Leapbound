@@ -13,7 +13,7 @@ public sealed class LevelTimer : ITickable
     public float ElapsedSeconds => _elapsedSeconds;
     public float TargetSeconds => _targetSeconds;
     public bool HasBonusTime => _bonusTimeGranted;
-    public bool IsTimeTrial => _levelRunContext.Mode == LevelRunMode.TimeTrial;
+    public bool IsTimeTrial => _levelRunContext.LevelMode == LevelRunMode.TimeTrial;
     public event Action<float, float> OnTimeChanged;
 
     public LevelTimer(LevelRunContext levelRunContext, IGameStateService gameStateService)

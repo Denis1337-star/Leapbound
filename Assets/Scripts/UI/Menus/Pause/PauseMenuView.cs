@@ -21,7 +21,7 @@ public sealed class PauseMenuView : MonoBehaviour
     [SerializeField] private TMP_Text _timeResultLabelText;
     [SerializeField] private PauseMenuStarView _starView;
     [SerializeField] private UiRewardPulse _rewardLifePulse;
-    [SerializeField] private Image _timeResultBackground; 
+    [SerializeField] private Image _timeResultBackground;
     [SerializeField] private Color _timeSuccessColor = new Color(0.45f, 0.85f, 0.35f);
     [SerializeField] private Color _timeFailColor = new Color(0.95f, 0.45f, 0.40f);
     [SerializeField] private float _crownPopDuration = 0.35f;
@@ -57,8 +57,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetRewardVisible(false);
         SetReviewPromptVisible(false);
         SetTimeTrialResultVisible(false);
-        if (_crownIcon != null)
-            _crownIcon.SetActive(false);
+        _crownIcon.SetActive(false);
     }
     public void ShowLose()
     {
@@ -70,8 +69,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetRewardVisible(true);
         SetReviewPromptVisible(false);
         SetTimeTrialResultVisible(false);
-        if (_crownIcon != null)
-            _crownIcon.SetActive(false);
+        _crownIcon.SetActive(false);
         SetTimeTrialOfferVisible(false);
     }
     public void ShowPaused()
@@ -83,8 +81,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetRewardVisible(false);
         SetReviewPromptVisible(false);
         SetTimeTrialResultVisible(false);
-        if (_crownIcon != null)
-            _crownIcon.SetActive(false);
+        _crownIcon.SetActive(false);
         SetTimeTrialOfferVisible(false);
     }
     public void ShowPlaying()
@@ -97,8 +94,7 @@ public sealed class PauseMenuView : MonoBehaviour
         SetReviewPromptVisible(false);
         _starView.Hide();
         SetTimeTrialResultVisible(false);
-        if (_crownIcon != null)
-            _crownIcon.SetActive(false);
+        _crownIcon.SetActive(false);
         SetTimeTrialOfferVisible(false);
     }
     private void SetCloseButtonVisible(bool visible) { _closeButton.gameObject.SetActive(visible); }
@@ -137,7 +133,7 @@ public sealed class PauseMenuView : MonoBehaviour
         else
             _starView.ClearBigStars();
     }
-    public void StopRewardPulsePublic()
+    public void StopRewardPulse()
     {
         if (_rewardLifePulse != null)
             _rewardLifePulse.Stop();
@@ -146,9 +142,8 @@ public sealed class PauseMenuView : MonoBehaviour
     {
         _starView.Hide();
         SetTimeTrialResultVisible(true);
-        _timeResultLabelText.SetText(string.Format("Время {0} / {1}",
-            LevelTimeFormat.Format(elapsedSeconds),
-            LevelTimeFormat.Format(targetSeconds)));
+        _timeResultLabelText.SetText(string.Format("Время {0}",
+            LevelTimeLabels.ElapsedOverTarget(elapsedSeconds, targetSeconds)));
 
         if (success)
         {
@@ -159,7 +154,7 @@ public sealed class PauseMenuView : MonoBehaviour
         else
         {
             SetStatus("Не успел!");
-          _timeResultBackground.color = _timeFailColor;
+            _timeResultBackground.color = _timeFailColor;
             HideCrown();
         }
         _pausePanel.SetActive(true);
@@ -172,7 +167,6 @@ public sealed class PauseMenuView : MonoBehaviour
 
     private void SetTimeTrialResultVisible(bool visible)
     {
-        if (_timeTrialResultRoot != null)
             _timeTrialResultRoot.SetActive(visible);
     }
     private void KillCrownTween()
@@ -185,8 +179,6 @@ public sealed class PauseMenuView : MonoBehaviour
     }
     private void PlayCrownPop()
     {
-        if (_crownIcon == null)
-            return;
         KillCrownTween();
         _crownIcon.SetActive(true);
         RectTransform crownRect = (RectTransform)_crownIcon.transform;
@@ -199,14 +191,11 @@ public sealed class PauseMenuView : MonoBehaviour
     private void HideCrown()
     {
         KillCrownTween();
-        if (_crownIcon == null)
-            return;
         _crownIcon.SetActive(false);
         _crownIcon.transform.localScale = Vector3.one;
     }
     private void SetTimeTrialOfferVisible(bool visible)
     {
-        if (_timeTrialOfferRoot != null)
             _timeTrialOfferRoot.SetActive(visible);
     }
 }

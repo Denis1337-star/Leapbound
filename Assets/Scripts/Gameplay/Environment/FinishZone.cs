@@ -51,7 +51,7 @@ public sealed class FinishZone : MonoBehaviour
         _playerWinEffect.Begin();
 
         Scene scene = SceneManager.GetActiveScene();
-        if (_levelRunContext.Mode == LevelRunMode.TimeTrial)
+        if (_levelRunContext.LevelMode == LevelRunMode.TimeTrial)
         {
             _levelTimer.Stop();
             _levelResultManager.SaveTimeTrialResult(

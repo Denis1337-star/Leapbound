@@ -48,7 +48,10 @@ public sealed class SlimeEnemy : EnemyBase
             return;
 
         bool targetIsPointA = Vector2.Distance(_target, _pointA.position) < 0.1f;
-        _target = targetIsPointA ? _pointB.position : _pointA.position;
+        if (targetIsPointA)
+            _target = _pointB.position;
+        else
+            _target = _pointA.position;
     }
     private void TrySpawnTrail(Vector2 currentPosition)
     {

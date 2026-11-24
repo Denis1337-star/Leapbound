@@ -32,8 +32,6 @@ public sealed class TimeTrialHud : MonoBehaviour
 
     private void HandleTimeChanged(float elapsed, float target)
     {
-        _timerText.SetText(string.Format("{0} / {1}",
-     LevelTimeFormat.Format(elapsed),
-     LevelTimeFormat.Format(target)));
+        _timerText.SetText(LevelTimeLabels.ElapsedOverTarget(elapsed, target));
     }
 }
