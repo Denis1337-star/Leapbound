@@ -1,0 +1,575 @@
+fileFormatVersion: 2
+guid: 97506e8288fcaf04aac1e7d3de8b2ae8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 9086710421748402591
+    second: Death_Rogue_0
+  - first:
+      213: -2931020131969246729
+    second: Death_Rogue_1
+  - first:
+      213: 643563282095506927
+    second: Death_Rogue_2
+  - first:
+      213: -6434604936907528710
+    second: Death_Rogue_3
+  - first:
+      213: -1721190052342475208
+    second: Death_Rogue_4
+  - first:
+      213: -4621441504251208066
+    second: Death_Rogue_5
+  - first:
+      213: 8955967135173379002
+    second: Death_Rogue_6
+  - first:
+      213: -337414922124121717
+    second: Death_Rogue_7
+  - first:
+      213: -7341980001627600230
+    second: Death_Rogue_8
+  - first:
+      213: 8684638907219273333
+    second: Death_Rogue_9
+  - first:
+      213: -1626492049648048495
+    second: Death_Rogue_10
+  - first:
+      213: 9164041956392636846
+    second: Death_Rogue_11
+  - first:
+      213: 2255783595529994954
+    second: Death_Rogue_12
+  - first:
+      213: 7313317177905785475
+    second: Death_Rogue_13
+  - first:
+      213: 5127850044640536107
+    second: Death_Rogue_14
+  - first:
+      213: -4552926108410590883
+    second: Death_Rogue_15
+  - first:
+      213: -1868849527994308026
+    second: Death_Rogue_16
+  - first:
+      213: 8004505859567457780
+    second: Death_Rogue_17
+  - first:
+      213: 2655135797528682756
+    second: Death_Rogue_18
+  - first:
+      213: 4836628404636660721
+    second: Death_Rogue_19
+  - first:
+      213: -7606672926127437521
+    second: Death_Rogue_20
+  - first:
+      213: -1368663490334191369
+    second: Death_Rogue_21
+  - first:
+      213: 4781487672092281147
+    second: Death_Rogue_22
+  - first:
+      213: 6540569235663220918
+    second: Death_Rogue_23
+  - first:
+      213: 2517042269380487575
+    second: Death_Rogue_24
+  - first:
+      213: 6939922288379526595
+    second: Death_Rogue_25
+  - first:
+      213: 4341092256338585198
+    second: Death_Rogue_26
+  - first:
+      213: 3393576107269028000
+    second: Death_Rogue_27
+  - first:
+      213: -1613803505026125403
+    second: Death_Rogue_28
+  - first:
+      213: 5670913152928304717
+    second: Death_Rogue_29
+  - first:
+      213: 244358281861033249
+    second: Death_Rogue_30
+  - first:
+      213: 6204089561618083286
+    second: Death_Rogue_31
+  - first:
+      213: -8581154560644608420
+    second: Death_Rogue_32
+  - first:
+      213: -7460104993768300215
+    second: Death_Rogue_33
+  - first:
+      213: 8533276589407234958
+    second: Death_Rogue_34
+  - first:
+      213: 1822025938793740721
+    second: Death_Rogue_35
+  - first:
+      213: 3160865608525276395
+    second: Death_Rogue_36
+  - first:
+      213: -8304933552551435668
+    second: Death_Rogue_37
+  - first:
+      213: 8093938412157991366
+    second: Death_Rogue_38
+  - first:
+      213: 9103438301438697006
+    second: Death_Rogue_39
+  - first:
+      213: 1948544079311378492
+    second: Death_Rogue_40
+  - first:
+      213: -8939468883621357333
+    second: Death_Rogue_41
+  - first:
+      213: -3264284136791509054
+    second: Death_Rogue_42
+  - first:
+      213: 2833397157617755487
+    second: Death_Rogue_43
+  - first:
+      213: -3944388901928831525
+    second: Death_Rogue_44
+  - first:
+      213: -1159361843700126062
+    second: Death_Rogue_45
+  - first:
+      213: 5403604607993745073
+    second: Death_Rogue_46
+  - first:
+      213: -6525961466707893537
+    second: Death_Rogue_47
+  - first:
+      213: -2095923396502493490
+    second: Death_Rogue_48
+  - first:
+      213: 3633390702824393070
+    second: Death_Rogue_49
+  - first:
+      213: -858900672891790396
+    second: Death_Rogue_50
+  - first:
+      213: 6428054039024738304
+    second: Death_Rogue_51
+  - first:
+      213: -4082658941622896299
+    second: Death_Rogue_52
+  - first:
+      213: -2508692889057256326
+    second: Death_Rogue_53
+  - first:
+      213: 2048817669362498738
+    second: Death_Rogue_54
+  - first:
+      213: -4997690305662935458
+    second: Death_Rogue_55
+  - first:
+      213: 6075264984134541373
+    second: Death_Rogue_56
+  - first:
+      213: 2512281743797195918
+    second: Death_Rogue_57
+  - first:
+      213: -4323890177603575636
+    second: Death_Rogue_58
+  - first:
+      213: -6850977077866241564
+    second: Death_Rogue_59
+  - first:
+      213: 3191660477466444377
+    second: Death_Rogue_60
+  - first:
+      213: 5172580170593667669
+    second: Death_Rogue_61
+  - first:
+      213: 2160119642895123727
+    second: Death_Rogue_62
+  - first:
+      213: -9190348356135024164
+    second: Death_Rogue_63
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Death_Rogue_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 202
+        width: 48
+        height: 54
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f9547c18bce257d0800000000000000
+      internalID: -2931020131969246729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Rogue_7
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 194
+        width: 58
+        height: 62
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8920e08ae2415bf0800000000000000
+      internalID: -337414922124121717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Rogue_9
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 192
+        width: 69
+        height: 64
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 576675ba219068870800000000000000
+      internalID: 8684638907219273333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Rogue_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 135
+        width: 81
+        height: 54
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d59c59ba3d1c0d0c0800000000000000
+      internalID: -4552926108410590883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Rogue_18
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 119
+        width: 82
+        height: 70
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 401ee1ab0ffe8d420800000000000000
+      internalID: 2655135797528682756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Rogue_21
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 120
+        width: 84
+        height: 72
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f095999ec7810de0800000000000000
+      internalID: -1368663490334191369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Rogue_45
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 35
+        width: 93
+        height: 60
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 29eac14bb8e19efe0800000000000000
+      internalID: -1159361843700126062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Death_Rogue_52
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 13
+        width: 113
+        height: 62
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 559be7dc25b7757c0800000000000000
+      internalID: -4082658941622896299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 2916b97c73404644b93accf856bd7bfe
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Death_Rogue_0: 9086710421748402591
+      Death_Rogue_1: -2931020131969246729
+      Death_Rogue_10: -1626492049648048495
+      Death_Rogue_11: 9164041956392636846
+      Death_Rogue_12: 2255783595529994954
+      Death_Rogue_13: 7313317177905785475
+      Death_Rogue_14: 5127850044640536107
+      Death_Rogue_15: -4552926108410590883
+      Death_Rogue_16: -1868849527994308026
+      Death_Rogue_17: 8004505859567457780
+      Death_Rogue_18: 2655135797528682756
+      Death_Rogue_19: 4836628404636660721
+      Death_Rogue_2: 643563282095506927
+      Death_Rogue_20: -7606672926127437521
+      Death_Rogue_21: -1368663490334191369
+      Death_Rogue_22: 4781487672092281147
+      Death_Rogue_23: 6540569235663220918
+      Death_Rogue_24: 2517042269380487575
+      Death_Rogue_25: 6939922288379526595
+      Death_Rogue_26: 4341092256338585198
+      Death_Rogue_27: 3393576107269028000
+      Death_Rogue_28: -1613803505026125403
+      Death_Rogue_29: 5670913152928304717
+      Death_Rogue_3: -6434604936907528710
+      Death_Rogue_30: 244358281861033249
+      Death_Rogue_31: 6204089561618083286
+      Death_Rogue_32: -8581154560644608420
+      Death_Rogue_33: -7460104993768300215
+      Death_Rogue_34: 8533276589407234958
+      Death_Rogue_35: 1822025938793740721
+      Death_Rogue_36: 3160865608525276395
+      Death_Rogue_37: -8304933552551435668
+      Death_Rogue_38: 8093938412157991366
+      Death_Rogue_39: 9103438301438697006
+      Death_Rogue_4: -1721190052342475208
+      Death_Rogue_40: 1948544079311378492
+      Death_Rogue_41: -8939468883621357333
+      Death_Rogue_42: -3264284136791509054
+      Death_Rogue_43: 2833397157617755487
+      Death_Rogue_44: -3944388901928831525
+      Death_Rogue_45: -1159361843700126062
+      Death_Rogue_46: 5403604607993745073
+      Death_Rogue_47: -6525961466707893537
+      Death_Rogue_48: -2095923396502493490
+      Death_Rogue_49: 3633390702824393070
+      Death_Rogue_5: -4621441504251208066
+      Death_Rogue_50: -858900672891790396
+      Death_Rogue_51: 6428054039024738304
+      Death_Rogue_52: -4082658941622896299
+      Death_Rogue_53: -2508692889057256326
+      Death_Rogue_54: 2048817669362498738
+      Death_Rogue_55: -4997690305662935458
+      Death_Rogue_56: 6075264984134541373
+      Death_Rogue_57: 2512281743797195918
+      Death_Rogue_58: -4323890177603575636
+      Death_Rogue_59: -6850977077866241564
+      Death_Rogue_6: 8955967135173379002
+      Death_Rogue_60: 3191660477466444377
+      Death_Rogue_61: 5172580170593667669
+      Death_Rogue_62: 2160119642895123727
+      Death_Rogue_63: -9190348356135024164
+      Death_Rogue_7: -337414922124121717
+      Death_Rogue_8: -7341980001627600230
+      Death_Rogue_9: 8684638907219273333
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

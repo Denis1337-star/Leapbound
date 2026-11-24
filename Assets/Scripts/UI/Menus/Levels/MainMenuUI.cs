@@ -11,6 +11,9 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private GameObject _settingsPanel;
     [SerializeField] private GameObject _levelsPanel;
     [SerializeField] private LevelsPanelUI _levelsPanelUI;
+    [SerializeField] private Button _leaderboardButton;
+    [SerializeField] private LeaderboardPanelView _leaderboardPanel;
+    [SerializeField] private GameObject _menuRoot;
     private bool _reportGameReadyWhenMenuShown = true;
     private bool _hasReportedGameReady;
     private LevelRunContext _levelRunContext;
@@ -20,11 +23,14 @@ public class MainMenuUI : MonoBehaviour
     {
         _levelRunContext = levelRunContext;
     }
+
     private void Start()
     {
         _playButton.onClick.AddListener(OnPlayClicked);
         _settingsButton.onClick.AddListener(OpenSettings);
         _levelsButton.onClick.AddListener(OpenLevels);
+        _leaderboardButton.onClick.AddListener(OpenLeaderboard);
+        _leaderboardPanel.BackButton.onClick.AddListener(CloseLeaderboard);
 
         ReportGameReadyIfNeeded();
         if (_levelRunContext != null && _levelRunContext.ConsumeOpenLevelsOnMainMenu())
@@ -35,6 +41,8 @@ public class MainMenuUI : MonoBehaviour
         _playButton.onClick.RemoveListener(OnPlayClicked);
         _settingsButton.onClick.RemoveListener(OpenSettings);
         _levelsButton.onClick.RemoveListener(OpenLevels);
+        _leaderboardButton.onClick.RemoveListener(OpenLeaderboard);
+        _leaderboardPanel.BackButton.onClick.RemoveListener(CloseLeaderboard);
     }
     private void OnPlayClicked()
     {
@@ -44,11 +52,13 @@ public class MainMenuUI : MonoBehaviour
     {
         _levelsPanel.SetActive(false);
         _settingsPanel.SetActive(true);
+        _leaderboardPanel.gameObject.SetActive(false);
     }
     private void OpenLevels()
     {
         _settingsPanel.SetActive(false);
         _levelsPanel.SetActive(true);
+        _leaderboardPanel.gameObject.SetActive(false);
     }
     private void ReportGameReadyIfNeeded()
     {
@@ -57,5 +67,25 @@ public class MainMenuUI : MonoBehaviour
 
         YG2.GameReadyAPI();
         _hasReportedGameReady = true;
+    }
+    private void OpenLeaderboard()
+    {
+        if (_menuRoot != null)
+            _menuRoot.SetActive(false);
+
+        _settingsPanel.SetActive(false);
+        _levelsPanel.SetActive(false);
+
+        if (_leaderboardPanel != null)
+            _leaderboardPanel.gameObject.SetActive(true);
+    }
+
+    private void CloseLeaderboard()
+    {
+        if (_leaderboardPanel != null)
+            _leaderboardPanel.gameObject.SetActive(false);
+
+        if (_menuRoot != null)
+            _menuRoot.SetActive(true);
     }
 }

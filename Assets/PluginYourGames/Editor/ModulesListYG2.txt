@@ -1,5 +1,6 @@
 Authorization v1.023
 InterstitialAdv v1.02
+Leaderboards v1.01
 Localization v1.02
 Review v1.0
 RewardedAdv v1.011

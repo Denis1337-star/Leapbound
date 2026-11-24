@@ -1,0 +1,287 @@
+fileFormatVersion: 2
+guid: d869d452cb00265449a16ff18773cee5
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6901973099260671430
+    second: Hurt_Rogue_0
+  - first:
+      213: 1988817216693529668
+    second: Hurt_Rogue_1
+  - first:
+      213: 4302047305460103876
+    second: Hurt_Rogue_2
+  - first:
+      213: 3607628685661524298
+    second: Hurt_Rogue_3
+  - first:
+      213: 6688202805560703092
+    second: Hurt_Rogue_4
+  - first:
+      213: -6653044430768690844
+    second: Hurt_Rogue_5
+  - first:
+      213: -2108103181954474717
+    second: Hurt_Rogue_6
+  - first:
+      213: 1784698816999403198
+    second: Hurt_Rogue_7
+  - first:
+      213: 7480345342747216518
+    second: Hurt_Rogue_8
+  - first:
+      213: -7679448749960266532
+    second: Hurt_Rogue_9
+  - first:
+      213: -4668015993865888328
+    second: Hurt_Rogue_10
+  - first:
+      213: -3040692391513866203
+    second: Hurt_Rogue_11
+  - first:
+      213: -3300199062559175389
+    second: Hurt_Rogue_12
+  - first:
+      213: 3306621374500624648
+    second: Hurt_Rogue_13
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 128
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Hurt_Rogue_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 74
+        width: 48
+        height: 54
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 44ce23ca8b2b99b10800000000000000
+      internalID: 1988817216693529668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hurt_Rogue_6
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 68
+        width: 55
+        height: 60
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32d9bb143538eb2e0800000000000000
+      internalID: -2108103181954474717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hurt_Rogue_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4
+        width: 58
+        height: 62
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bd18cf8f20e73fb0800000000000000
+      internalID: -4668015993865888328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Hurt_Rogue_12
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 3
+        width: 63
+        height: 65
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32d451410765332d0800000000000000
+      internalID: -3300199062559175389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: d196efd62a4f8424785a36bc642e0cda
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Hurt_Rogue_0: 6901973099260671430
+      Hurt_Rogue_1: 1988817216693529668
+      Hurt_Rogue_10: -4668015993865888328
+      Hurt_Rogue_11: -3040692391513866203
+      Hurt_Rogue_12: -3300199062559175389
+      Hurt_Rogue_13: 3306621374500624648
+      Hurt_Rogue_2: 4302047305460103876
+      Hurt_Rogue_3: 3607628685661524298
+      Hurt_Rogue_4: 6688202805560703092
+      Hurt_Rogue_5: -6653044430768690844
+      Hurt_Rogue_6: -2108103181954474717
+      Hurt_Rogue_7: 1784698816999403198
+      Hurt_Rogue_8: 7480345342747216518
+      Hurt_Rogue_9: -7679448749960266532
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

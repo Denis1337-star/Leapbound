@@ -157,199 +157,199 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Flying (32x32)_0
+      name: Fluing_0
       rect:
         serializedVersion: 2
         x: 1
         y: 39
         width: 30
         height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 819e07ad30572804281f4abe4818ada0
-      internalID: 6570920502705930198
+      spriteID: 15f185b9fbbfc8c4192b6a68a4acad6a
+      internalID: -438839835
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flying (32x32)_1
+      name: Fluing_1
       rect:
         serializedVersion: 2
         x: 33
         y: 39
         width: 31
         height: 23
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70de0b47d3635dc44a943363d7bcdcf2
-      internalID: 3944408015643112240
+      spriteID: 8d0ea7f73e818b241a2a1d181f27634e
+      internalID: 1427191447
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flying (32x32)_2
+      name: Fluing_2
       rect:
         serializedVersion: 2
         x: 64
         y: 41
         width: 32
         height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a348a9ada0c4a4c489fb4a4871ccdecd
-      internalID: 3853816143673293235
+      spriteID: 0324973fc15f2384fa534ed9987f575e
+      internalID: -1996590146
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flying (32x32)_3
+      name: Fluing_3
       rect:
         serializedVersion: 2
         x: 96
         y: 41
         width: 32
         height: 20
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e320f4d30cd0e8488c843a6e7908664
-      internalID: -3032164649882222076
+      spriteID: 8d5cfdc8a060db44d94a044ca208248f
+      internalID: -105663167
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flying (32x32)_4
+      name: Fluing_4
       rect:
         serializedVersion: 2
         x: 2
         y: 5
         width: 28
         height: 28
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b196a8cf9945f5c4b801268394ff7288
-      internalID: 3545866933577851776
+      spriteID: 08c168e97fd436a438caf444b05b7f2a
+      internalID: 1325159011
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flying (32x32)_6
+      name: Fluing_6
       rect:
         serializedVersion: 2
         x: 33
         y: 7
         width: 29
         height: 26
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d17af1115be752642aec2ec5f52e8fb7
-      internalID: 2030330461010847512
+      spriteID: 91cdcf0975070d94e84582357a6cbda1
+      internalID: -91074765
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flying (32x32)_7
+      name: Fluing_7
       rect:
         serializedVersion: 2
         x: 65
         y: 7
         width: 27
         height: 26
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 118e75ab61413d048be538594228f0f1
-      internalID: 8186078023339056789
+      spriteID: 32025ae4d91fa2b40aa1f3caf9890f10
+      internalID: 1870718869
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flying (32x32)_8
+      name: Fluing_8
       rect:
         serializedVersion: 2
         x: 97
         y: 7
         width: 27
         height: 26
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12ef74075278ef944b803d8390b208c4
-      internalID: 5717007125227293428
+      spriteID: 35e550b73ad244f48af08ea16110420e
+      internalID: -591161686
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Flying (32x32)_9
+      name: Fluing_9
       rect:
         serializedVersion: 2
         x: 129
         y: 7
         width: 27
         height: 26
-      alignment: 7
-      pivot: {x: 0.5, y: 0}
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cedee095697a23241a050805b741b841
-      internalID: -1598120164
+      spriteID: e05d2ad1a2a005f4596874aaccdc95e3
+      internalID: -1622808727
       vertices: []
       indices: 
       edges: []
@@ -368,18 +368,18 @@ TextureImporter:
     spriteCustomMetadata:
       entries:
       - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.0},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":7,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Flying (32x32)_0: 6570920502705930198
-      Flying (32x32)_1: 3944408015643112240
-      Flying (32x32)_2: 3853816143673293235
-      Flying (32x32)_3: -3032164649882222076
-      Flying (32x32)_4: 3545866933577851776
-      Flying (32x32)_5: 3029354677832749505
-      Flying (32x32)_6: 2030330461010847512
-      Flying (32x32)_7: 8186078023339056789
-      Flying (32x32)_8: 5717007125227293428
-      Flying (32x32)_9: -1598120164
+      Fluing_0: -438839835
+      Fluing_1: 1427191447
+      Fluing_2: -1996590146
+      Fluing_3: -105663167
+      Fluing_4: 1325159011
+      Fluing_5: -1025295399
+      Fluing_6: -91074765
+      Fluing_7: 1870718869
+      Fluing_8: -591161686
+      Fluing_9: -1622808727
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

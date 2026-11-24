@@ -5,6 +5,7 @@ public sealed class LevelTimeCatalog : ScriptableObject
 {
     [SerializeField] private float[] _targetTimeByBuildIndex;
 
+    public int LevelCount => _targetTimeByBuildIndex.Length;
     public float GetTargetTimeSeconds(int levelBuildIndex)
     {
         if (_targetTimeByBuildIndex == null ||

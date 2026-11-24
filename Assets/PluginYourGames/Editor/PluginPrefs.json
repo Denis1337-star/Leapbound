@@ -3,6 +3,10 @@
         {
             "key": "PluginYG_URLCloudInfo",
             "value": "https://max-games.ru/public/pluginYG2/data.json"
+        },
+        {
+            "key": "SelectModuleToggle_YG2",
+            "value": "Leaderboards"
         }
     ],
     "intPrefs": [

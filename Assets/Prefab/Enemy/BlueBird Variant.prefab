@@ -13,12 +13,24 @@ PrefabInstance:
       value: BlueBird Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3716346366750663592, guid: bd4c3ef5e4873434dab03a575f7242fa, type: 3}
+      propertyPath: m_Size.x
+      value: 0.9375
+      objectReference: {fileID: 0}
+    - target: {fileID: 3716346366750663592, guid: bd4c3ef5e4873434dab03a575f7242fa, type: 3}
+      propertyPath: m_Size.y
+      value: 0.71875
+      objectReference: {fileID: 0}
+    - target: {fileID: 3716346366750663592, guid: bd4c3ef5e4873434dab03a575f7242fa, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6570920502705930198, guid: 9f8778d0d44049a459735824f24042e0, type: 3}
+      objectReference: {fileID: -438839835, guid: 9f8778d0d44049a459735824f24042e0, type: 3}
     - target: {fileID: 3716346366750663592, guid: bd4c3ef5e4873434dab03a575f7242fa, type: 3}
       propertyPath: m_SortingOrder
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3716346366750663592, guid: bd4c3ef5e4873434dab03a575f7242fa, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5266498211581707342, guid: bd4c3ef5e4873434dab03a575f7242fa, type: 3}
       propertyPath: m_Controller
