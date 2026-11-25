@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1351508524815018610}
   - component: {fileID: 971973715581237419}
   - component: {fileID: -8827477668392759735}
+  - component: {fileID: 457587332880993845}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -79,6 +80,18 @@ MonoBehaviour:
   _audioManager: {fileID: 7891988777983585153}
   _sceneFade: {fileID: 7895241036661572532}
   _levelTimeCatalog: {fileID: 11400000, guid: 913a963b3202d5c4ba5e2583dc1bed88, type: 2}
+--- !u!114 &457587332880993845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33274541171110308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c66d3ab56cc71745982569cb28c3dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::YG.ConsumePurchasesYG
 --- !u!1 &966600859298085783
 GameObject:
   m_ObjectHideFlags: 0

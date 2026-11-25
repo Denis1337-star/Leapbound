@@ -12,6 +12,8 @@ public sealed class Player : MonoBehaviour
     [SerializeField] private PlayerSwordHit _playerSwordHit;
     [SerializeField] private HitStopPulse _hitStopPulse;
     [SerializeField] private CameraHitShake _cameraHitShake;
+    [SerializeField] private DustRun _dustRun;
+    [SerializeField] private HealthOneShot _healthOneShot;
     private PlayerHealth _playerHealth;
     private PlayerAudio _playerAudio;
     private PlayerDust _playerDust;
@@ -28,6 +30,9 @@ public sealed class Player : MonoBehaviour
     public Collider2D BodyCollider => _bodyCollider;
     public PlayerSwordHit SwordHit => _playerSwordHit;
     public bool AttackMoveLock => _attackMoveLock;
+    public DustRun DustRun => _dustRun;
+    public HealthOneShot HealthOneShot => _healthOneShot;
+    public HitStopPulse HitStopPulse => _hitStopPulse;
 
     [Inject]
     public void Construct(PlayerHealth playerHealth, PlayerAudio playerAudio, PlayerDust playerDust)

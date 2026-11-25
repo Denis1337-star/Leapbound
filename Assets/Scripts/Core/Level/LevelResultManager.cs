@@ -163,4 +163,16 @@ public sealed class LevelResultManager
 
         return field;
     }
+    public bool HasStarsOnAllLevels(int[] levelIndexes)
+    {
+        if (levelIndexes == null || levelIndexes.Length == 0)
+            return false;
+
+        for (int i = 0; i < levelIndexes.Length; i++)
+        {
+            if (GetStarsForLevel(levelIndexes[i]) < 1)
+                return false;
+        }
+        return true;
+    }
 }

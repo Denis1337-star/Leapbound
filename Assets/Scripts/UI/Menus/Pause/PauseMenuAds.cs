@@ -11,11 +11,14 @@ public sealed class PauseMenuAds
     private readonly Action _onRewardStarted;
     private readonly LevelResultManager _levelResultManager;
     private readonly LevelTimeCatalog _levelTimeCatalog;
+    private readonly HeroProgress _heroProgress;
     private Action _afterInterstitial;
+   
 
     public PauseMenuAds(IGameStateService gameStateService, ISceneFlowService sceneFlowService,
         PlayerLives playerLives, PlayerRespawn playerRespawn, Action onRewardStarted,
-        LevelRunContext levelRunContext, LevelTimeCatalog levelTimeCatalog, LevelResultManager levelResultManager)
+        LevelRunContext levelRunContext, LevelTimeCatalog levelTimeCatalog, LevelResultManager levelResultManager, 
+        HeroProgress heroProgress)
     {
         _gameStateService = gameStateService;
         _sceneFlowService = sceneFlowService;
@@ -25,6 +28,7 @@ public sealed class PauseMenuAds
         _levelRunContext = levelRunContext;
         _levelTimeCatalog = levelTimeCatalog;
         _levelResultManager = levelResultManager;
+        _heroProgress = heroProgress;
     }
     public void Dispose()
     {
@@ -37,6 +41,7 @@ public sealed class PauseMenuAds
         if (_gameStateService.CurrentState != GameState.Win)
         {
             PrepareNextLevelRunMode();
+           _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
             _sceneFlowService.LoadNextLevel();
             return;
         }
@@ -47,6 +52,7 @@ public sealed class PauseMenuAds
         if (_gameStateService.CurrentState != GameState.Win)
         {
             _levelRunContext.SetNormal();
+            _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
             _sceneFlowService.LoadMainMenu();
             return;
         }
@@ -71,11 +77,14 @@ public sealed class PauseMenuAds
     private void LoadNextLevelAfterAd()
     {
         PrepareNextLevelRunMode();
+        _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
         _sceneFlowService.LoadNextLevel();
+
     }
     private void LoadMainMenuAfterAd()
     {
         _levelRunContext.SetNormal();
+        _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
         _sceneFlowService.LoadMainMenu();
     }
     private void UnfreezeAfterRewardedAd()
@@ -116,6 +125,7 @@ public sealed class PauseMenuAds
         if (_gameStateService.CurrentState != GameState.Win)
         {
             _levelRunContext.SetNormal();
+            _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
             _sceneFlowService.LoadMainMenu();
             return;
         }

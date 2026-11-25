@@ -9,7 +9,9 @@ namespace YG
         public int winCount;
         public bool reviewPromptShown;
         public bool reviewCompleted;
-
+        public bool rogueUnlocked;
+        public bool rogueTrialReady;
+        public int selectedHeroId; 
 
     }
 }

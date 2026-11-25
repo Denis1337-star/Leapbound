@@ -16,7 +16,7 @@ MonoBehaviour:
   RunSpeed: 5
   JumpForce: 11
   MaxJumpCount: 2
-  StopmBounceForce: 10
+  StompBounceForce: 7
   GroundCheckRadius: 0.4
   GroundLayer:
     serializedVersion: 2
@@ -33,8 +33,8 @@ MonoBehaviour:
   AttackClip: {fileID: 8300000, guid: 3725eea336179a9448b14a5058c673b1, type: 3}
   HurtClip: {fileID: 8300000, guid: df6af6dcf07a47f4080eb8bbfffd4fee, type: 3}
   DeathClip: {fileID: 8300000, guid: 349add1a39df26647aeb4433952199d8, type: 3}
-  AttackIdleDuration: 0.42
-  AttackWalkDuration: 0.5
-  AttackRunDuration: 0.67
+  AttackIdleDuration: 0.35
+  AttackWalkDuration: 0.43
+  AttackRunDuration: 0.57
   AttackHitStart: 0.12
   AttackHitEnd: 0.28

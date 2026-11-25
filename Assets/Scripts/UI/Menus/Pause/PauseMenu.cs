@@ -21,13 +21,14 @@ public sealed class PauseMenu : MonoBehaviour
     private LevelResultManager _levelResultManager;
     private LevelTimeCatalog _levelTimeCatalog;
     private LevelEndPresenter _levelEndPresenter;
+    private HeroProgress _heroProgress;
 
     [Inject]
     public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService,
         IGameStateService gameStateService, IInputService inputService,
         LevelStarCalculator levelStarCalculator, PlayerLives playerLives, PlayerRespawn playerRespawn,
         GameReviewPrompt gameReviewPrompt, LevelRunContext levelRunContext, LevelTimer levelTimer, 
-        LevelResultManager levelResultManager, LevelTimeCatalog levelTimeCatalog)
+        LevelResultManager levelResultManager, LevelTimeCatalog levelTimeCatalog, HeroProgress heroProgress)
     {
         _sceneFlowService = sceneFlowService;
         _scoreService = scoreService;
@@ -41,11 +42,12 @@ public sealed class PauseMenu : MonoBehaviour
         _levelTimer = levelTimer;
         _levelResultManager = levelResultManager;
         _levelTimeCatalog = levelTimeCatalog;
+        _heroProgress = heroProgress;
     }
     private void Awake()
     {
         _pauseMenuAds = new PauseMenuAds(_gameStateService, _sceneFlowService, _playerLives, _playerRespawn,
-            _pauseMenuView.StopRewardPulse, _levelRunContext, _levelTimeCatalog, _levelResultManager);
+            _pauseMenuView.StopRewardPulse, _levelRunContext, _levelTimeCatalog, _levelResultManager, _heroProgress);
 
         _levelEndPresenter = new LevelEndPresenter(_levelRunContext, _levelTimer, _levelStarCalculator,
             _scoreService, _playerLives, _pauseMenuView, _gameReviewPrompt, _sceneFlowService);
@@ -102,11 +104,16 @@ public sealed class PauseMenu : MonoBehaviour
         _pauseMenuView.SetReviewPromptVisible(false);
         _gameReviewPrompt.Decline();
     }
+    private void OnRestartClicked()
+    {
+        _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
+        _sceneFlowService.RestartCurrentLevel();
+    }
     private void BindButtons()
     {
         _pauseButton.onClick.AddListener(TogglePause);
         _pauseMenuView.CloseButton.onClick.AddListener(TogglePause);
-        _pauseMenuView.RestartButton.onClick.AddListener(() => _sceneFlowService.RestartCurrentLevel());
+        _pauseMenuView.RestartButton.onClick.AddListener(OnRestartClicked);
         _pauseMenuView.MainMenuButton.onClick.AddListener(_pauseMenuAds.OnMainMenuClicked);
         _pauseMenuView.NextLevelButton.onClick.AddListener(_pauseMenuAds.OnNextLevelClicked);
         _pauseMenuView.RewardLifeButton.onClick.AddListener(_pauseMenuAds.OnRewardLifeClicked);

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fae3c6973fbe545ab55dad7cb70e02, type: 3}
+  m_Name: Hero_Mage
+  m_EditorClassIdentifier: Assembly-CSharp::HeroDefinition
+  Id: 2
+  DisplayName: "\u041C\u0430\u0433"
+  Description: "\u0421\u043A\u043E\u0440\u043E. \u0421\u0432\u043E\u0439 \u0441\u0442\u0438\u043B\u044C
+    \u0431\u043E\u044F \u0435\u0449\u0451 \u0432 \u043F\u0443\u0442\u0438."
+  MenuIcon: {fileID: 2971653748508199937, guid: d5f47166ef5283e4086ad1186e67a52f, type: 3}
+  MenuIdle: {fileID: 0}
+  StartsUnlocked: 0
+  ComingSoon: 1

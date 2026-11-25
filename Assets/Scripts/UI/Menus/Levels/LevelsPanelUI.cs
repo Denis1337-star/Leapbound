@@ -28,6 +28,7 @@ public sealed class LevelsPanelUI : MonoBehaviour
     private LevelResultManager _levelResultManager;
     private LevelRunContext _levelRunContext;
     private LevelTimeCatalog _levelTimeCatalog;
+    private int[] _levelIndexes;
 
 
     [Inject]
@@ -150,5 +151,24 @@ public sealed class LevelsPanelUI : MonoBehaviour
                 return _levelButtons[i];
         }
         return null;
+    }
+    private void EnsureLevelIndexes()
+    {
+        if (_levelIndexes != null)
+            return;
+
+        if (_levelButtons == null || _levelButtons.Length == 0)
+        {
+            _levelIndexes = System.Array.Empty<int>();
+            return;
+        }
+        _levelIndexes = new int[_levelButtons.Length];
+        for (int i = 0; i < _levelButtons.Length; i++)
+            _levelIndexes[i] = _levelButtons[i].LevelIndex;
+    }
+    public bool HasCompletedAllLevelsWithStars()
+    {
+        EnsureLevelIndexes();
+        return _levelResultManager.HasStarsOnAllLevels(_levelIndexes);
     }
 }

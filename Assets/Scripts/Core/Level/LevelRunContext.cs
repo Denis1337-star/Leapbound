@@ -4,6 +4,7 @@ public sealed class LevelRunContext
     public float TargetTimeSeconds { get; private set; }
     public bool IsInputLocked { get; private set; }
     public bool OpenLevelsOnMainMenu { get; private set; }
+    public HeroId SelectedHero { get; private set; } = HeroId.Knight;
 
     public void SetInputLocked(bool locked)
     {
@@ -29,5 +30,9 @@ public sealed class LevelRunContext
         bool value = OpenLevelsOnMainMenu;
         OpenLevelsOnMainMenu = false;
         return value;
+    }
+    public void SetHero(HeroId hero)
+    {
+        SelectedHero = hero;
     }
 }

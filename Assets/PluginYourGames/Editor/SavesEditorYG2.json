@@ -1,5 +1,5 @@
 {
-    "idSave": 37,
+    "idSave": 53,
     "lastUnlockedLevelBuildIndex": 12,
     "starsByLevelBuildIndex": [
         0,
@@ -55,7 +55,10 @@
         0.0,
         0.0
     ],
-    "winCount": 20,
+    "winCount": 21,
     "reviewPromptShown": true,
-    "reviewCompleted": false
+    "reviewCompleted": false,
+    "rogueUnlocked": true,
+    "rogueTrialReady": false,
+    "selectedHeroId": 0
 }

@@ -18,5 +18,6 @@ public class ProjectInstaller : MonoInstaller
         Container.BindInterfacesAndSelfTo<GameReviewPrompt>().AsSingle().NonLazy();
         Container.Bind<LevelRunContext>().AsSingle();
         Container.BindInstance(_levelTimeCatalog);
+        Container.Bind<HeroProgress>().AsSingle();
     }
 }

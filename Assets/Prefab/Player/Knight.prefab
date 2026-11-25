@@ -210,6 +210,8 @@ MonoBehaviour:
   _playerSwordHit: {fileID: 6153088534040081022}
   _hitStopPulse: {fileID: 4089564441933120730}
   _cameraHitShake: {fileID: 6199401786912140736}
+  _dustRun: {fileID: 3464127028398203637}
+  _healthOneShot: {fileID: 6155884403005416170}
 --- !u!82 &6651586976536197305
 AudioSource:
   m_ObjectHideFlags: 0
@@ -437,7 +439,7 @@ GameObject:
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3840817444809995703
 Transform:
   m_ObjectHideFlags: 0
