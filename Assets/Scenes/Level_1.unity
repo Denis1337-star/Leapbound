@@ -1948,7 +1948,7 @@ Transform:
   m_GameObject: {fileID: 452225379}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.8572288, y: 1.9300008, z: -10}
+  m_LocalPosition: {x: 3.8625681, y: 1.2130551, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2347,6 +2347,10 @@ PrefabInstance:
       propertyPath: _playerHealth
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8757717568816325540, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 210
+      objectReference: {fileID: 0}
     - target: {fileID: 9080203509477976517, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2360,6 +2364,28 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+--- !u!114 &580433372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7714599961523665576, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+  m_PrefabInstance: {fileID: 580433371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1899580bebcb66a48b11598c330e495b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TouchActionButton
+--- !u!114 &580433373 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8901849912217839892, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+  m_PrefabInstance: {fileID: 580433371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1899580bebcb66a48b11598c330e495b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TouchActionButton
 --- !u!1001 &631949782
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10814,7 +10840,7 @@ GameObject:
   m_Component:
   - component: {fileID: 958866898}
   - component: {fileID: 958866901}
-  - component: {fileID: 958866900}
+  - component: {fileID: 958866903}
   - component: {fileID: 958866899}
   - component: {fileID: 958866902}
   m_Layer: 0
@@ -10833,7 +10859,7 @@ Transform:
   m_GameObject: {fileID: 958866895}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.48, y: 1.93, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10852,44 +10878,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineConfiner2D
   BoundingShape2D: {fileID: 429230200}
-  Damping: 0
+  Damping: 1
   SlowingDistance: 5
   OversizeWindow:
     Enabled: 0
     MaxWindowSize: 0
     Padding: 0
   m_LegacyMaxWindowSize: -2
---- !u!114 &958866900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958866895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePositionComposer
-  CameraDistance: 10
-  DeadZoneDepth: 0
-  Composition:
-    ScreenPosition: {x: 0, y: 0}
-    DeadZone:
-      Enabled: 1
-      Size: {x: 0, y: 0}
-    HardLimits:
-      Enabled: 1
-      Size: {x: 0.8, y: 0.8}
-      Offset: {x: 0, y: 0}
-  CenterOnActivate: 1
-  TargetOffset: {x: 0, y: 0, z: 0}
-  Damping: {x: 1, y: 1, z: 1}
-  Lookahead:
-    Enabled: 0
-    Time: 0
-    Smoothing: 0
-    IgnoreY: 0
 --- !u!114 &958866901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10957,6 +10952,37 @@ MonoBehaviour:
     FrequencyGain: 1
     Duration: 1
     m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &958866903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958866895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 886251e9a18ece04ea8e61686c173e1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePositionComposer
+  CameraDistance: 10
+  DeadZoneDepth: 0
+  Composition:
+    ScreenPosition: {x: 0, y: 0}
+    DeadZone:
+      Enabled: 0
+      Size: {x: 0.2, y: 0.2}
+    HardLimits:
+      Enabled: 0
+      Size: {x: 0.8, y: 0.8}
+      Offset: {x: 0, y: 0}
+  CenterOnActivate: 1
+  TargetOffset: {x: 0, y: 0, z: 0}
+  Damping: {x: 1, y: 1, z: 1}
+  Lookahead:
+    Enabled: 0
+    Time: 0
+    Smoothing: 0
+    IgnoreY: 0
 --- !u!4 &960827646 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6386583439156031459, guid: bd4c3ef5e4873434dab03a575f7242fa, type: 3}
@@ -15779,6 +15805,10 @@ MonoBehaviour:
   _knightPrefab: {fileID: 5421278713137560588, guid: c17ae649c21aaf047a39fa4de45d070c, type: 3}
   _roguePrefab: {fileID: 1317428739425453113, guid: c815db29c53d5f44e87f8c81f5f711fa, type: 3}
   _followCamera: {fileID: 958866901}
+  _cameraFeelConfig: {fileID: 11400000, guid: 428f564d274c1c34e9ba23c35dbdce26, type: 2}
+  _touchJoystick: {fileID: 1148995699}
+  _jumpButton: {fileID: 580433373}
+  _attackButton: {fileID: 580433372}
 --- !u!1001 &1055290738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24253,6 +24283,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6008132102281944831, guid: c5fed818c423b4d4e87dba7ffeeae482, type: 3}
   m_PrefabInstance: {fileID: 1146333108}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1148995699 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9077594428246782844, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+  m_PrefabInstance: {fileID: 580433371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29352b753465a974da5eeef74144d993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TouchJoystick
 --- !u!1001 &1167677323
 PrefabInstance:
   m_ObjectHideFlags: 0

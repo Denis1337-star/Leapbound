@@ -14,6 +14,10 @@ public class SceneInstaller : MonoInstaller
     [SerializeField] private Player _knightPrefab;
     [SerializeField] private Player _roguePrefab;
     [SerializeField] private CinemachineCamera _followCamera;
+    [SerializeField] private CameraFeelConfig _cameraFeelConfig;
+    [SerializeField] private TouchJoystick _touchJoystick;
+    [SerializeField] private TouchActionButton _jumpButton;
+    [SerializeField] private TouchActionButton _attackButton;
     private LevelRunContext _levelRunContext;
     private Player _spawnedPlayer;
 
@@ -27,8 +31,7 @@ public class SceneInstaller : MonoInstaller
         PlayerInstaller();
         LevelInstaller();
         FxInstaller();
-        Container.QueueForInject(_spawnedPlayer);
-        Container.QueueForInject(_spawnedPlayer.HitStopPulse);
+        QueueForInstaller();
     }
     private void PlayerInstaller()
     {
@@ -63,6 +66,17 @@ public class SceneInstaller : MonoInstaller
         Container.Bind<DustOneShotPool>().AsSingle().WithArguments(_dustOneShotPrefab, 4);
         Container.Bind<CoinOneShotPool>().AsSingle().WithArguments(_coinOneShotPrefab, 8);
         Container.Bind<CoinFlyFxPool>().AsSingle().WithArguments(_coinFlyFxPrefab, 8, _fxCanvas, _scoreDisplay);
+      
+        Container.BindInterfacesAndSelfTo<DynamicCameraFeel>().AsSingle().WithArguments(
+        _followCamera.GetComponent<CinemachinePositionComposer>(),_cameraFeelConfig);
+    }
+    private void QueueForInstaller()
+    {
+        Container.QueueForInject(_spawnedPlayer);
+        Container.QueueForInject(_spawnedPlayer.HitStopPulse);
+        Container.QueueForInject(_touchJoystick);
+        Container.QueueForInject(_jumpButton);
+        Container.QueueForInject(_attackButton);
     }
     private Player SpawnPlayer()
     {

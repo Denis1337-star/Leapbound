@@ -1917,7 +1917,7 @@ Transform:
   m_GameObject: {fileID: 452225379}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.8572426, y: 1.2972941, z: -10}
+  m_LocalPosition: {x: 3.8625588, y: 1.2972941, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2791,6 +2791,39 @@ Canvas:
   m_CorrespondingSourceObject: {fileID: 2502763369899662008, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
   m_PrefabInstance: {fileID: 580433371}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &580433374 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7714599961523665576, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+  m_PrefabInstance: {fileID: 580433371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1899580bebcb66a48b11598c330e495b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TouchActionButton
+--- !u!114 &580433375 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8901849912217839892, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+  m_PrefabInstance: {fileID: 580433371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1899580bebcb66a48b11598c330e495b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TouchActionButton
+--- !u!114 &580433376 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9077594428246782844, guid: 1281eb9a784e2c14f8be6b17783ef487, type: 3}
+  m_PrefabInstance: {fileID: 580433371}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29352b753465a974da5eeef74144d993, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TouchJoystick
 --- !u!1001 &583395013
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15096,7 +15129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineConfiner2D
   BoundingShape2D: {fileID: 429230200}
-  Damping: 0
+  Damping: 1
   SlowingDistance: 5
   OversizeWindow:
     Enabled: 0
@@ -15470,6 +15503,10 @@ MonoBehaviour:
   _knightPrefab: {fileID: 5421278713137560588, guid: c17ae649c21aaf047a39fa4de45d070c, type: 3}
   _roguePrefab: {fileID: 1317428739425453113, guid: c815db29c53d5f44e87f8c81f5f711fa, type: 3}
   _followCamera: {fileID: 958866901}
+  _cameraFeelConfig: {fileID: 11400000, guid: 428f564d274c1c34e9ba23c35dbdce26, type: 2}
+  _touchJoystick: {fileID: 580433376}
+  _jumpButton: {fileID: 580433375}
+  _attackButton: {fileID: 580433374}
 --- !u!1001 &1038239651
 PrefabInstance:
   m_ObjectHideFlags: 0
