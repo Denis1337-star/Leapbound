@@ -8,9 +8,11 @@ public sealed class GuidePanelAds
     private readonly float _bonusTimeSeconds;
     private readonly Action _onHeartGranted;
     private readonly Action _onTimeGranted;
+    private readonly AnalyticsService _analyticsService;
 
     public GuidePanelAds(PlayerHealth playerHealth,LevelRunContext levelRunContext,
-        LevelTimer levelTimer,float bonusTimeSeconds,Action onHeartGranted,Action onTimeGranted)
+        LevelTimer levelTimer,float bonusTimeSeconds,Action onHeartGranted,Action onTimeGranted,
+        AnalyticsService analyticsService)
     {
         _playerHealth = playerHealth;
         _levelRunContext = levelRunContext;
@@ -18,6 +20,7 @@ public sealed class GuidePanelAds
         _bonusTimeSeconds = bonusTimeSeconds;
         _onHeartGranted = onHeartGranted;
         _onTimeGranted = onTimeGranted;
+        _analyticsService = analyticsService;   
     }
 
     public void OnBonusHeartClicked()
@@ -25,7 +28,12 @@ public sealed class GuidePanelAds
         if (_playerHealth.HasBonusMaxHealth)
             return;
 
-        YandexRewardedBridge.Show("extra_heart", GrantBonusHeartAfterReward);
+        _analyticsService.AdRewardedShow("extra_heart");
+        YandexRewardedBridge.Show("extra_heart", () =>
+        {
+            _analyticsService.AdRewardedReward("extra_heart");
+            GrantBonusHeartAfterReward();
+        });
     }
 
     public void OnBonusTimeClicked()
@@ -36,7 +44,12 @@ public sealed class GuidePanelAds
         if (_levelTimer.HasBonusTime)
             return;
 
-        YandexRewardedBridge.Show("extra_time", GrantBonusTimeAfterReward);
+        _analyticsService.AdRewardedShow("extra_time");
+        YandexRewardedBridge.Show("extra_time", () =>
+        {
+            _analyticsService.AdRewardedReward("extra_time");
+            GrantBonusTimeAfterReward();
+        });
     }
 
     private void GrantBonusHeartAfterReward()

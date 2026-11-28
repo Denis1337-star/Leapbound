@@ -12,13 +12,16 @@ public sealed class PauseMenuAds
     private readonly LevelResultManager _levelResultManager;
     private readonly LevelTimeCatalog _levelTimeCatalog;
     private readonly HeroProgress _heroProgress;
+    private AnalyticsService _analyticsService;
+    private LevelSessionStats _levelSessionStats;
     private Action _afterInterstitial;
-   
+    private string _interstitialPlacement;
+
 
     public PauseMenuAds(IGameStateService gameStateService, ISceneFlowService sceneFlowService,
         PlayerLives playerLives, PlayerRespawn playerRespawn, Action onRewardStarted,
-        LevelRunContext levelRunContext, LevelTimeCatalog levelTimeCatalog, LevelResultManager levelResultManager, 
-        HeroProgress heroProgress)
+        LevelRunContext levelRunContext, LevelTimeCatalog levelTimeCatalog, LevelResultManager levelResultManager,
+        HeroProgress heroProgress, AnalyticsService analyticsService, LevelSessionStats levelSessionStats)
     {
         _gameStateService = gameStateService;
         _sceneFlowService = sceneFlowService;
@@ -29,6 +32,8 @@ public sealed class PauseMenuAds
         _levelTimeCatalog = levelTimeCatalog;
         _levelResultManager = levelResultManager;
         _heroProgress = heroProgress;
+        _analyticsService = analyticsService;
+        _levelSessionStats = levelSessionStats;
     }
     public void Dispose()
     {
@@ -41,22 +46,28 @@ public sealed class PauseMenuAds
         if (_gameStateService.CurrentState != GameState.Win)
         {
             PrepareNextLevelRunMode();
-           _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
+            _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
             _sceneFlowService.LoadNextLevel();
             return;
         }
-        ShowInterstitialThen(LoadNextLevelAfterAd);
+        ShowInterstitialThen(LoadNextLevelAfterAd, "next_level");
     }
     public void OnMainMenuClicked()
     {
         if (_gameStateService.CurrentState != GameState.Win)
         {
+            string runMode = AnalyticsLabels.RunMode(_levelRunContext);
+            _analyticsService.LevelQuit(_levelSessionStats.LevelBuildIndex,runMode,
+                _levelSessionStats.Deaths,_levelSessionStats.ElapsedSecondsRounded);
+
             _levelRunContext.SetNormal();
             _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
             _sceneFlowService.LoadMainMenu();
+
+            _sceneFlowService.LoadMainMenu();
             return;
         }
-        ShowInterstitialThen(LoadMainMenuAfterAd);
+        ShowInterstitialThen(LoadMainMenuAfterAd, "main_menu");
     }
     public void OnRewardLifeClicked()
     {
@@ -65,7 +76,13 @@ public sealed class PauseMenuAds
 
         _onRewardStarted?.Invoke();
         YG2.onCloseRewardedAdv += UnfreezeAfterRewardedAd;
-        YandexRewardedBridge.Show("extra_life", GrantExtraLifeAfterReward);
+        _analyticsService.AdRewardedShow("extra_life");
+        YandexRewardedBridge.Show("extra_life", () =>
+        {
+            _analyticsService.AdRewardedReward("extra_life");
+            _analyticsService.ExtraLifeTaken(_levelSessionStats.LevelBuildIndex);
+            GrantExtraLifeAfterReward();
+        });
     }
     private void GrantExtraLifeAfterReward()
     {
@@ -124,21 +141,30 @@ public sealed class PauseMenuAds
         _levelRunContext.RequestOpenLevelsOnMainMenu();
         if (_gameStateService.CurrentState != GameState.Win)
         {
+            string runMode = AnalyticsLabels.RunMode(_levelRunContext);
+            _analyticsService.LevelQuit(_levelSessionStats.LevelBuildIndex, runMode,
+                _levelSessionStats.Deaths, _levelSessionStats.ElapsedSecondsRounded);
+
             _levelRunContext.SetNormal();
             _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
             _sceneFlowService.LoadMainMenu();
+
+            _sceneFlowService.LoadMainMenu();
             return;
         }
-        ShowInterstitialThen(LoadMainMenuAfterAd);
+        ShowInterstitialThen(LoadMainMenuAfterAd, "main_menu");
     }
-    private void ShowInterstitialThen(Action afterClose)
+    private void ShowInterstitialThen(Action afterClose, string adPlacement)
     {
+        _interstitialPlacement = adPlacement;
         _afterInterstitial = afterClose;
+        _analyticsService.AdInterstitialShow(adPlacement);
         YG2.onCloseAnyAdv += OnInterstitialClosed;
         YG2.InterstitialAdvShow();
     }
     private void OnInterstitialClosed()
     {
+        _analyticsService.AdInterstitialClose(_interstitialPlacement);
         YG2.onCloseAnyAdv -= OnInterstitialClosed;
         Action after = _afterInterstitial;
         _afterInterstitial = null;

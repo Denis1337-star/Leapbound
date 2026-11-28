@@ -24,5 +24,7 @@ public class ProjectInstaller : MonoInstaller
         Container.Bind<LevelRunContext>().AsSingle();
         Container.BindInstance(_levelTimeCatalog);
         Container.Bind<HeroProgress>().AsSingle();
+
+        Container.Bind<AnalyticsService>().AsSingle();
     }
 }

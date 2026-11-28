@@ -6,6 +6,7 @@ public sealed class GameReviewPrompt : IInitializable, IDisposable
 {
     private const int WinsRequired = 3;
 
+    [Inject] private readonly AnalyticsService _analyticsService;
     public void Initialize()
     {
         YG2.onReviewSent += OnReviewSent;
@@ -26,6 +27,7 @@ public sealed class GameReviewPrompt : IInitializable, IDisposable
     }
     public void Accept()
     {
+        _analyticsService.ReviewAccept();
         YG2.saves.reviewPromptShown = true;
         YG2.SaveProgress();
         if (!YG2.reviewCanShow)
@@ -35,6 +37,7 @@ public sealed class GameReviewPrompt : IInitializable, IDisposable
     }
     public void Decline()
     {
+        _analyticsService.ReviewDecline();
         YG2.saves.reviewPromptShown = true;
         YG2.SaveProgress();
     }

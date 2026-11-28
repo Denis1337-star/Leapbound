@@ -22,13 +22,16 @@ public sealed class PauseMenu : MonoBehaviour
     private LevelTimeCatalog _levelTimeCatalog;
     private LevelEndPresenter _levelEndPresenter;
     private HeroProgress _heroProgress;
+    private AnalyticsService _analyticsService;
+    private LevelSessionStats _levelSessionStats;
 
     [Inject]
     public void Construct(ISceneFlowService sceneFlowService, IScoreService scoreService,
-        IGameStateService gameStateService, IInputService inputService,
-        LevelStarCalculator levelStarCalculator, PlayerLives playerLives, PlayerRespawn playerRespawn,
-        GameReviewPrompt gameReviewPrompt, LevelRunContext levelRunContext, LevelTimer levelTimer, 
-        LevelResultManager levelResultManager, LevelTimeCatalog levelTimeCatalog, HeroProgress heroProgress)
+        IGameStateService gameStateService, IInputService inputService,LevelStarCalculator 
+        levelStarCalculator, PlayerLives playerLives, PlayerRespawn playerRespawn,GameReviewPrompt gameReviewPrompt,
+        LevelRunContext levelRunContext, LevelTimer levelTimer, LevelResultManager levelResultManager, 
+        LevelTimeCatalog levelTimeCatalog, HeroProgress heroProgress, AnalyticsService analyticsService, 
+        LevelSessionStats levelSessionStats)
     {
         _sceneFlowService = sceneFlowService;
         _scoreService = scoreService;
@@ -43,14 +46,17 @@ public sealed class PauseMenu : MonoBehaviour
         _levelResultManager = levelResultManager;
         _levelTimeCatalog = levelTimeCatalog;
         _heroProgress = heroProgress;
+        _analyticsService = analyticsService;
+        _levelSessionStats = levelSessionStats;
     }
     private void Awake()
     {
         _pauseMenuAds = new PauseMenuAds(_gameStateService, _sceneFlowService, _playerLives, _playerRespawn,
-            _pauseMenuView.StopRewardPulse, _levelRunContext, _levelTimeCatalog, _levelResultManager, _heroProgress);
+            _pauseMenuView.StopRewardPulse, _levelRunContext, _levelTimeCatalog, _levelResultManager, _heroProgress, 
+            _analyticsService, _levelSessionStats);
 
         _levelEndPresenter = new LevelEndPresenter(_levelRunContext, _levelTimer, _levelStarCalculator,
-            _scoreService, _playerLives, _pauseMenuView, _gameReviewPrompt, _sceneFlowService);
+            _scoreService, _playerLives, _pauseMenuView, _gameReviewPrompt, _sceneFlowService, _analyticsService, _levelSessionStats);
         BindButtons();
     }
     private void Start()
@@ -106,6 +112,9 @@ public sealed class PauseMenu : MonoBehaviour
     }
     private void OnRestartClicked()
     {
+        _analyticsService.LevelRestart(_levelSessionStats.LevelBuildIndex,AnalyticsLabels.RunMode(_levelRunContext),
+            _levelSessionStats.Deaths,_levelSessionStats.ElapsedSecondsRounded);
+
         _heroProgress.ResetToKnightIfNeeded(_levelRunContext);
         _sceneFlowService.RestartCurrentLevel();
     }

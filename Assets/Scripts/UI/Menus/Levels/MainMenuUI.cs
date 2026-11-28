@@ -25,15 +25,17 @@ public class MainMenuUI : MonoBehaviour
     private LevelRunContext _levelRunContext;
     private HeroesPanelLogic _heroesPanelLogic;
     private HeroProgress _heroProgress;
+    private AnalyticsService _analyticsService;
     private const string OtherGameUrl = "https://yandex.ru/games/app/539279";
 
     [Inject]
-    public void Construct(LevelRunContext levelRunContext, HeroProgress heroProgress)
+    public void Construct(LevelRunContext levelRunContext, HeroProgress heroProgress, AnalyticsService analyticsService)
     {
         _levelRunContext = levelRunContext;
         _heroProgress = heroProgress;
+        _analyticsService = analyticsService;
         _heroesPanelLogic = new HeroesPanelLogic(
-           _heroesPanel, levelRunContext, heroProgress, RestoreMenuAfterHeroes);
+           _heroesPanel, levelRunContext, heroProgress, RestoreMenuAfterHeroes, analyticsService);
     }
 
     private void Start()
@@ -111,6 +113,7 @@ public class MainMenuUI : MonoBehaviour
     }
     private void OpenLeaderboard()
     {
+        _analyticsService.LeaderboardOpen();
         _menuRoot.SetActive(false);
         _settingsPanel.SetActive(false);
         _levelsPanel.SetActive(false);
@@ -136,6 +139,7 @@ public class MainMenuUI : MonoBehaviour
     private void RestoreMenuAfterHeroes() { _menuRoot.SetActive(true); }
     private void OpenAbout()
     {
+        _analyticsService.AboutOpen();
         _menuRoot.SetActive(false);
         _settingsPanel.SetActive(false);
         _levelsPanel.SetActive(false);

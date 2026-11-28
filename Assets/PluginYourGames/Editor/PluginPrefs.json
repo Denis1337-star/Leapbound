@@ -6,7 +6,7 @@
         },
         {
             "key": "SelectModuleToggle_YG2",
-            "value": "Leaderboards;Authorization;InterstitialAdv;PluginYG2;Localization;RewardedAdv;Storage;Review;Payments;YandexGames"
+            "value": "Leaderboards;Authorization;InterstitialAdv;PluginYG2;Localization;RewardedAdv;Storage;Review;Payments;YandexGames;EnvirData;OpenURL;Metrica"
         }
     ],
     "intPrefs": [

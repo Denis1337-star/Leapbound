@@ -11,7 +11,7 @@ namespace YG
         public bool reviewCompleted;
         public bool rogueUnlocked;
         public bool rogueTrialReady;
-        public int selectedHeroId; 
+        public int selectedHeroId;
 
     }
 }

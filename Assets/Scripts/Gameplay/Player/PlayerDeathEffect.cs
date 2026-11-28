@@ -10,10 +10,12 @@ public sealed class PlayerDeathEffect : IInitializable, ITickable, IDisposable
     private readonly PlayerAnimation _playerAnimation;
     private readonly PlayerLives _playerLives;
     private readonly IGameStateService _gameStateService;
+    private readonly LevelSessionStats _levelSessionStats;
     private float _restartTimer = -1f;
 
     public PlayerDeathEffect(Player player, PlayerHealth playerHealth, PlayerRespawn playerRespawn,
-        PlayerAnimation playerAnimation, PlayerLives playerLives, IGameStateService gameStateService)
+        PlayerAnimation playerAnimation, PlayerLives playerLives, IGameStateService gameStateService, 
+        LevelSessionStats levelSessionStats)
     {
         _player = player;
         _playerHealth = playerHealth;
@@ -21,6 +23,7 @@ public sealed class PlayerDeathEffect : IInitializable, ITickable, IDisposable
         _playerAnimation = playerAnimation;
         _playerLives = playerLives;
         _gameStateService = gameStateService;
+        _levelSessionStats = levelSessionStats;
     }
     public void Initialize() { _playerHealth.OnDeath += OnDeath; }
     public void Dispose() { _playerHealth.OnDeath -= OnDeath; }
@@ -38,6 +41,7 @@ public sealed class PlayerDeathEffect : IInitializable, ITickable, IDisposable
     }
     private void OnDeath()
     {
+        _levelSessionStats.RegisterDeath();
         _player.SpriteRenderer.enabled = true;
         _playerAnimation.SetUnscaled(true);
         _player.FreezeBody();

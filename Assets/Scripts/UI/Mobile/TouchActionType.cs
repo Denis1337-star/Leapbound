@@ -10,21 +10,21 @@ public enum TouchActionType
 
 public sealed class TouchActionButton : MonoBehaviour, IPointerDownHandler
 {
-    [SerializeField] private TouchActionType _action;
+    [SerializeField] private TouchActionType _touchActionType   ;
 
-    private GameplayInputService _input;
+    private GameplayInputService _gameplayInput;
 
     [Inject]
-    public void Construct(GameplayInputService input)
+    public void Construct(GameplayInputService gameplayInput)
     {
-        _input = input;
+        _gameplayInput = gameplayInput;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (_action == TouchActionType.Jump)
-            _input.BufferJump();
+        if (_touchActionType == TouchActionType.Jump)
+            _gameplayInput.BufferJump();
         else
-            _input.BufferAttack();
+            _gameplayInput.BufferAttack();
     }
 }

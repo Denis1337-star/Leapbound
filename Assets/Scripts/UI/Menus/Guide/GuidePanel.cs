@@ -20,20 +20,25 @@ public sealed class GuidePanel : MonoBehaviour
     private LevelTimer _levelTimer;
     private LevelResultManager _levelResultManager;
     private GuidePanelAds _guidePanelAds;
+    private AnalyticsService _analyticsService;
+    private LevelSessionStats _levelSessionStats;
     [Inject]
     public void Construct(LevelStarCalculator levelStarCalculator,PlayerHealth playerHealth,
-        LevelRunContext levelRunContext,LevelTimer levelTimer,LevelResultManager levelResultManager)
+        LevelRunContext levelRunContext,LevelTimer levelTimer,LevelResultManager levelResultManager,
+        AnalyticsService analyticsService,LevelSessionStats levelSessionStats)
     {
         _levelStarCalculator = levelStarCalculator;
         _playerHealth = playerHealth;
         _levelRunContext = levelRunContext;
         _levelTimer = levelTimer;
         _levelResultManager = levelResultManager;
+        _analyticsService = analyticsService;
+        _levelSessionStats = levelSessionStats;
     }
     private void Awake()
     {
         _guidePanelAds = new GuidePanelAds(_playerHealth,_levelRunContext,_levelTimer,
-            _bonusTimeSeconds,OnHeartGranted,OnTimeGranted);
+            _bonusTimeSeconds,OnHeartGranted,OnTimeGranted,_analyticsService);
 
         _bonusHeartButton.onClick.AddListener(_guidePanelAds.OnBonusHeartClicked);
         _bonusTimeButton.onClick.AddListener(_guidePanelAds.OnBonusTimeClicked);
@@ -72,6 +77,11 @@ public sealed class GuidePanel : MonoBehaviour
     private void OnOkClicked()
     {
         _levelRunContext.SetInputLocked(false);
+        _levelSessionStats.MarkStarted();
+        _analyticsService.LevelStart(_levelSessionStats.LevelBuildIndex,
+            AnalyticsLabels.RunMode(_levelRunContext),
+            AnalyticsLabels.SelectedHero(_levelRunContext.SelectedHero));
+
         if (_levelRunContext.LevelMode == LevelRunMode.TimeTrial)
             _levelTimer.StartTimer();
 

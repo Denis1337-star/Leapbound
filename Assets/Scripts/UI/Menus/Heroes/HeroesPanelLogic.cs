@@ -10,14 +10,16 @@ public sealed class HeroesPanelLogic
     private readonly HeroProgress _heroProgress;
     private readonly Action _onClosedToMenu;
     private HeroId _focusedId = HeroId.Knight;
+    private AnalyticsService _analyticsService;
 
     public HeroesPanelLogic(HeroesPanelView heroesPanelview,LevelRunContext levelRunContext,
-        HeroProgress heroProgress,Action onClosedToMenu)
+        HeroProgress heroProgress,Action onClosedToMenu,AnalyticsService analyticsService)
     {
         _heroesPanelview = heroesPanelview;
         _levelRunContext = levelRunContext;
         _heroProgress = heroProgress;
         _onClosedToMenu = onClosedToMenu;
+        _analyticsService = analyticsService;
 
         _heroesPanelview.Closed += OnClosed;
         _heroesPanelview.SlotClicked += OnSlot;
@@ -69,6 +71,7 @@ public sealed class HeroesPanelLogic
         _heroesPanelview.RefreshChecks(heroId);
         _heroProgress.Equip(heroId, _levelRunContext);
         _heroesPanelview.RefreshChecks(heroId);
+        _analyticsService.HeroSelect(AnalyticsLabels.SelectedHero(heroId));
     }
 
     private void OnTrial()
@@ -76,13 +79,19 @@ public sealed class HeroesPanelLogic
         if (_focusedId != HeroId.Rogue)
             return;
 
-        YandexRewardedBridge.Show("rogue_trial", OnTrialGranted);
+        _analyticsService.AdRewardedShow("rogue_trial");
+        YandexRewardedBridge.Show("rogue_trial", () =>
+        {
+            _analyticsService.AdRewardedReward("rogue_trial");
+            OnTrialGranted();
+        });
     }
 
     private void OnTrialGranted()
     {
         _heroProgress.GrantRogueTrial();
         RefreshActions(HeroId.Rogue);
+        _analyticsService.HeroTrialStart("Rogue");
     }
 
     private void OnBuy()
@@ -121,5 +130,6 @@ public sealed class HeroesPanelLogic
         _heroProgress.UnlockRogue();
         RefreshActions(HeroId.Rogue);
         YG2.ConsumePurchaseByID(heroId);
+        _analyticsService.HeroBuy("Rogue");
     }
 }

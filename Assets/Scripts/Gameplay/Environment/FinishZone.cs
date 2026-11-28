@@ -12,12 +12,15 @@ public sealed class FinishZone : MonoBehaviour
     private PlayerLives _playerLives;
     private LevelRunContext _levelRunContext;
     private LevelTimer _levelTimer;
+    private AnalyticsService _analyticsService;
+    private LevelSessionStats _levelSessionStats;
     private bool _isCompleted;
 
     [Inject]
     public void Construct(IScoreService scoreService, LevelResultManager levelResultManager,
         LevelStarCalculator levelStarCalculator, PlayerWinEffect playerWinEffect, PlayerLives playerLives,
-        LevelRunContext levelRunContext, LevelTimer levelTimer)
+        LevelRunContext levelRunContext, LevelTimer levelTimer, 
+        AnalyticsService analyticsService, LevelSessionStats levelSessionStats)
     {
         _scoreService = scoreService;
         _levelResultManager = levelResultManager;
@@ -26,6 +29,8 @@ public sealed class FinishZone : MonoBehaviour
         _playerLives = playerLives;
         _levelRunContext = levelRunContext;
         _levelTimer = levelTimer;
+        _analyticsService = analyticsService;
+        _levelSessionStats = levelSessionStats;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -50,18 +55,29 @@ public sealed class FinishZone : MonoBehaviour
         player.FreezeBody();
         _playerWinEffect.Begin();
 
+        int starsCount = 0;
+        bool finishedUnderTarget = false;
         Scene scene = SceneManager.GetActiveScene();
         if (_levelRunContext.LevelMode == LevelRunMode.TimeTrial)
         {
             _levelTimer.Stop();
             _levelResultManager.SaveTimeTrialResult(
                 scene.buildIndex, _levelTimer.ElapsedSeconds, _levelTimer.TargetSeconds);
+
+            if (_levelTimer.ElapsedSeconds <= _levelTimer.TargetSeconds)
+                finishedUnderTarget = true;
         }
         else
         {
             LevelStarResult result = _levelStarCalculator.Calculate(
                 _scoreService.Score, _playerLives.HasLostLife, true);
             _levelResultManager.SaveLevelResult(scene.buildIndex, result.Count);
+            starsCount = result.Count;
+
         }
+
+        _analyticsService.LevelComplete(scene.buildIndex,AnalyticsLabels.RunMode(_levelRunContext),
+            AnalyticsLabels.SelectedHero(_levelRunContext.SelectedHero),starsCount,
+            _levelSessionStats.ElapsedSecondsRounded,_levelSessionStats.Deaths,finishedUnderTarget);
     }
 }

@@ -7,17 +7,17 @@ public sealed class TouchJoystick : MonoBehaviour,
 {
     [SerializeField] private RectTransform _stickRoot;
     [SerializeField] private RectTransform _knob;
-    [SerializeField] private TouchInputConfig _config;
+    [SerializeField] private TouchInputConfig _touchConfig;
     [SerializeField] private bool _hideWhenIdle = true;
 
     private float _radius;
-    private GameplayInputService _input;
+    private GameplayInputService _gameplayInput;
     private RectTransform _zone;
 
     [Inject]
-    public void Construct(GameplayInputService input)
+    public void Construct(GameplayInputService gameplayInput)
     {
-        _input = input;
+        _gameplayInput = gameplayInput;
     }
 
     private void Awake()
@@ -52,7 +52,7 @@ public sealed class TouchJoystick : MonoBehaviour,
     public void OnPointerUp(PointerEventData eventData)
     {
         _knob.anchoredPosition = Vector2.zero;
-        _input.ClearStick();
+        _gameplayInput.ClearStick();
 
         if (_hideWhenIdle)
             _stickRoot.gameObject.SetActive(false);
@@ -77,17 +77,17 @@ public sealed class TouchJoystick : MonoBehaviour,
         float absX = Mathf.Abs(x / _radius);
         float move = 0f;
         bool runHeld = false;
-        if (absX >= _config.DeadZone)
+        if (absX >= _touchConfig.DeadZone)
         {
             if (x > 0f)
                 move = 1f;
             else
                 move = -1f;
 
-            if (absX >= _config.RunThreshold)
+            if (absX >= _touchConfig.RunThreshold)
                 runHeld = true;
         }
 
-        _input.SetStick(move, runHeld);
+        _gameplayInput.SetStick(move, runHeld);
     }
 }
